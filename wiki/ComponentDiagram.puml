@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+[Player]
+[Enemy]
+[EnemyGeneration]
+[GameEngine]
+[Map]
+[Collision]
+[Weapon]
+[Shop]
+[Currency]
+[Common]
+
+[Collision] -(0- [Player]
+[Player] -(0- [Weapon]
+[Shop] -(0- [Currency]
+note bottom of [Currency]: Do [Currency] need to be its own or part of [Shop]
+[Common] -(0- [Player]
+[Common] -(0- [Enemy]
+[Common] -(0- [Map]
+[GameEngine] -(0- [Currency]
+[Common] -(0- [GameEngine]
+[Enemy] -0)- [EnemyGeneration]
+note bottom of [EnemyGeneration]: Which one eats which
+note right of [Common]: Are the lolipop notaions pointing the right way? \n
+
+@enduml

@@ -10,16 +10,24 @@
 
     <packaging>pom</packaging>
     <modules>
-        <module>common</module>
         <module>core</module>
+        <module>common</module>
     </modules>
 
     <properties>
         <java>java</java>
-        <maven.compiler.source>1.9</maven.compiler.source>
-        <maven.compiler.target>1.9</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.almasb</groupId>
+            <artifactId>fxgl</artifactId>
+            <version>21</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -52,10 +60,9 @@
                     <workingDirectory>.</workingDirectory>
                     <longModulepath>false</longModulepath>
                     <arguments>
-                        <!--
-                                                On Mac Devices this line should not be commented out
-                                                <argument>-XstartOnFirstThread</argument>
-                        -->
+                        <!--On Mac Devices this line should not be commented out-->
+                        <argument>-XstartOnFirstThread</argument>
+
                         <!--                        <argument>-Dorg.lwjgl.util.Debug=true</argument>-->
                         <argument>-Djava.library.path=libs</argument>
                         <argument>--module-path=mods-mvn</argument>

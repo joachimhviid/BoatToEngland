@@ -10,8 +10,8 @@
 
     <packaging>pom</packaging>
     <modules>
-        <module>core</module>
         <module>common</module>
+        <module>core</module>
     </modules>
 
     <properties>
@@ -20,14 +20,6 @@
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.github.almasb</groupId>
-            <artifactId>fxgl</artifactId>
-            <version>21</version>
-        </dependency>
-    </dependencies>
 
     <build>
         <plugins>
@@ -42,6 +34,7 @@
                     <fork>true</fork>
                 </configuration>
             </plugin>
+
             <!-- execute the resulting project -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -60,21 +53,12 @@
                     <workingDirectory>.</workingDirectory>
                     <longModulepath>false</longModulepath>
                     <arguments>
-                        <!--On Mac Devices this line should not be commented out-->
-                        <argument>-XstartOnFirstThread</argument>
-
-                        <!--                        <argument>-Dorg.lwjgl.util.Debug=true</argument>-->
-                        <argument>-Djava.library.path=libs</argument>
+                        <!--<argument>-XstartOnFirstThread</argument>-->
                         <argument>--module-path=mods-mvn</argument>
                         <argument>--class-path=libs/*</argument>
-                        <!-- because spark.core is an automatic module and actually required,
-                        monitor.observer.zero would be resolved as well and does not need
-                        to be added explicitly;
-                        I still wanted to do it for clarity, but for some reason that results
-                        in "java.lang.module.FindException: Module monitor.observer.zero not found";
-                        strange... -->
-                        <!--<argument>&#45;&#45;add-modules=monitor.observer.zero</argument>-->
                         <argument>--module=core/launcher.GameLauncher</argument>
+<!--                        <argument>&#45;&#45;add-modules com.almasb.fxgl.all</argument>-->
+
                     </arguments>
                 </configuration>
             </plugin>
@@ -147,5 +131,4 @@
             </build>
         </profile>
     </profiles>
-
 </project>

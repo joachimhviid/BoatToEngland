@@ -1,4 +1,4 @@
 open module core {
-  requires com.almasb.fxgl.all;
   requires common;
+  requires com.almasb.fxgl.all;
 }

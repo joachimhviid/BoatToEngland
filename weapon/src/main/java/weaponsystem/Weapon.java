@@ -3,12 +3,16 @@ package weaponsystem;
 public class Weapon {
 
 
-    double fireRate;
+    private double fireRate;
 
-    int damage;
+    private int damage;
 
-    private void attack() {
+    public Weapon(double fireRate, int damage) {
+        this.fireRate = fireRate;
+        this.damage = damage;
+    }
 
+    void attack() {
     }
 
 

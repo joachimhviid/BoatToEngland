@@ -1,0 +1,5 @@
+module weapon {
+    exports weaponsystem;
+
+
+}

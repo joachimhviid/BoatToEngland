@@ -24,7 +24,7 @@ public class Player {
 
 
     public int getHealth() {
-        return health;
+        return this.health;
     }
 
     public void setHealth(int health) {
@@ -45,6 +45,18 @@ public class Player {
 
     public void setMovementSpeed(int movementSpeed) {
         this.movementSpeed = movementSpeed;
+    }
+
+    public void wasAttacked(int damage) {
+        setHealth(getHealth() - damage);
+        if (getHealth() <= 0) {
+            death();
+        }
+    }
+
+
+    public void death() {
+        //Implement game over
     }
 
 }

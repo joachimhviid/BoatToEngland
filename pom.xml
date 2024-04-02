@@ -12,6 +12,10 @@
     <modules>
         <module>common</module>
         <module>core</module>
+        <module>map</module>
+        <module>player</module>
+        <module>enemy</module>
+        <module>weapon</module>
         <module>CommonEnemy</module>
         <module>Enemy</module>
     </modules>

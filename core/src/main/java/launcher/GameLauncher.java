@@ -30,6 +30,8 @@ public class GameLauncher extends GameApplication {
   @Override
   protected void initInput() {
     Input input = FXGL.getInput();
+
+    // See if these can be extracted to Player module
     input.addAction(new UserAction("Move Left") {
       protected void onAction() {
         System.out.println("Move left");
@@ -45,11 +47,13 @@ public class GameLauncher extends GameApplication {
     input.addAction(new UserAction("Move Up") {
       protected void onAction() {
         System.out.println("Move up");
+        player.getComponent(AnimationComponent.class).moveUp();
       }
     }, KeyCode.W);
     input.addAction(new UserAction("Move Down") {
       protected void onAction() {
         System.out.println("Move down");
+        player.getComponent(AnimationComponent.class).moveDown();
       }
     }, KeyCode.S);
   }
@@ -57,12 +61,17 @@ public class GameLauncher extends GameApplication {
   @Override
   protected void initGame() {
     System.out.println("Game initialized");
+    // Move to map module
     GameScene scene = FXGL.getGameScene();
     scene.setBackgroundColor(javafx.scene.paint.Color.LIGHTBLUE);
+
+    // Move to player module
     player = FXGL.entityBuilder()
-      .at(400, 300)
-      .with(new AnimationComponent())
-      .buildAndAttach();
+        .with(new AnimationComponent())
+        .buildAndAttach();
+
+    //Viewport viewport = scene.getViewport();
+    //viewport.bindToEntity(player, (double) scene.getAppWidth() / 2, (double) scene.getAppHeight() / 2);
   }
 
   @Override
@@ -73,8 +82,8 @@ public class GameLauncher extends GameApplication {
   @Override
   protected void initUI() {
     System.out.println("UI initialized");
-      Text text = new Text("Hello World!");
+    Text text = new Text("Hello World!");
 
-      FXGL.addUINode(text, 100, 100);
+    FXGL.addUINode(text, 100, 100);
   }
 }

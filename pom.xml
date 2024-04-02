@@ -12,6 +12,8 @@
     <modules>
         <module>common</module>
         <module>core</module>
+        <module>player</module>
+        <module>weapon</module>
     </modules>
 
     <properties>

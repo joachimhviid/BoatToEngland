@@ -12,6 +12,8 @@
     <modules>
         <module>common</module>
         <module>core</module>
+        <module>CommonEnemy</module>
+        <module>Enemy</module>
     </modules>
 
     <properties>

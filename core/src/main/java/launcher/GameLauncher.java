@@ -13,6 +13,7 @@ import javafx.scene.text.Text;
 
 public class GameLauncher extends GameApplication {
   private Entity player;
+  private Text speedometer;
 
   public static void main(String[] args) {
     System.out.println("Hello World!");
@@ -25,6 +26,8 @@ public class GameLauncher extends GameApplication {
     gameSettings.setWidthFromRatio(16 / 9.0);
     gameSettings.setTitle("Boat to England");
     gameSettings.setVersion("0.1");
+
+    //gameSettings.setProfilingEnabled(true);
   }
 
   @Override
@@ -82,8 +85,13 @@ public class GameLauncher extends GameApplication {
   @Override
   protected void initUI() {
     System.out.println("UI initialized");
-    Text text = new Text("Hello World!");
+    speedometer = new Text();
 
-    FXGL.addUINode(text, 100, 100);
+    FXGL.addUINode(speedometer, 100, 100);
+  }
+
+  @Override
+  protected void onUpdate(double tpf) {
+      speedometer.setText(player.getComponent(AnimationComponent.class).getSpeed());
   }
 }

@@ -6,13 +6,14 @@ import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 import com.almasb.fxgl.texture.ImagesKt;
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
 
 public class AnimationComponent extends Component {
     private int speedX = 0;
     private int speedY = 0;
-    private int scale = 5;
+    private int scale = 4;
 
     private AnimatedTexture texture;
     private AnimationChannel animIdle, animRun;
@@ -29,6 +30,7 @@ public class AnimationComponent extends Component {
 
     @Override
     public void onAdded() {
+        entity.getTransformComponent().setScaleOrigin(new Point2D((double) (50 * scale) / 2, (double) (48 * scale) / 2));
         entity.getViewComponent().addChild(texture);
     }
 
@@ -37,10 +39,11 @@ public class AnimationComponent extends Component {
         entity.translateX(speedX * tpf);
         entity.translateY(speedY * tpf);
 
-        if (speedX != 0 || speedY != 0) {
+        if (isMoving()) {
             if (texture.getAnimationChannel() == animIdle) {
                 texture.loopAnimationChannel(animRun);
             }
+            // Deceleration
             speedX = (int) (speedX * 0.9);
             speedY = (int) (speedY * 0.9);
 
@@ -52,21 +55,29 @@ public class AnimationComponent extends Component {
         }
     }
 
+    private boolean isMoving() {
+        return speedX != 0 || speedY != 0;
+    }
+
+    public String getSpeed() {
+        return "Speed: " + speedX + ", " + speedY;
+    }
+
     public void moveRight() {
-        speedX = 150;
+        speedX = 250;
         entity.setScaleX(1);
     }
 
     public void moveLeft() {
-        speedX = -150;
+        speedX = -250;
         entity.setScaleX(-1);
     }
 
     public void moveUp() {
-        speedY = -150;
+        speedY = -250;
     }
 
     public void moveDown() {
-        speedY = 150;
+        speedY = 250;
     }
 }

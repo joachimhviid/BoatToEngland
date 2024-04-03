@@ -5,11 +5,13 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.GameScene;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
-import components.AnimationComponent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
+import playersystem.AnimationComponent;
+import playersystem.PlayerFactory;
 
 public class GameLauncher extends GameApplication {
   private Entity player;
@@ -65,10 +67,8 @@ public class GameLauncher extends GameApplication {
     GameScene scene = FXGL.getGameScene();
     scene.setBackgroundColor(javafx.scene.paint.Color.LIGHTBLUE);
 
-    // Move to player module
-    player = FXGL.entityBuilder()
-        .with(new AnimationComponent())
-        .buildAndAttach();
+    // SpawnData = playerSpawnData; Optionally spawn data passed into newPlayer?
+    player = new PlayerFactory().newPlayer();
 
     //Viewport viewport = scene.getViewport();
     //viewport.bindToEntity(player, (double) scene.getAppWidth() / 2, (double) scene.getAppHeight() / 2);

@@ -11,15 +11,18 @@
 [Shop]
 [Common]
 
-[Collision] -(0- [Common]
-[Player] -(0- [Weapon]
-[Common] -0)- [Player]
-[Common] -0)- [Enemy]
-[Common] -0)- [Map]
-[GameEngine] -(0- [Shop]
-[Common] -0)- [GameEngine]
-[Enemy] -0)- [EnemyGeneration]
-note bottom of [EnemyGeneration]: Which one eats which
-note right of [Common]: Are the lolipop notaions pointing the right way? \n
 
+[Collision] -- [GameEngine]
+[Player] -(0- [Weapon]
+[Common] -- [Player]
+[Common] -- [Enemy]
+[Common] -- [Map]
+[GameEngine] -(0- [Shop]
+[Common] -- [GameEngine]
+[Enemy] -0)- [EnemyGeneration]
+[GameEngine] -(0- [Enemy]
+[GameEngine] -(0- [Player]
+/'note bottom of [EnemyGeneration]: Which one eats which
+note right of [Common]: Are the lolipop notaions pointing the right way? \n
+'/
 @enduml

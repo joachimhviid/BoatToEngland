@@ -5,14 +5,19 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.GameScene;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
+import common.enemy.EnemySPI;
 import components.AnimationComponent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 
+import java.util.ServiceLoader;
+
 public class GameLauncher extends GameApplication {
   private Entity player;
+  private EnemySPI enemySpawner;
 
   public static void main(String[] args) {
     System.out.println("Hello World!");
@@ -70,6 +75,9 @@ public class GameLauncher extends GameApplication {
         .with(new AnimationComponent())
         .buildAndAttach();
 
+    enemySpawner = ServiceLoader.load(EnemySPI.class).findFirst().orElseThrow();
+    enemySpawner.createEnemy(new SpawnData(??));
+
     //Viewport viewport = scene.getViewport();
     //viewport.bindToEntity(player, (double) scene.getAppWidth() / 2, (double) scene.getAppHeight() / 2);
   }
@@ -86,4 +94,6 @@ public class GameLauncher extends GameApplication {
 
     FXGL.addUINode(text, 100, 100);
   }
+
+
 }

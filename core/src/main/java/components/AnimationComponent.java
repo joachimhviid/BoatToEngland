@@ -21,7 +21,7 @@ public class AnimationComponent extends Component {
     public AnimationComponent() {
         Image playerReady = FXGL.image("player_ready.png");
         Image playerRun = FXGL.image("player_run.png");
-        // TODO: Figure out a better way to resize images
+        // TODO: Figure out a better way to resize images maybe based on application window size
         animIdle = new AnimationChannel(ImagesKt.resize(playerReady, (int) playerReady.getWidth() * scale, (int) playerReady.getHeight() * scale), 6, 50 * scale, 48 * scale, Duration.seconds(1), 0, 5);
         animRun = new AnimationChannel(ImagesKt.resize(playerRun, (int) playerRun.getWidth() * scale, (int) playerRun.getHeight() * scale), 6, 50 * scale, 48 * scale, Duration.seconds(1), 0, 5);
 

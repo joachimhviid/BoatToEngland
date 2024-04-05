@@ -3,10 +3,14 @@ package launcher;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.GameScene;
+import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.level.Level;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
+import com.almasb.fxgl.physics.BoundingShape;
+import com.almasb.fxgl.physics.HitBox;
 import components.AnimationComponent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
@@ -14,6 +18,7 @@ import javafx.scene.text.Text;
 public class GameLauncher extends GameApplication {
   private Entity player;
   private Text speedometer;
+  private Text viewport;
 
   public static void main(String[] args) {
     System.out.println("Hello World!");
@@ -67,14 +72,17 @@ public class GameLauncher extends GameApplication {
     // Move to map module
     GameScene scene = FXGL.getGameScene();
     scene.setBackgroundColor(javafx.scene.paint.Color.LIGHTBLUE);
+    FXGL.setLevelFromMap("boat-to-england-map.tmx");
 
     // Move to player module
     player = FXGL.entityBuilder()
         .with(new AnimationComponent())
+        .bbox(new HitBox(BoundingShape.box(4 * 50, 4 * 48)))
         .buildAndAttach();
 
-    //Viewport viewport = scene.getViewport();
-    //viewport.bindToEntity(player, (double) scene.getAppWidth() / 2, (double) scene.getAppHeight() / 2);
+    Viewport viewport = scene.getViewport();
+    viewport.setBounds(0, 0, 1600, 1600);
+    viewport.bindToEntity(player, viewport.getWidth() / 2 - player.getWidth() / 2, viewport.getHeight() / 2 - player.getHeight() / 2);
   }
 
   @Override
@@ -86,12 +94,15 @@ public class GameLauncher extends GameApplication {
   protected void initUI() {
     System.out.println("UI initialized");
     speedometer = new Text();
+    viewport = new Text();
 
     FXGL.addUINode(speedometer, 100, 100);
+    FXGL.addUINode(viewport, 100, 150);
   }
 
   @Override
   protected void onUpdate(double tpf) {
-      speedometer.setText(player.getComponent(AnimationComponent.class).getSpeed());
+    speedometer.setText(player.getComponent(AnimationComponent.class).getSpeed());
+    viewport.setText("Viewport: %s, %s\nBounds: %s, %s\nPlayer dimensions: %s, %s".formatted(FXGL.getGameScene().getViewport().getWidth(), FXGL.getGameScene().getViewport().getHeight(), FXGL.getGameScene().getViewport().getWidth() / 2 - player.getWidth() / 2, FXGL.getGameScene().getViewport().getHeight() / 2 - player.getHeight() / 2, player.getWidth(), player.getHeight()));
   }
 }

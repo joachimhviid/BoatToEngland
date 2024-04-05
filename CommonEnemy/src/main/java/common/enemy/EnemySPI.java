@@ -1,7 +1,8 @@
 package common.enemy;
 
 import com.almasb.fxgl.entity.SpawnData;
+import com.almasb.fxgl.entity.Entity;
 
 public interface EnemySPI {
-    void createEnemy(SpawnData spawnData);
+    Entity createEnemy(SpawnData spawnData);
 }

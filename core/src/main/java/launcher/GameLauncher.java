@@ -5,6 +5,7 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.GameScene;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
@@ -13,11 +14,13 @@ import components.AnimationComponent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 
+import java.util.List;
 import java.util.ServiceLoader;
+import java.util.stream.Collectors;
 
 public class GameLauncher extends GameApplication {
   private Entity player;
-  private EnemySPI enemySpawner;
+  private EnemySPI enemyFactory;
 
   public static void main(String[] args) {
     System.out.println("Hello World!");
@@ -75,8 +78,14 @@ public class GameLauncher extends GameApplication {
         .with(new AnimationComponent())
         .buildAndAttach();
 
-    enemySpawner = ServiceLoader.load(EnemySPI.class).findFirst().orElseThrow();
-    enemySpawner.createEnemy(new SpawnData(??));
+    List<EnemySPI> enemyFactories = ServiceLoader.load(EnemySPI.class)
+            .stream()
+            .map(ServiceLoader.Provider::get)
+            .toList();
+
+    enemyFactories.forEach(enemyFactory -> FXGL.getGameWorld().addEntityFactory((EntityFactory) enemyFactory));
+    enemyFactories.forEach(enemyFactory -> FXGL.getGameWorld().spawn("enemy"));
+
 
     //Viewport viewport = scene.getViewport();
     //viewport.bindToEntity(player, (double) scene.getAppWidth() / 2, (double) scene.getAppHeight() / 2);

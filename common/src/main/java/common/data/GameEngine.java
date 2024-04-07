@@ -1,6 +1,6 @@
-package data;
+package common.data;
 
-import services.IGamePluginService;
+import common.services.IGamePluginService;
 
 import java.util.Collection;
 import java.util.ServiceLoader;

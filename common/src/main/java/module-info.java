@@ -1,5 +1,10 @@
+import common.services.IGamePluginService;
+
 module common {
-  uses services.IGamePluginService;
-  exports data;
-  exports services;
+  requires com.almasb.fxgl.all;
+
+  uses IGamePluginService;
+  exports common.data;
+  exports common.services;
+  exports common.events;
 }

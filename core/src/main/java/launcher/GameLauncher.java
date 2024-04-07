@@ -6,21 +6,22 @@ import com.almasb.fxgl.app.scene.GameScene;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
-import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
+import common.ai.AI_SPI;
 import common.enemy.EnemySPI;
+import common.events.DebugToggleEvent;
 import components.AnimationComponent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 
 import java.util.List;
 import java.util.ServiceLoader;
-import java.util.stream.Collectors;
 
 public class GameLauncher extends GameApplication {
   private Entity player;
   private EnemySPI enemyFactory;
+  private AI_SPI aiFactory;
 
   public static void main(String[] args) {
     System.out.println("Hello World!");
@@ -64,6 +65,13 @@ public class GameLauncher extends GameApplication {
         player.getComponent(AnimationComponent.class).moveDown();
       }
     }, KeyCode.S);
+    input.addAction(new UserAction("Toggle FlowField Visibility") {
+      @Override
+      protected void onActionBegin() {
+        System.out.println("COMMA!");
+        FXGL.getEventBus().fireEvent(new DebugToggleEvent());
+      }
+    }, KeyCode.COMMA);
   }
 
   @Override
@@ -86,6 +94,14 @@ public class GameLauncher extends GameApplication {
     enemyFactories.forEach(enemyFactory -> FXGL.getGameWorld().addEntityFactory((EntityFactory) enemyFactory));
     enemyFactories.forEach(enemyFactory -> FXGL.getGameWorld().spawn("enemy"));
 
+    ServiceLoader<AI_SPI> aiFactory = ServiceLoader.load(AI_SPI.class);
+    aiFactory.stream().forEach(aiSpiProvider -> {
+      AI_SPI service = aiSpiProvider.get();
+      FXGL.getGameWorld().addEntityFactory((EntityFactory) service);
+    });
+
+    FXGL.getGameWorld().spawn("flowfield");
+
 
     //Viewport viewport = scene.getViewport();
     //viewport.bindToEntity(player, (double) scene.getAppWidth() / 2, (double) scene.getAppHeight() / 2);
@@ -99,9 +115,9 @@ public class GameLauncher extends GameApplication {
   @Override
   protected void initUI() {
     System.out.println("UI initialized");
-    Text text = new Text("Hello World!");
-
-    FXGL.addUINode(text, 100, 100);
+//    Text text = new Text("Hello World!");
+//
+//    FXGL.addUINode(text, 100, 100);
   }
 
 

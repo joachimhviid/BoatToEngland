@@ -17,6 +17,8 @@
         <module>weapon</module>
         <module>CommonEnemy</module>
         <module>Enemy</module>
+        <module>CommonAI</module>
+        <module>FlowFieldAI</module>
     </modules>
 
     <properties>

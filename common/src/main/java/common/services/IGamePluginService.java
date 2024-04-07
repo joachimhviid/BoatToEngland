@@ -1,4 +1,4 @@
-package services;
+package common.services;
 
 public interface IGamePluginService {
     void start(String engine);

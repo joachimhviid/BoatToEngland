@@ -1,6 +1,6 @@
 package components;
 
-import com.almasb.fxgl.core.math.FXGLMath;
+import com.almasb.fxgl.core.math.Vec2;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.texture.AnimatedTexture;
@@ -11,9 +11,8 @@ import javafx.scene.image.Image;
 import javafx.util.Duration;
 
 public class AnimationComponent extends Component {
-    private int speed = 300;
-    private int velocityX = 0;
-    private int velocityY = 0;
+    private final double speed = 300;
+    private Vec2 velocity = new Vec2(0, 0);
     private final int scale = 4;
 
     private AnimatedTexture texture;
@@ -38,55 +37,48 @@ public class AnimationComponent extends Component {
     @Override
     public void onUpdate(double tpf) {
         normalizeSpeed();
-        entity.translateX(velocityX * tpf);
-        entity.translateY(velocityY * tpf);
+        entity.translate(velocity.mul(tpf * speed));
 
         if (isMoving()) {
             if (texture.getAnimationChannel() == animIdle) {
                 texture.loopAnimationChannel(animRun);
             }
             // Deceleration
-            velocityX = (int) (velocityX * 0.9);
-            velocityY = (int) (velocityY * 0.9);
+            velocity = velocity.mul(0.9);
 
-            if (FXGLMath.abs(velocityX) < 1 && FXGLMath.abs(velocityY) < 1) {
-                velocityX = 0;
-                velocityY = 0;
-                texture.loopAnimationChannel(animIdle);
+            if (velocity.length() < 1) {
+                velocity = velocity.mul(0);
             }
+        } else if (texture.getAnimationChannel() == animRun) {
+            texture.loopAnimationChannel(animIdle);
         }
     }
 
     private boolean isMoving() {
-        return velocityX != 0 || velocityY != 0;
-    }
-
-    public String getSpeed() {
-        return "Speed: " + velocityX + ", " + velocityY;
+        return velocity.length() > 0;
     }
 
     private void normalizeSpeed() {
-        if (velocityX != 0 && velocityY != 0) {
-            velocityX /= (int) Math.sqrt(2);
-            velocityY /= (int) Math.sqrt(2);
+        if (velocity.length() > 0) {
+            velocity = velocity.normalize();
         }
     }
 
     public void moveRight() {
-        velocityX = speed;
+        velocity = new Vec2(speed, velocity.y);
         entity.setScaleX(1);
     }
 
     public void moveLeft() {
-        velocityX = -speed;
+        velocity = new Vec2(-speed, velocity.y);
         entity.setScaleX(-1);
     }
 
     public void moveUp() {
-        velocityY = -speed;
+        velocity = new Vec2(velocity.x, -speed);
     }
 
     public void moveDown() {
-        velocityY = speed;
+        velocity = new Vec2(velocity.x, speed);
     }
 }

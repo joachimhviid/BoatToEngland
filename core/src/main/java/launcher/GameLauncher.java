@@ -32,6 +32,7 @@ public class GameLauncher extends GameApplication {
     gameSettings.setVersion("0.1");
 
     //gameSettings.setProfilingEnabled(true);
+    gameSettings.setTicksPerSecond(60);
   }
 
   @Override

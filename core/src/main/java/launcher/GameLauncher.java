@@ -16,7 +16,7 @@ import javafx.scene.text.Text;
 
 public class GameLauncher extends GameApplication {
   private Entity player;
-  private Text speedometer;
+  private Text debugText;
   private Text viewport;
 
   public static void main(String[] args) {
@@ -41,25 +41,21 @@ public class GameLauncher extends GameApplication {
     // See if these can be extracted to Player module
     input.addAction(new UserAction("Move Left") {
       protected void onAction() {
-        System.out.println("Move left");
         player.getComponent(AnimationComponent.class).moveLeft();
       }
     }, KeyCode.A);
     input.addAction(new UserAction("Move Right") {
       protected void onAction() {
-        System.out.println("Move right");
         player.getComponent(AnimationComponent.class).moveRight();
       }
     }, KeyCode.D);
     input.addAction(new UserAction("Move Up") {
       protected void onAction() {
-        System.out.println("Move up");
         player.getComponent(AnimationComponent.class).moveUp();
       }
     }, KeyCode.W);
     input.addAction(new UserAction("Move Down") {
       protected void onAction() {
-        System.out.println("Move down");
         player.getComponent(AnimationComponent.class).moveDown();
       }
     }, KeyCode.S);
@@ -92,16 +88,16 @@ public class GameLauncher extends GameApplication {
   @Override
   protected void initUI() {
     System.out.println("UI initialized");
-    speedometer = new Text();
+    debugText = new Text();
     viewport = new Text();
 
-    FXGL.addUINode(speedometer, 100, 100);
+    FXGL.addUINode(debugText, 100, 100);
     FXGL.addUINode(viewport, 100, 150);
   }
 
   @Override
   protected void onUpdate(double tpf) {
-    speedometer.setText(player.getComponent(AnimationComponent.class).getSpeed());
+    //debugText.setText(ticks++ + " ticks\nTPF: " + tpf);
     viewport.setText("Viewport: %s, %s\nBounds: %s, %s\nPlayer dimensions: %s, %s".formatted(FXGL.getGameScene().getViewport().getWidth(), FXGL.getGameScene().getViewport().getHeight(), FXGL.getGameScene().getViewport().getWidth() / 2 - player.getWidth() / 2, FXGL.getGameScene().getViewport().getHeight() / 2 - player.getHeight() / 2, player.getWidth(), player.getHeight()));
   }
 }

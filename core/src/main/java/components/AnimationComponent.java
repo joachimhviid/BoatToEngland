@@ -11,9 +11,10 @@ import javafx.scene.image.Image;
 import javafx.util.Duration;
 
 public class AnimationComponent extends Component {
-    private int speedX = 0;
-    private int speedY = 0;
-    private int scale = 4;
+    private int speed = 300;
+    private int velocityX = 0;
+    private int velocityY = 0;
+    private final int scale = 4;
 
     private AnimatedTexture texture;
     private AnimationChannel animIdle, animRun;
@@ -36,48 +37,56 @@ public class AnimationComponent extends Component {
 
     @Override
     public void onUpdate(double tpf) {
-        entity.translateX(speedX * tpf);
-        entity.translateY(speedY * tpf);
+        normalizeSpeed();
+        entity.translateX(velocityX * tpf);
+        entity.translateY(velocityY * tpf);
 
         if (isMoving()) {
             if (texture.getAnimationChannel() == animIdle) {
                 texture.loopAnimationChannel(animRun);
             }
             // Deceleration
-            speedX = (int) (speedX * 0.9);
-            speedY = (int) (speedY * 0.9);
+            velocityX = (int) (velocityX * 0.9);
+            velocityY = (int) (velocityY * 0.9);
 
-            if (FXGLMath.abs(speedX) < 1 && FXGLMath.abs(speedY) < 1) {
-                speedX = 0;
-                speedY = 0;
+            if (FXGLMath.abs(velocityX) < 1 && FXGLMath.abs(velocityY) < 1) {
+                velocityX = 0;
+                velocityY = 0;
                 texture.loopAnimationChannel(animIdle);
             }
         }
     }
 
     private boolean isMoving() {
-        return speedX != 0 || speedY != 0;
+        return velocityX != 0 || velocityY != 0;
     }
 
     public String getSpeed() {
-        return "Speed: " + speedX + ", " + speedY;
+        return "Speed: " + velocityX + ", " + velocityY;
+    }
+
+    private void normalizeSpeed() {
+        if (velocityX != 0 && velocityY != 0) {
+            velocityX /= (int) Math.sqrt(2);
+            velocityY /= (int) Math.sqrt(2);
+        }
     }
 
     public void moveRight() {
-        speedX = 250;
+        velocityX = speed;
         entity.setScaleX(1);
     }
 
     public void moveLeft() {
-        speedX = -250;
+        velocityX = -speed;
         entity.setScaleX(-1);
     }
 
     public void moveUp() {
-        speedY = -250;
+        velocityY = -speed;
     }
 
     public void moveDown() {
-        speedY = 250;
+        velocityY = speed;
     }
 }

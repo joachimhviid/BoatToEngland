@@ -6,7 +6,6 @@ import com.almasb.fxgl.app.scene.GameScene;
 import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
-import com.almasb.fxgl.entity.level.Level;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.BoundingShape;
@@ -72,7 +71,7 @@ public class GameLauncher extends GameApplication {
     // Move to map module
     GameScene scene = FXGL.getGameScene();
     scene.setBackgroundColor(javafx.scene.paint.Color.LIGHTBLUE);
-    FXGL.setLevelFromMap("boat-to-england-map.tmx");
+    FXGL.setLevelFromMap("boat-to-england-map-4x.tmx");
 
     // Move to player module
     player = FXGL.entityBuilder()
@@ -81,7 +80,7 @@ public class GameLauncher extends GameApplication {
         .buildAndAttach();
 
     Viewport viewport = scene.getViewport();
-    viewport.setBounds(0, 0, 1600, 1600);
+    viewport.setBounds(0, 0, 6400, 6400);
     viewport.bindToEntity(player, viewport.getWidth() / 2 - player.getWidth() / 2, viewport.getHeight() / 2 - player.getHeight() / 2);
   }
 

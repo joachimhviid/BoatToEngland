@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="64" tileheight="64" infinite="0" nextlayerid="11" nextobjectid="5">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="64" tileheight="64" infinite="0" nextlayerid="12" nextobjectid="167">
  <tileset firstgid="1" name="terrain_sheet" tilewidth="64" tileheight="64" tilecount="288" columns="24">
   <image source="terrain_sheet_4x.png" width="1536" height="768"/>
   <wangsets>
@@ -198,7 +198,7 @@
  </tileset>
  <layer id="2" name="Base" width="100" height="100">
   <data encoding="csv">
-151,151,151,151,247,199,271,199,151,55,175,151,247,79,247,271,175,199,151,151,151,151,151,265,269,266,267,267,267,266,267,266,266,268,266,171,251,180,220,197,203,244,252,197,196,220,180,221,203,180,245,196,220,244,245,245,172,252,227,244,220,204,203,203,245,244,220,180,220,220,245,221,252,251,221,220,197,228,252,227,180,244,228,196,220,245,221,228,244,251,179,204,203,221,179,197,227,221,221,252,
+151,151,151,151,247,199,271,199,151,55,175,151,247,79,247,271,175,199,151,151,151,151,151,199,223,271,247,223,103,199,223,247,55,199,265,171,251,180,220,197,203,244,252,197,196,220,180,221,203,180,245,196,220,244,245,245,172,252,227,244,220,204,203,203,245,244,220,180,220,220,245,221,252,251,221,220,197,228,252,227,180,244,228,196,220,245,221,228,244,251,179,204,203,221,179,197,227,221,221,252,
 151,151,151,151,151,175,199,151,175,223,175,223,247,7,223,247,151,247,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,265,267,267,266,269,266,268,269,267,266,266,269,267,268,268,268,268,266,267,266,268,269,266,266,266,268,268,267,266,267,267,267,269,267,268,269,268,269,269,269,171,221,180,228,220,180,245,204,197,245,227,244,196,179,197,172,228,172,251,197,172,252,251,220,227,
 151,151,151,151,79,247,223,223,199,199,271,31,199,7,271,175,199,271,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,265,269,266,269,267,266,268,171,251,196,244,180,173,252,252,245,228,180,244,204,251,221,180,220,204,
 151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,199,223,199,79,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,151,265,267,267,268,171,204,251,197,173,180,204,197,204,220,173,180,172,252,
@@ -508,5 +508,156 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="4" name="Obstacles"/>
+ <objectgroup id="4" name="Obstacles">
+  <object id="5" type="obstacle" x="1153" y="1006" width="143" height="74"/>
+  <object id="7" type="obstacle" x="2176.5" y="1833" width="143" height="74"/>
+  <object id="8" type="obstacle" x="2686.5" y="1773" width="143" height="74"/>
+  <object id="9" type="obstacle" x="2366.5" y="2161" width="143" height="74"/>
+  <object id="10" type="obstacle" x="1726.5" y="4399" width="143" height="74"/>
+  <object id="11" type="obstacle" x="1278.5" y="4651" width="143" height="74"/>
+  <object id="12" type="obstacle" x="830.5" y="4655" width="143" height="74"/>
+  <object id="13" type="obstacle" x="1528.5" y="6059" width="143" height="74"/>
+  <object id="14" type="obstacle" x="2044.5" y="6191" width="143" height="74"/>
+  <object id="15" type="obstacle" x="1854.5" y="5801" width="143" height="74"/>
+  <object id="16" type="obstacle" x="2170.5" y="5617" width="143" height="74"/>
+  <object id="17" type="obstacle" x="2680.5" y="5615" width="143" height="74"/>
+  <object id="18" type="obstacle" x="2428.5" y="5931" width="143" height="74"/>
+  <object id="19" type="obstacle" x="2616.5" y="6319" width="143" height="74"/>
+  <object id="20" type="obstacle" x="3000.5" y="6189" width="143" height="74"/>
+  <object id="21" type="obstacle" x="4664.5" y="6317" width="143" height="74"/>
+  <object id="22" type="obstacle" x="4862.5" y="6063" width="143" height="74"/>
+  <object id="23" type="obstacle" x="5116.5" y="6255" width="143" height="74"/>
+  <object id="24" type="obstacle" x="5504.5" y="6319" width="143" height="74"/>
+  <object id="25" type="obstacle" x="5432.5" y="6061" width="143" height="74"/>
+  <object id="26" type="obstacle" x="5114.5" y="5867" width="143" height="74"/>
+  <object id="27" type="obstacle" x="5440.5" y="5745" width="143" height="74"/>
+  <object id="28" type="obstacle" x="5690.5" y="5865" width="143" height="74"/>
+  <object id="29" type="obstacle" x="5946.5" y="6067" width="143" height="74"/>
+  <object id="30" type="obstacle" x="5688.5" y="6187" width="143" height="74"/>
+  <object id="31" type="obstacle" x="5882.5" y="6317" width="143" height="74"/>
+  <object id="32" type="obstacle" x="6138.5" y="6257" width="143" height="74"/>
+  <object id="33" type="obstacle" x="6204.5" y="5869" width="143" height="74"/>
+  <object id="34" type="obstacle" x="5882.5" y="5607" width="143" height="74"/>
+  <object id="35" type="obstacle" x="6208.5" y="5545" width="143" height="74"/>
+  <object id="36" type="obstacle" x="5236.5" y="4333" width="143" height="74"/>
+  <object id="37" type="obstacle" x="4858.5" y="2925" width="143" height="74"/>
+  <object id="38" type="obstacle" x="5370.5" y="2857" width="143" height="74"/>
+  <object id="39" type="obstacle" x="5950.5" y="2667" width="143" height="74"/>
+  <object id="40" type="obstacle" x="6138.5" y="2349" width="143" height="74"/>
+  <object id="41" type="obstacle" x="5056.5" y="2475" width="143" height="74"/>
+  <object id="42" type="obstacle" x="5246.5" y="2023" width="143" height="74"/>
+  <object id="43" type="obstacle" x="6016.5" y="1961" width="143" height="74"/>
+  <object id="44" type="obstacle" x="458.667" y="470.667" width="109.333" height="84.6667"/>
+  <object id="45" type="obstacle" x="968" y="1049.67" width="109.333" height="84.6667"/>
+  <object id="46" type="obstacle" x="906.667" y="1176.33" width="109.333" height="84.6667"/>
+  <object id="47" type="obstacle" x="1164" y="4693.67" width="109.333" height="84.6667"/>
+  <object id="48" type="obstacle" x="1546.67" y="4569.67" width="109.333" height="84.6667"/>
+  <object id="49" type="obstacle" x="1673.33" y="4179" width="109.333" height="84.6667"/>
+  <object id="50" type="obstacle" x="1868" y="6099" width="109.333" height="84.6667"/>
+  <object id="51" type="obstacle" x="2570.67" y="6040.33" width="109.333" height="84.6667"/>
+  <object id="52" type="obstacle" x="2636" y="5844.33" width="109.333" height="84.6667"/>
+  <object id="53" type="obstacle" x="6090.67" y="5267" width="109.333" height="84.6667"/>
+  <object id="54" type="obstacle" x="5578.67" y="2712.33" width="109.333" height="84.6667"/>
+  <object id="55" type="obstacle" x="5192" y="2583" width="109.333" height="84.6667"/>
+  <object id="56" type="obstacle" x="5769.33" y="1944.33" width="109.333" height="84.6667"/>
+  <object id="57" type="obstacle" x="5897.33" y="1877.67" width="109.333" height="84.6667"/>
+  <object id="58" type="obstacle" x="6156" y="1879" width="109.333" height="84.6667"/>
+  <object id="59" type="obstacle" x="6090.67" y="2519" width="109.333" height="84.6667"/>
+  <object id="60" type="obstacle" x="2378.67" y="1877.67" width="109.333" height="84.6667"/>
+  <object id="61" type="obstacle" x="577" y="509" width="63" height="66"/>
+  <object id="62" type="obstacle" x="578.5" y="575" width="63" height="66"/>
+  <object id="63" type="obstacle" x="515.5" y="575" width="63" height="66"/>
+  <object id="64" type="obstacle" x="513.5" y="639" width="63" height="66"/>
+  <object id="65" type="obstacle" x="1025.5" y="1148" width="63" height="66"/>
+  <object id="66" type="obstacle" x="1601" y="4475.5" width="63" height="66"/>
+  <object id="67" type="obstacle" x="1537.5" y="4476.5" width="63" height="66"/>
+  <object id="68" type="obstacle" x="1472" y="4540" width="63" height="66"/>
+  <object id="69" type="obstacle" x="1796.5" y="6273" width="63" height="66"/>
+  <object id="70" type="obstacle" x="4610.5" y="6013" width="63" height="66"/>
+  <object id="71" type="obstacle" x="5120.5" y="5629" width="63" height="66"/>
+  <object id="72" type="obstacle" x="5185.5" y="5566.5" width="63" height="66"/>
+  <object id="73" type="obstacle" x="5251" y="5566" width="63" height="66"/>
+  <object id="74" type="obstacle" x="6016.5" y="5311" width="63" height="66"/>
+  <object id="75" type="obstacle" x="64" y="384" width="64" height="64"/>
+  <object id="77" type="obstacle" x="128" y="384" width="64" height="64"/>
+  <object id="78" type="obstacle" x="192" y="384" width="64" height="64"/>
+  <object id="79" type="obstacle" x="64" y="448" width="64" height="64"/>
+  <object id="80" type="obstacle" x="1792" y="3904" width="64" height="64"/>
+  <object id="81" type="obstacle" x="1728" y="4032" width="64" height="64"/>
+  <object id="82" type="obstacle" x="1920" y="4416" width="64" height="64"/>
+  <object id="83" type="obstacle" x="640" y="3328" width="64" height="64"/>
+  <object id="84" type="obstacle" x="3328" y="4480" width="64" height="64"/>
+  <object id="85" type="obstacle" x="3392" y="4416" width="64" height="64"/>
+  <object id="86" type="obstacle" x="3456" y="4352" width="64" height="64"/>
+  <object id="87" type="obstacle" x="3520" y="4352" width="64" height="64"/>
+  <object id="88" type="obstacle" x="4480" y="4096" width="64" height="64"/>
+  <object id="89" type="obstacle" x="4608" y="4032" width="64" height="64"/>
+  <object id="90" type="obstacle" x="5312" y="4736" width="64" height="64"/>
+  <object id="91" type="obstacle" x="5376" y="4736" width="64" height="64"/>
+  <object id="92" type="obstacle" x="5504" y="4672" width="64" height="64"/>
+  <object id="93" type="obstacle" x="5632" y="4608" width="64" height="64"/>
+  <object id="94" type="obstacle" x="5632" y="2560" width="128" height="128"/>
+  <object id="95" type="obstacle" x="5312" y="2240" width="128" height="128"/>
+  <object id="96" type="obstacle" x="4992" y="4352" width="128" height="128"/>
+  <object id="97" type="obstacle" x="5632" y="5376" width="128" height="128"/>
+  <object id="98" type="obstacle" x="3648" y="1600" width="128" height="64"/>
+  <object id="99" type="obstacle" x="2240" y="1920" width="64" height="64"/>
+  <object id="100" type="obstacle" x="2112" y="5888" width="64" height="64"/>
+  <object id="102" type="obstacle" x="2368" y="6208" width="64" height="64"/>
+  <object id="103" type="obstacle" x="2752" y="6016" width="64" height="64"/>
+  <object id="104" type="obstacle" x="5184" y="5248" width="64" height="64"/>
+  <object id="105" type="obstacle" x="4928" y="5632" width="64" height="64"/>
+  <object id="106" type="obstacle" x="4672" y="5632" width="192" height="64"/>
+  <object id="107" type="obstacle" x="4992" y="5248" width="128" height="64"/>
+  <object id="108" type="obstacle" x="5626.5" y="2349" width="143" height="74"/>
+  <object id="109" type="obstacle" x="128" y="832" width="64" height="64"/>
+  <object id="111" type="obstacle" x="64" y="704" width="128" height="128"/>
+  <object id="112" type="obstacle" x="0" y="832" width="128" height="128"/>
+  <object id="113" type="obstacle" x="1600" y="2880" width="128" height="128"/>
+  <object id="114" type="obstacle" x="2112" y="3584" width="128" height="128"/>
+  <object id="124" type="obstacle" x="1058" y="2976" width="508" height="32"/>
+  <object id="125" type="obstacle" x="1024" y="3008" width="576" height="64"/>
+  <object id="126" type="obstacle" x="896" y="3072" width="832" height="896"/>
+  <object id="127" type="obstacle" x="1599" y="3035.5" width="158" height="38"/>
+  <object id="129" type="obstacle" x="924" y="3028" width="98" height="40"/>
+  <object id="130" type="obstacle" x="1728" y="3072" width="256" height="704"/>
+  <object id="131" type="obstacle" x="1984" y="3136" width="64" height="640"/>
+  <object id="132" type="obstacle" x="2048" y="3200" width="64" height="576"/>
+  <object id="133" type="obstacle" x="2112" y="3392" width="104.5" height="237"/>
+  <object id="135" type="obstacle" x="1728" y="3776" width="155" height="35"/>
+  <object id="136" type="obstacle" x="1727.5" y="3811" width="106.5" height="66.4261"/>
+  <object id="137" type="obstacle" x="1729" y="3877.5" width="37" height="58.5"/>
+  <object id="138" type="obstacle" x="538.667" y="3961.33" width="1152" height="98.6667"/>
+  <object id="139" type="obstacle" x="548" y="4059.83" width="1094.67" height="73.5"/>
+  <object id="140" type="obstacle" x="601.333" y="4133.33" width="1038.67" height="118.667"/>
+  <object id="141" type="obstacle" x="662.667" y="4248" width="906.667" height="136"/>
+  <object id="142" type="obstacle" x="673.333" y="4380" width="837.333" height="70.6667"/>
+  <object id="143" type="obstacle" x="724" y="4448" width="722.667" height="65.3333"/>
+  <object id="144" type="obstacle" x="853.333" y="4509.33" width="550.667" height="68"/>
+  <object id="145" type="obstacle" x="540" y="3741.33" width="361.333" height="228"/>
+  <object id="146" type="obstacle" x="605.333" y="3550.67" width="294.667" height="194.667"/>
+  <object id="147" type="obstacle" x="656" y="3416" width="245.333" height="138.667"/>
+  <object id="148" type="obstacle" x="732" y="3298.67" width="168" height="117.333"/>
+  <object id="149" type="obstacle" x="861.333" y="3106.67" width="38.6667" height="196"/>
+  <object id="150" type="obstacle" x="821.333" y="3216" width="38.6667" height="84"/>
+  <object id="151" type="obstacle" x="781.333" y="3240" width="37.3333" height="57.3333"/>
+  <object id="152" type="obstacle" x="2209" y="0" width="4191" height="64"/>
+  <object id="153" type="obstacle" x="2304" y="64" width="4096" height="64"/>
+  <object id="154" type="obstacle" x="4864" y="128" width="1536" height="64"/>
+  <object id="155" type="obstacle" x="5312" y="192" width="1088" height="64"/>
+  <object id="156" type="obstacle" x="5568" y="256" width="832" height="64"/>
+  <object id="157" type="obstacle" x="5760" y="320" width="640" height="64"/>
+  <object id="158" type="obstacle" x="5888" y="384" width="512" height="64"/>
+  <object id="159" type="obstacle" x="5952" y="448" width="448" height="64"/>
+  <object id="160" type="obstacle" x="6336" y="512" width="64" height="1344"/>
+  <object id="161" type="obstacle" x="6016" y="512" width="320" height="128"/>
+  <object id="162" type="obstacle" x="6080" y="640" width="256" height="64"/>
+  <object id="163" type="obstacle" x="6114" y="704" width="222" height="89"/>
+  <object id="164" type="obstacle" x="6238" y="863" width="96" height="118"/>
+  <object id="165" type="obstacle" x="6299" y="978" width="37" height="151"/>
+  <object id="166" type="obstacle" x="6165" y="784" width="174" height="86"/>
+ </objectgroup>
+ <objectgroup id="11" name="Data">
+  <object id="119" type="player" x="2176" y="3136" width="128" height="128"/>
+ </objectgroup>
 </map>

@@ -3,6 +3,7 @@ package components;
 import com.almasb.fxgl.core.math.Vec2;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
+import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 import com.almasb.fxgl.texture.ImagesKt;
@@ -14,6 +15,8 @@ public class AnimationComponent extends Component {
     private final double speed = 300;
     private Vec2 velocity = new Vec2(0, 0);
     private final int scale = 4;
+
+    private PhysicsComponent physics;
 
     private AnimatedTexture texture;
     private AnimationChannel animIdle, animRun;
@@ -32,14 +35,15 @@ public class AnimationComponent extends Component {
     public void onAdded() {
         entity.getTransformComponent().setScaleOrigin(new Point2D((double) (50 * scale) / 2, (double) (48 * scale) / 2));
         entity.getViewComponent().addChild(texture);
+        //entity.getViewComponent().turnOnDebugBBox(true);
     }
 
     @Override
     public void onUpdate(double tpf) {
         normalizeSpeed();
-        entity.translate(velocity.mul(tpf * speed));
+        physics.setBodyLinearVelocity(velocity.mul(tpf * speed));
 
-        if (isMoving()) {
+        if (physics.isMoving()) {
             if (texture.getAnimationChannel() == animIdle) {
                 texture.loopAnimationChannel(animRun);
             }
@@ -52,10 +56,6 @@ public class AnimationComponent extends Component {
         } else if (texture.getAnimationChannel() == animRun) {
             texture.loopAnimationChannel(animIdle);
         }
-    }
-
-    private boolean isMoving() {
-        return velocity.length() > 0;
     }
 
     private void normalizeSpeed() {
@@ -75,10 +75,10 @@ public class AnimationComponent extends Component {
     }
 
     public void moveUp() {
-        velocity = new Vec2(velocity.x, -speed);
+        velocity = new Vec2(velocity.x, speed);
     }
 
     public void moveDown() {
-        velocity = new Vec2(velocity.x, speed);
+        velocity = new Vec2(velocity.x, -speed);
     }
 }

@@ -6,6 +6,8 @@ import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 import com.almasb.fxgl.texture.ImagesKt;
+import common.events.PlayerMovedEvent;
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
 
@@ -55,18 +57,22 @@ public class AnimationComponent extends Component {
     public void moveRight() {
         speedX = 150;
         entity.setScaleX(1);
+        FXGL.getEventBus().fireEvent(new PlayerMovedEvent(new Point2D(entity.getX(), entity.getY())));
     }
 
     public void moveLeft() {
         speedX = -150;
         entity.setScaleX(-1);
+        FXGL.getEventBus().fireEvent(new PlayerMovedEvent(new Point2D(entity.getX(), entity.getY())));
     }
 
     public void moveUp() {
         speedY = -150;
+        FXGL.getEventBus().fireEvent(new PlayerMovedEvent(new Point2D(entity.getX(), entity.getY())));
     }
 
     public void moveDown() {
         speedY = 150;
+        FXGL.getEventBus().fireEvent(new PlayerMovedEvent(new Point2D(entity.getX(), entity.getY())));
     }
 }

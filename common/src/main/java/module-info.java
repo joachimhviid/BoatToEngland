@@ -1,5 +1,5 @@
 module common {
-  uses services.IGamePluginService;
+  requires com.almasb.fxgl.all;
   exports data;
   exports services;
 }

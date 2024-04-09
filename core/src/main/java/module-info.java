@@ -1,5 +1,6 @@
 open module core {
-  requires common;
+    uses services.MapSPI;
+    requires common;
   requires com.almasb.fxgl.all;
 
   exports launcher to com.almasb.fxgl.core;

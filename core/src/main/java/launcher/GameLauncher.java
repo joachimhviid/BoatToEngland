@@ -2,25 +2,31 @@ package launcher;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
-import com.almasb.fxgl.app.scene.GameScene;
 import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
+import com.almasb.fxgl.physics.BoundingShape;
+import com.almasb.fxgl.physics.HitBox;
+import com.almasb.fxgl.physics.PhysicsComponent;
+import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import components.AnimationComponent;
-import components.EntityType;
-import components.ObstacleFactory;
+import data.EntityType;
+import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
-import javafx.scene.text.Text;
+import services.MapSPI;
+
+import java.util.List;
+import java.util.ServiceLoader;
 
 public class GameLauncher extends GameApplication {
     private Entity player;
-    private Text debugText;
-    private Text viewport;
+
+    //private Text debugText;
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
         launch(args);
     }
 
@@ -66,18 +72,32 @@ public class GameLauncher extends GameApplication {
 
     @Override
     protected void initGame() {
-        System.out.println("Game initialized");
-        // Move to map module
-        GameScene scene = FXGL.getGameScene();
-        scene.setBackgroundColor(javafx.scene.paint.Color.LIGHTBLUE);
-        FXGL.getGameWorld().addEntityFactory(new ObstacleFactory());
-        FXGL.setLevelFromMap("boat-to-england-map-4x.tmx");
-        FXGL.getPhysicsWorld().setGravity(0, 0);
+        List<MapSPI> worldFactories = ServiceLoader.load(MapSPI.class)
+            .stream()
+            .map(ServiceLoader.Provider::get)
+            .toList();
+
+        worldFactories.forEach(factory -> {
+            System.out.println("Found world factory: " + factory);
+            FXGL.getGameWorld().addEntityFactory((EntityFactory) factory);
+            factory.loadMap();
+        });
 
         // Move to player module
-        player = FXGL.getGameWorld().getEntitiesByType(EntityType.PLAYER).getFirst();
+        //player = FXGL.getGameWorld().getEntitiesByType(EntityType.PLAYER).getFirst();
+        PhysicsComponent physics = new PhysicsComponent();
+        physics.setBodyType(BodyType.DYNAMIC);
+        HitBox box = new HitBox(new Point2D((double) (4 * 50) / 4, (double) (4 * 48) / 5), BoundingShape.box(2 * 50, 3 * 48));
 
-        Viewport viewport = scene.getViewport();
+        player = FXGL.entityBuilder()
+            .at(100, 100)
+            .type(EntityType.PLAYER)
+            .bbox(box)
+            .with(physics)
+            .with(new AnimationComponent())
+            .buildAndAttach();
+
+        Viewport viewport = FXGL.getGameScene().getViewport();
         viewport.setBounds(0, 0, 6400, 6400);
         viewport.bindToEntity(player, viewport.getWidth() / 2 - (double) (4 * 50) / 2, viewport.getHeight() / 2 - (double) (4 * 48) / 2);
     }
@@ -90,16 +110,12 @@ public class GameLauncher extends GameApplication {
     @Override
     protected void initUI() {
         System.out.println("UI initialized");
-        debugText = new Text();
-        viewport = new Text();
-
-        FXGL.addUINode(debugText, 100, 100);
-        FXGL.addUINode(viewport, 100, 150);
+        // debugText = new Text();
+        // FXGL.addUINode(debugText, 100, 100);
     }
 
     @Override
     protected void onUpdate(double tpf) {
-        //debugText.setText(ticks++ + " ticks\nTPF: " + tpf);
-        viewport.setText("Viewport: %s, %s\nBounds: %s, %s\nPlayer dimensions: %s, %s".formatted(FXGL.getGameScene().getViewport().getWidth(), FXGL.getGameScene().getViewport().getHeight(), FXGL.getGameScene().getViewport().getWidth() / 2 - player.getWidth() / 2, FXGL.getGameScene().getViewport().getHeight() / 2 - player.getHeight() / 2, player.getWidth(), player.getHeight()));
+        // debugText.setText(ticks++ + " ticks\nTPF: " + tpf);
     }
 }

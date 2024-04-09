@@ -35,7 +35,6 @@ public class AnimationComponent extends Component {
     public void onAdded() {
         entity.getTransformComponent().setScaleOrigin(new Point2D((double) (50 * scale) / 2, (double) (48 * scale) / 2));
         entity.getViewComponent().addChild(texture);
-        //entity.getViewComponent().turnOnDebugBBox(true);
     }
 
     @Override

@@ -86,19 +86,8 @@ public class GameLauncher extends GameApplication {
             factory.loadMap();
         });
 
-        // Move to player module
-        //player = FXGL.getGameWorld().getEntitiesByType(EntityType.PLAYER).getFirst();
-        PhysicsComponent physics = new PhysicsComponent();
-        physics.setBodyType(BodyType.DYNAMIC);
-        HitBox box = new HitBox(new Point2D((double) (4 * 50) / 4, (double) (4 * 48) / 5), BoundingShape.box(2 * 50, 3 * 48));
-
-        player = FXGL.entityBuilder()
-            .at(100, 100)
-            .type(EntityType.PLAYER)
-            .bbox(box)
-            .with(physics)
-            .with(new AnimationComponent())
-            .buildAndAttach();
+    // SpawnData = playerSpawnData; Optionally spawn data passed into newPlayer?
+    player = new PlayerFactory().newPlayer();
 
         Viewport viewport = FXGL.getGameScene().getViewport();
         viewport.setBounds(0, 0, 6400, 6400);

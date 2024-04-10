@@ -1,4 +1,4 @@
-package components;
+package playersystem;
 
 import com.almasb.fxgl.core.math.Vec2;
 import com.almasb.fxgl.dsl.FXGL;

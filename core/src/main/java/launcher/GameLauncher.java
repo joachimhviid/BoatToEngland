@@ -85,7 +85,7 @@ public class GameLauncher extends GameApplication {
             // order of types is the same as passed into the constructor
             @Override
             protected void onCollisionBegin(Entity player, Entity enemy) {
-                //player should take damage here
+                player.removeFromWorld();
             }
         });
     }

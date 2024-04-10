@@ -8,16 +8,12 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
-import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.CollisionHandler;
-import com.almasb.fxgl.physics.HitBox;
-import com.almasb.fxgl.physics.PhysicsComponent;
-import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
-import components.AnimationComponent;
 import data.EntityType;
-import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
+import playersystem.PlayerFactory;
 import services.MapSPI;
+import services.PlayerSPI;
 
 import java.util.List;
 import java.util.ServiceLoader;
@@ -48,29 +44,7 @@ public class GameLauncher extends GameApplication {
 
     @Override
     protected void initInput() {
-        Input input = FXGL.getInput();
 
-        // See if these can be extracted to Player module
-        input.addAction(new UserAction("Move Left") {
-            protected void onAction() {
-                player.getComponent(AnimationComponent.class).moveLeft();
-            }
-        }, KeyCode.A);
-        input.addAction(new UserAction("Move Right") {
-            protected void onAction() {
-                player.getComponent(AnimationComponent.class).moveRight();
-            }
-        }, KeyCode.D);
-        input.addAction(new UserAction("Move Up") {
-            protected void onAction() {
-                player.getComponent(AnimationComponent.class).moveUp();
-            }
-        }, KeyCode.W);
-        input.addAction(new UserAction("Move Down") {
-            protected void onAction() {
-                player.getComponent(AnimationComponent.class).moveDown();
-            }
-        }, KeyCode.S);
     }
 
     @Override
@@ -86,8 +60,18 @@ public class GameLauncher extends GameApplication {
             factory.loadMap();
         });
 
+        List<PlayerSPI> playerFactories = ServiceLoader.load(PlayerSPI.class)
+            .stream()
+            .map(ServiceLoader.Provider::get)
+            .toList();
+
+        playerFactories.forEach(factory -> {
+            FXGL.getGameWorld().addEntityFactory((EntityFactory) factory);
+            player = FXGL.getGameWorld().spawn("player", 100, 100);
+            factory.loadInput(player);
+        });
+
     // SpawnData = playerSpawnData; Optionally spawn data passed into newPlayer?
-    player = new PlayerFactory().newPlayer();
 
         Viewport viewport = FXGL.getGameScene().getViewport();
         viewport.setBounds(0, 0, 6400, 6400);

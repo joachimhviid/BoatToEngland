@@ -11,6 +11,8 @@ import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
 
+import java.net.URL;
+
 public class AnimationComponent extends Component {
     private final double speed = 300;
     private Vec2 velocity = new Vec2(0, 0);
@@ -24,6 +26,7 @@ public class AnimationComponent extends Component {
     public AnimationComponent() {
         Image playerReady = FXGL.image("player_ready.png");
         Image playerRun = FXGL.image("player_run.png");
+//        Image playerReady1 = FXGL.image(new URL("/player/assets/player_ready.png"));
         // TODO: Figure out a better way to resize images maybe based on application window size
         animIdle = new AnimationChannel(ImagesKt.resize(playerReady, (int) playerReady.getWidth() * scale, (int) playerReady.getHeight() * scale), 6, 50 * scale, 48 * scale, Duration.seconds(1), 0, 5);
         animRun = new AnimationChannel(ImagesKt.resize(playerRun, (int) playerRun.getWidth() * scale, (int) playerRun.getHeight() * scale), 6, 50 * scale, 48 * scale, Duration.seconds(1), 0, 5);

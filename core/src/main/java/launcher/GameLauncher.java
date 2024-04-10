@@ -9,6 +9,7 @@ import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.BoundingShape;
+import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
@@ -20,6 +21,8 @@ import services.MapSPI;
 
 import java.util.List;
 import java.util.ServiceLoader;
+
+import static com.almasb.fxgl.dsl.FXGL.getPhysicsWorld;
 
 public class GameLauncher extends GameApplication {
     private Entity player;
@@ -104,7 +107,14 @@ public class GameLauncher extends GameApplication {
 
     @Override
     protected void initPhysics() {
-        System.out.println("Physics initialized");
+        getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.ENEMY) {
+
+            // order of types is the same as passed into the constructor
+            @Override
+            protected void onCollisionBegin(Entity player, Entity enemy) {
+                //player should take damage here
+            }
+        });
     }
 
     @Override

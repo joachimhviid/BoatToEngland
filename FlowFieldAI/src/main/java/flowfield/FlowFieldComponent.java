@@ -5,15 +5,19 @@ import com.almasb.fxgl.entity.component.Component;
 import common.ai.AI;
 import common.events.DebugToggleEvent;
 import common.events.PlayerMovedEvent;
+import javafx.application.Platform;
 import javafx.geometry.Point2D;
 
 public class FlowFieldComponent extends Component {
     private AI ai;
-    private FlowFieldGrid flowFieldGrid = new FlowFieldGrid(30, 30, 40);
+
+    // TODO: I need to make this variable not hardcoded at some point. Add some kind of event for when player is added and listen for that event.
+    private Point2D startPosition = new Point2D(100, 100);
+
+    private FlowFieldGrid flowFieldGrid = new FlowFieldGrid(16, 10, 100, startPosition);
     private DebugOverlay debugOverlay;
 
     //This is for optimizing a bit since my methods lagged the game. Will ensure we don't call the PLAYER_MOVED every frame but instead everytime player has moved enough
-    private final double UPDATE_THRESHOLD = 40;
     private Point2D lastUpdatePosition = new Point2D(0,0);
 
     @Override
@@ -27,19 +31,24 @@ public class FlowFieldComponent extends Component {
         debugOverlay.getArrowCanvas().setVisible(false);
 
         //This is the toggle handler
-        FXGL.getEventBus().addEventHandler(DebugToggleEvent.ANY, event -> toggleDebugOverlay());
+        FXGL.getEventBus().addEventHandler(DebugToggleEvent.ANY, event -> {
+            Platform.runLater(this::toggleDebugOverlay);
+        });
 
         //This is the handler for everytime player moves
         FXGL.getEventBus().addEventHandler(PlayerMovedEvent.PLAYER_MOVED, event -> {
             Point2D playerPosition = event.getNewPosition();
 
-            if(lastUpdatePosition.distance(playerPosition) > UPDATE_THRESHOLD) {
+            if(lastUpdatePosition.distance(playerPosition) > flowFieldGrid.getCellSize()) {
                 lastUpdatePosition = playerPosition;
-                flowFieldGrid.updateField(playerPosition);
 
-                if(debugOverlay.getIsVisible()) {
-                    debugOverlay.refreshArrows();
-                }
+                Platform.runLater(() -> {
+                    flowFieldGrid.updateField(playerPosition);
+
+                    if(debugOverlay.getIsVisible()) {
+                        debugOverlay.refreshArrows();
+                    }
+                });
             }
 
         });
@@ -51,6 +60,8 @@ public class FlowFieldComponent extends Component {
     }
 
     public void toggleDebugOverlay() {
-        debugOverlay.toggleVisibility();
+        Platform.runLater(() -> {
+            debugOverlay.toggleVisibility();
+        });
     }
 }

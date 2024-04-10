@@ -4,7 +4,9 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
+import com.almasb.fxgl.physics.PhysicsComponent;
 import common.ai.AI_SPI;
+import common.data.EntityType;
 
 import static com.almasb.fxgl.dsl.FXGLForKtKt.entityBuilder;
 
@@ -13,8 +15,8 @@ public class FlowFieldFactory implements EntityFactory, AI_SPI {
     @Spawns("flowfield")
     public Entity createAI(SpawnData spawnData) {
         return entityBuilder(spawnData)
-                //.type(BoatToEnglandType.FLOW_FIELD)
+                .type(EntityType.FLOW_FIELD)
                 .with(new FlowFieldComponent())
-                .build();
+                .buildAndAttach();
     }
 }

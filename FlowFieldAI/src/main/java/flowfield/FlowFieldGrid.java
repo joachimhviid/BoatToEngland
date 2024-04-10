@@ -8,12 +8,17 @@ public class FlowFieldGrid {
     private int width;
     private int height;
     private double cellSize;
+    private Point2D origin;
 
-    public FlowFieldGrid(int width, int height, double cellSize) {
+    public FlowFieldGrid(int width, int height, double cellSize, Point2D playerStartPosition) {
         this.width = width;
         this.height = height;
         this.grid = new Cell[height][width];
         this.cellSize = cellSize;
+        this.origin = new Point2D(
+                playerStartPosition.getX() - (width * cellSize) / 2,
+                playerStartPosition.getY() - (height * cellSize) / 2
+        );
         initializeGrid();
     }
 
@@ -33,11 +38,18 @@ public class FlowFieldGrid {
                 Point2D cellPosition = new Point2D(
                         (x + 0.5) * cellSize,
                         (y + 0.5) * cellSize
-                );
+                ).add(origin);
                 Point2D direction = playerPosition.subtract(cellPosition).normalize();
                 cell.setDirection(direction);
             }
         }
+    }
+
+    public void centerGridOnPlayer(Point2D playerPosition) {
+        double offSetX = playerPosition.getX() - (this.width * this.cellSize / 2);
+        double offSetY = playerPosition.getY() - (this.height * this.cellSize / 2);
+
+        this.origin = new Point2D(offSetX, offSetY);
     }
 
     public int getHeight() {
@@ -62,5 +74,9 @@ public class FlowFieldGrid {
 
     public double getCellSize() {
         return this.cellSize;
+    }
+
+    public Point2D getOrigin() {
+        return origin;
     }
 }

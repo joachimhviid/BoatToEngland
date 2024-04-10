@@ -1,5 +1,5 @@
-package data;
+package common.data;
 
 public enum EntityType {
-    PLAYER, ENEMY, OBSTACLE
+    PLAYER, ENEMY, OBSTACLE, FLOW_FIELD
 }

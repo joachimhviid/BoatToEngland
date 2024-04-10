@@ -63,15 +63,16 @@ public class DebugOverlay {
         Point2D direction = cell.getDirection().normalize();
         double scale = 1.7;
 
-        double centerX = x * cellSize + cellSize * 0.5;
-        double centerY = y * cellSize + cellSize * 0.5;
+        double worldX = x * cellSize + grid.getOrigin().getX();
+        double worldY = y * cellSize + grid.getOrigin().getY();
+
+        double centerX = worldX + cellSize * 0.5;
+        double centerY = worldY + cellSize * 0.5;
 
         double arrowLength = cellSize * scale * 0.2;
         double endX = centerX + direction.getX() * arrowLength;
         double endY = centerY + direction.getY() * arrowLength;
 
-        arrowGC.setLineWidth(2);
-        arrowGC.setStroke(Color.GRAY);
         arrowGC.strokeLine(centerX, centerY, endX, endY);
 
         double arrowHeadSize = cellSize * scale * 0.1;
@@ -86,12 +87,15 @@ public class DebugOverlay {
         double x3 = endX + arrowHeadSize * Math.cos(angle);
         double y3 = endY + arrowHeadSize * Math.sin(angle);
 
-        arrowGC.setFill(Color.GRAY);
         arrowGC.fillPolygon(new double[]{x1, x2, x3}, new double[]{y1, y2, y3}, 3);
     }
 
     public void refreshArrows() {
         arrowGC.clearRect(0, 0, arrowCanvas.getWidth(), arrowCanvas.getHeight());
+
+        arrowGC.setLineWidth(2);
+        arrowGC.setStroke(Color.GRAY);
+        arrowGC.setFill(Color.GRAY);
 
         for(int y = 0; y < grid.getHeight(); y++) {
             for(int x = 0; x < grid.getWidth(); x++) {

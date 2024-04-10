@@ -8,5 +8,6 @@ public class DebugToggleEvent extends Event {
 
     public DebugToggleEvent() {
         super(ANY);
+        System.out.println("DEBUGGING!");
     }
 }

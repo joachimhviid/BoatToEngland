@@ -22,6 +22,10 @@ public class AnimationComponent extends Component {
     private AnimatedTexture texture;
     private AnimationChannel animIdle, animRun;
 
+    //FOR TESTING
+    private Point2D lastEventPosition = new Point2D(0,0);
+    private final double CAP = 100;
+
     public AnimationComponent() {
         Image playerReady = FXGL.image("player_ready.png");
         Image playerRun = FXGL.image("player_run.png");
@@ -53,9 +57,19 @@ public class AnimationComponent extends Component {
             if (velocity.length() < 1) {
                 velocity = velocity.mul(0);
             }
+
+            Point2D currentPosition = new Point2D(entity.getX(), entity.getY());
+
+            if(lastEventPosition.distance(currentPosition) > CAP) {
+                lastEventPosition = currentPosition;
+
+                FXGL.getEventBus().fireEvent(new PlayerMovedEvent(new Point2D(entity.getX(), entity.getY())));
+            }
+
         } else if (texture.getAnimationChannel() == animRun) {
             texture.loopAnimationChannel(animIdle);
         }
+
     }
 
     private void normalizeSpeed() {
@@ -67,23 +81,23 @@ public class AnimationComponent extends Component {
     public void moveRight() {
         velocity = new Vec2(speed, velocity.y);
         entity.setScaleX(1);
-        FXGL.getEventBus().fireEvent(new PlayerMovedEvent(new Point2D(entity.getX(), entity.getY())));
+        //
     }
 
     public void moveLeft() {
         velocity = new Vec2(-speed, velocity.y);
         entity.setScaleX(-1);
-        FXGL.getEventBus().fireEvent(new PlayerMovedEvent(new Point2D(entity.getX(), entity.getY())));
+//        FXGL.getEventBus().fireEvent(new PlayerMovedEvent(new Point2D(entity.getX(), entity.getY())));
     }
 
     public void moveUp() {
         velocity = new Vec2(velocity.x, speed);
-        FXGL.getEventBus().fireEvent(new PlayerMovedEvent(new Point2D(entity.getX(), entity.getY())));
+//        FXGL.getEventBus().fireEvent(new PlayerMovedEvent(new Point2D(entity.getX(), entity.getY())));
     }
 
     public void moveDown() {
         velocity = new Vec2(velocity.x, -speed);
-        FXGL.getEventBus().fireEvent(new PlayerMovedEvent(new Point2D(entity.getX(), entity.getY())));
+//        FXGL.getEventBus().fireEvent(new PlayerMovedEvent(new Point2D(entity.getX(), entity.getY())));
 
     }
 }

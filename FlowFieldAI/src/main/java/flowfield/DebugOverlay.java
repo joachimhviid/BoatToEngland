@@ -88,6 +88,8 @@ public class DebugOverlay {
         double y3 = endY + arrowHeadSize * Math.sin(angle);
 
         arrowGC.fillPolygon(new double[]{x1, x2, x3}, new double[]{y1, y2, y3}, 3);
+
+        System.out.println("Drawing arrows 2");
     }
 
     public void refreshArrows() {
@@ -103,6 +105,8 @@ public class DebugOverlay {
                 drawArrowForCell(cell, x, y);
             }
         }
+
+        System.out.println("Drawing Arrows");
     }
 
     public boolean getIsVisible() {

@@ -96,13 +96,13 @@ public class GameLauncher extends GameApplication {
             factory.loadMap();
         });
 
-        List<EnemySPI> enemyFactories = ServiceLoader.load(EnemySPI.class)
-                .stream()
-                .map(ServiceLoader.Provider::get)
-                .toList();
-
-        enemyFactories.forEach(enemyFactory -> FXGL.getGameWorld().addEntityFactory((EntityFactory) enemyFactory));
-        enemyFactories.forEach(enemyFactory -> FXGL.getGameWorld().spawn("enemy"));
+//        List<EnemySPI> enemyFactories = ServiceLoader.load(EnemySPI.class)
+//                .stream()
+//                .map(ServiceLoader.Provider::get)
+//                .toList();
+//
+//        enemyFactories.forEach(enemyFactory -> FXGL.getGameWorld().addEntityFactory((EntityFactory) enemyFactory));
+//        enemyFactories.forEach(enemyFactory -> FXGL.getGameWorld().spawn("enemy"));
 
         ServiceLoader<AI_SPI> aiFactory = ServiceLoader.load(AI_SPI.class);
         aiFactory.stream().forEach(aiSpiProvider -> {

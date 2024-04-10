@@ -29,7 +29,10 @@ public class FlowFieldComponent extends Component {
 
         debugOverlay.getBoxCanvas().setVisible(false);
         debugOverlay.getArrowCanvas().setVisible(false);
+    }
 
+    @Override
+    public void onUpdate(double tpf) {
         //This is the toggle handler
         FXGL.getEventBus().addEventHandler(DebugToggleEvent.ANY, event -> {
             Platform.runLater(this::toggleDebugOverlay);
@@ -39,24 +42,18 @@ public class FlowFieldComponent extends Component {
         FXGL.getEventBus().addEventHandler(PlayerMovedEvent.PLAYER_MOVED, event -> {
             Point2D playerPosition = event.getNewPosition();
 
-            if(lastUpdatePosition.distance(playerPosition) > flowFieldGrid.getCellSize()) {
+            if (lastUpdatePosition.distance(playerPosition) > flowFieldGrid.getCellSize()) {
                 lastUpdatePosition = playerPosition;
+                flowFieldGrid.updateField(playerPosition);
 
-                Platform.runLater(() -> {
-                    flowFieldGrid.updateField(playerPosition);
+                if (debugOverlay.getIsVisible()) {
+                    System.out.println("Updating Arrows!");
+                    debugOverlay.refreshArrows();
+                }
 
-                    if(debugOverlay.getIsVisible()) {
-                        debugOverlay.refreshArrows();
-                    }
-                });
             }
 
         });
-
-    }
-
-    @Override
-    public void onUpdate(double tpf) {
     }
 
     public void toggleDebugOverlay() {

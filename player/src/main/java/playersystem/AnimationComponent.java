@@ -24,14 +24,17 @@ public class AnimationComponent extends Component {
     private AnimationChannel animIdle, animRun;
 
     public AnimationComponent() {
-        Image playerReady = FXGL.image("player_ready.png");
-        Image playerRun = FXGL.image("player_run.png");
-//        Image playerReady1 = FXGL.image(new URL("/player/assets/player_ready.png"));
-        // TODO: Figure out a better way to resize images maybe based on application window size
-        animIdle = new AnimationChannel(ImagesKt.resize(playerReady, (int) playerReady.getWidth() * scale, (int) playerReady.getHeight() * scale), 6, 50 * scale, 48 * scale, Duration.seconds(1), 0, 5);
-        animRun = new AnimationChannel(ImagesKt.resize(playerRun, (int) playerRun.getWidth() * scale, (int) playerRun.getHeight() * scale), 6, 50 * scale, 48 * scale, Duration.seconds(1), 0, 5);
+        URL playerReadyUrl = url("textures/player_ready.png");
+        if (playerReadyUrl == null) {
+            throw new RuntimeException("Player ready image not found: " + "textures/player_ready.png");
+        } else {
+            Image playerReady = FXGL.image(playerReadyUrl);
+            Image playerRun = FXGL.image(url("textures/player_run.png"));
+            animIdle = new AnimationChannel(ImagesKt.resize(playerReady, (int) playerReady.getWidth() * scale, (int) playerReady.getHeight() * scale), 6, 50 * scale, 48 * scale, Duration.seconds(1), 0, 5);
+            animRun = new AnimationChannel(ImagesKt.resize(playerRun, (int) playerRun.getWidth() * scale, (int) playerRun.getHeight() * scale), 6, 50 * scale, 48 * scale, Duration.seconds(1), 0, 5);
 
-        texture = new AnimatedTexture(animIdle);
+            texture = new AnimatedTexture(animIdle);
+        }
     }
 
     @Override
@@ -82,5 +85,13 @@ public class AnimationComponent extends Component {
 
     public void moveDown() {
         velocity = new Vec2(velocity.x, -speed);
+    }
+
+    private String getUrlPrefixForAssets() {
+        return '/' + getClass().getModule().getName() + "/assets/";
+    }
+
+    private URL url(String path) {
+        return getClass().getResource(getUrlPrefixForAssets() + path);
     }
 }

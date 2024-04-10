@@ -32,7 +32,6 @@ public class WorldFactory implements EntityFactory, MapSPI {
         if (levelUrl == null) {
             throw new RuntimeException("Level not found: " + "levels/boat-to-england-map-4x.tmx");
         } else {
-            System.out.println("Level found: " + levelUrl);
             TMXLevelLoader levelLoader = new TMXLevelLoader();
             Level level = levelLoader.load(levelUrl, FXGL.getGameWorld());
             FXGL.getGameWorld().setLevel(level);

@@ -11,7 +11,6 @@ import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
 import data.EntityType;
 import javafx.scene.input.KeyCode;
-import playersystem.PlayerFactory;
 import services.MapSPI;
 import services.PlayerSPI;
 
@@ -50,9 +49,9 @@ public class GameLauncher extends GameApplication {
     @Override
     protected void initGame() {
         List<MapSPI> worldFactories = ServiceLoader.load(MapSPI.class)
-            .stream()
-            .map(ServiceLoader.Provider::get)
-            .toList();
+                .stream()
+                .map(ServiceLoader.Provider::get)
+                .toList();
 
         worldFactories.forEach(factory -> {
             System.out.println("Found world factory: " + factory);
@@ -61,9 +60,9 @@ public class GameLauncher extends GameApplication {
         });
 
         List<PlayerSPI> playerFactories = ServiceLoader.load(PlayerSPI.class)
-            .stream()
-            .map(ServiceLoader.Provider::get)
-            .toList();
+                .stream()
+                .map(ServiceLoader.Provider::get)
+                .toList();
 
         playerFactories.forEach(factory -> {
             FXGL.getGameWorld().addEntityFactory((EntityFactory) factory);
@@ -71,11 +70,14 @@ public class GameLauncher extends GameApplication {
             factory.loadInput(player);
         });
 
-    // SpawnData = playerSpawnData; Optionally spawn data passed into newPlayer?
+        // SpawnData = playerSpawnData; Optionally spawn data passed into newPlayer?
 
         Viewport viewport = FXGL.getGameScene().getViewport();
         viewport.setBounds(0, 0, 6400, 6400);
-        viewport.bindToEntity(player, viewport.getWidth() / 2 - (double) (4 * 50) / 2, viewport.getHeight() / 2 - (double) (4 * 48) / 2);
+
+        if (player != null) {
+            viewport.bindToEntity(player, viewport.getWidth() / 2 - (double) (4 * 50) / 2, viewport.getHeight() / 2 - (double) (4 * 48) / 2);
+        }
     }
 
     @Override

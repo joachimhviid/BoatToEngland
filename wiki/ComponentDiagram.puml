@@ -12,13 +12,13 @@
 [Common]
 
 
-[Collision] -- [GameEngine]
+[Collision] ..> [GameEngine]
 [Player] -(0- [Weapon]
-[Common] -- [Player]
-[Common] -- [Enemy]
-[Common] -- [Map]
+[Common] <.. [Player]
+[Common] <.. [Enemy]
+[Common] <.. [Map]
 [GameEngine] -(0- [Shop]
-[Common] -- [GameEngine]
+[Common] <.. [GameEngine]
 [Enemy] -0)- [EnemyGeneration]
 [GameEngine] -(0- [Enemy]
 [GameEngine] -(0- [Player]

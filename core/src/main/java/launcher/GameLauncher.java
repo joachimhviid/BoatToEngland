@@ -78,6 +78,9 @@ public class GameLauncher extends GameApplication {
         if (player != null) {
             viewport.bindToEntity(player, viewport.getWidth() / 2 - (double) (4 * 50) / 2, viewport.getHeight() / 2 - (double) (4 * 48) / 2);
         }
+        FXGL.play("background_music.mp3");
+        System.out.println("Background music is playing");
+
     }
 
     @Override
@@ -95,8 +98,8 @@ public class GameLauncher extends GameApplication {
     @Override
     protected void initUI() {
         System.out.println("UI initialized");
-        // debugText = new Text();
-        // FXGL.addUINode(debugText, 100, 100);
+//        Text debugText = new Text("Some debug text");
+//        FXGL.addUINode(debugText, 50, 50);
     }
 
     @Override

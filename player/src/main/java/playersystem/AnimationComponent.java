@@ -33,6 +33,8 @@ public class AnimationComponent extends Component {
             animIdle = new AnimationChannel(ImagesKt.resize(playerReady, (int) playerReady.getWidth() * scale, (int) playerReady.getHeight() * scale), 6, 50 * scale, 48 * scale, Duration.seconds(1), 0, 5);
             animRun = new AnimationChannel(ImagesKt.resize(playerRun, (int) playerRun.getWidth() * scale, (int) playerRun.getHeight() * scale), 6, 50 * scale, 48 * scale, Duration.seconds(1), 0, 5);
 
+
+
             texture = new AnimatedTexture(animIdle);
         }
     }
@@ -86,6 +88,11 @@ public class AnimationComponent extends Component {
     public void moveDown() {
         velocity = new Vec2(velocity.x, -speed);
     }
+
+    public void shout() {
+
+    }
+
 
     private String getUrlPrefixForAssets() {
         return '/' + getClass().getModule().getName() + "/assets/";

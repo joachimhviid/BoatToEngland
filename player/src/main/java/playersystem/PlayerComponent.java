@@ -41,6 +41,16 @@ public class PlayerComponent extends Component {
             }
         }, KeyCode.S);
 
+        // Optional
+        input.addAction(new UserAction("Shout") {
+            protected void onAction() {
+                entity.getComponent(AnimationComponent.class).shout();
+                FXGL.play("shout1.wav");
+                //Note: sounds files must be put under /assets/sounds in the core resources
+            }
+        }, KeyCode.F);
+
+
         // TODO: Add attack move
 //        input.addAction(new UserAction("Attack Move") {
 //            protected void onAction() {
@@ -50,7 +60,6 @@ public class PlayerComponent extends Component {
 
 
     }
-
 
 
     public Weapon getWeapon() {

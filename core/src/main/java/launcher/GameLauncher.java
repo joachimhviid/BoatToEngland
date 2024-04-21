@@ -70,8 +70,6 @@ public class GameLauncher extends GameApplication {
             factory.loadInput(player);
         });
 
-        // SpawnData = playerSpawnData; Optionally spawn data passed into newPlayer?
-
         Viewport viewport = FXGL.getGameScene().getViewport();
         viewport.setBounds(0, 0, 6400, 6400);
 

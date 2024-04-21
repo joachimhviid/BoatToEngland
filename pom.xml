@@ -16,6 +16,7 @@
         <module>player</module>
         <module>enemy</module>
         <module>weapon</module>
+        <module>CommonWeapon</module>
     </modules>
 
     <properties>

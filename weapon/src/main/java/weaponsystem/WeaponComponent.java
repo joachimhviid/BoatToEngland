@@ -20,22 +20,17 @@ public class WeaponComponent extends Component {
     private PhysicsComponent physicsComponent;
 
 
-    public WeaponComponent() {
-    }
-
     public WeaponComponent(Weapon weapon, Point2D direction) {
+
         this.weapon = weapon;
         this.direction = direction;
-        System.out.println("created const");
-        System.out.println(direction);
+
+        System.out.println("Weapon direction: " + direction);
     }
 
     @Override
     public void onAdded() {
-        System.out.println("spawned a weapon");
 
-        //TODO: Add axe sound effect, not important!
-        FXGL.play("throw_sound.wav");
     }
 
     @Override

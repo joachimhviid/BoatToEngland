@@ -25,7 +25,7 @@ public class WeaponAnimationComponent extends Component {
             throw new RuntimeException("axeURL not found: " + axeURL);
         } else {
             Image axeIMG = FXGL.image(axeURL);
-            animIdle = new AnimationChannel(ImagesKt.resize(axeIMG, (int) axeIMG.getWidth() * scale, (int) axeIMG.getHeight() * scale), 6, 50 * scale, 48 * scale, Duration.seconds(0.3), 0, 5);
+            animIdle = new AnimationChannel(ImagesKt.resize(axeIMG, (int) axeIMG.getWidth() * scale, (int) axeIMG.getHeight() * scale), 6, 50 * scale, 48 * scale, Duration.seconds(0.4), 0, 5);
 
             texture = new AnimatedTexture(animIdle);
         }

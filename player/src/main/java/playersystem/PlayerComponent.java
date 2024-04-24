@@ -1,22 +1,30 @@
 package playersystem;
 
-import com.almasb.fxgl.core.math.Vec2;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
+import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import weaponsystem.Weapon;
-import weaponsystem.WeaponComponent;
 
 public class PlayerComponent extends Component {
+
 
     int health;
     int damage;
 
     int movementSpeed;
     Weapon weapon;
+
+    boolean autoFireEnabled;
+    //TODO:
+    //Implement autoFireInterval get firerate from weapon
+    private double autoFireInterval = 0.7; // Interval between autofire in seconds
+    private double autoFireTimer = 0.0;
+    private Point2D currentPlayerVelocity = new Point2D(0, 0);
+    private Point2D oldPlayerVelocity = new Point2D(0, 0);
 
 
     public PlayerComponent() {
@@ -45,10 +53,13 @@ public class PlayerComponent extends Component {
         }, KeyCode.S);
         input.addAction(new UserAction("Attack") {
             protected void onActionBegin() {
-//                entity.getComponent(WeaponComponent.class).weaponAttack(entity);
-                Vec2 playervelocity = entity.getComponent(AnimationComponent.class).getVelocity();
-                FXGL.getGameWorld().spawn("weapon", new SpawnData(entity.getCenter())
-                        .put("direction", playervelocity.toPoint2D()));
+
+                if (autoFireEnabled) {
+                    autoFireEnabled = false;
+                } else if (!autoFireEnabled) {
+                    autoFireTimer = 0.5;
+                    autoFireEnabled = true;
+                }
 
             }
         }, KeyCode.SPACE);
@@ -63,6 +74,33 @@ public class PlayerComponent extends Component {
         }, KeyCode.F);
 
 
+    }
+
+
+    @Override
+    public void onUpdate(double tpf) {
+
+        if (autoFireEnabled) {
+            autoFireTimer += tpf;
+            if (autoFireTimer >= autoFireInterval) {
+                autoFireTimer = 0.0;
+                attack();
+            }
+        }
+    }
+
+    private void attack() {
+
+        currentPlayerVelocity = entity.getComponent(AnimationComponent.class).getVelocity().toPoint2D();
+        if (!currentPlayerVelocity.equals(Point2D.ZERO)) {
+            oldPlayerVelocity = currentPlayerVelocity;
+        }
+
+        Point2D weaponSpawnData = new Point2D(entity.getX() + 60, entity.getY() + 60);
+        FXGL.getGameWorld().spawn("weapon", new SpawnData(weaponSpawnData)
+                .put("direction", oldPlayerVelocity));
+
+        // entity.getComponent(WeaponComponent.class).weaponAttack();
     }
 
 

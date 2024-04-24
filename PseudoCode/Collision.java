@@ -9,6 +9,7 @@ Public class Collision {
         }
     }
     void sortedCollision() {
+        sortedByLeftX(entities);
         for (int i = 0; i < entities.size(); i++) {
             for (int j = i + 1; j < entities.size(); j++) {
                 if (entities.get(i).getBoundingBox().getMaxX() < entities.get(j).getBoundingBox().getMinX()) {

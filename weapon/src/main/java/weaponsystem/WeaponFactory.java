@@ -1,6 +1,7 @@
 package weaponsystem;
 
 import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.dsl.components.KeepOnScreenComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
@@ -20,12 +21,21 @@ import static com.almasb.fxgl.dsl.FXGLForKtKt.entityBuilder;
 
 
 public class WeaponFactory implements EntityFactory, WeaponSPI {
+
     @Override
     @Spawns("weapon")
     public Entity createWeapon(SpawnData data) {
         Weapon axe = new Weapon(0.5, 5);
+
+        PhysicsComponent physics = new PhysicsComponent();
+        physics.setBodyType(BodyType.DYNAMIC);
+        Point2D dir = data.get("direction");
+        System.out.println(dir);
         return entityBuilder(data)
-                .with(new WeaponComponent(axe))
+                .with(physics)
+                .bbox(new HitBox(BoundingShape.box(25,25)))
+//                .with(new KeepOnScreenComponent())
+                .with(new WeaponComponent(axe, dir))
                 .with(new WeaponAnimationComponent())
 //                for testing
 //                .view(new Rectangle(30, 30, Color.BLUE))

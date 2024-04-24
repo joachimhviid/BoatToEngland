@@ -1,6 +1,8 @@
 package playersystem;
 
+import com.almasb.fxgl.core.math.Vec2;
 import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
@@ -42,8 +44,10 @@ public class PlayerComponent extends Component {
             }
         }, KeyCode.S);
         input.addAction(new UserAction("Attack") {
-            protected void onAction() {
-                entity.getComponent(WeaponComponent.class).playerAttack();
+            protected void onActionBegin() {
+//                entity.getComponent(WeaponComponent.class).weaponAttack(entity);
+                FXGL.getGameWorld().spawn("weapon", new SpawnData(entity.getCenter())
+                        .put("direction", Vec2.fromAngle(entity.getRotation()).toPoint2D()));
 
             }
         }, KeyCode.SPACE);

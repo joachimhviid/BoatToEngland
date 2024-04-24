@@ -34,7 +34,7 @@ public class PlayerFactory implements EntityFactory, PlayerSPI {
                 .with(new PlayerComponent())
                 .with(new CollidableComponent(true))
                 .with(new AnimationComponent())
-                .with(new WeaponComponent())
+//                .with(new WeaponComponent())
                 .buildAndAttach();
     }
 

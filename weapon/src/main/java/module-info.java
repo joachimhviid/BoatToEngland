@@ -4,5 +4,6 @@ module weapon {
     requires common;
     requires com.almasb.fxgl.all;
     requires com.almasb.fxgl.core;
+    opens weaponsystem to com.almasb.fxgl.core;
     provides services.WeaponSPI with weaponsystem.WeaponFactory;
 }

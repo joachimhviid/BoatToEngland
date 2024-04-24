@@ -15,7 +15,7 @@ import java.util.ServiceLoader;
 public class WeaponComponent extends Component {
     private Weapon weapon;
 
-    private double speed = 180;
+    private double speed = 120;
     private Point2D direction = Point2D.ZERO;
     private PhysicsComponent physicsComponent;
 
@@ -35,11 +35,14 @@ public class WeaponComponent extends Component {
         System.out.println("spawned a weapon");
 
         //TODO: Add axe sound effect, not important!
-        //      FXGL.play();
+        FXGL.play("throw_sound.wav");
     }
 
     @Override
     public void onUpdate(double tpf) {
+
+        physicsComponent.setLinearVelocity(direction.getX() * speed, -direction.getY() * speed);
+//        physicsComponent.setLinearVelocity(direction.multiply(speed));
 
 //        Old enemy movement
 //        double x = entity.getX();
@@ -67,7 +70,6 @@ public class WeaponComponent extends Component {
 //            speedY = Math.abs(speedY);
 //        }
 
-        physicsComponent.setLinearVelocity(direction.multiply(speed));
 
     }
 
@@ -79,7 +81,7 @@ public class WeaponComponent extends Component {
 
 //        weaponFactories.forEach(WeaponFactory -> {
         FXGL.getGameWorld().spawn("weapon", new SpawnData(player.getCenter().multiply(4))
-                        .put("direction", Vec2.fromAngle(player.getRotation() - 90).toPoint2D()));
+                .put("direction", Vec2.fromAngle(player.getRotation() - 90).toPoint2D()));
 //        });
         System.out.println("Weapon spawned");
     }

@@ -53,7 +53,7 @@ public class PlayerComponent extends Component {
             }
         }, KeyCode.SPACE);
 
-        // Optional
+
         input.addAction(new UserAction("Shout") {
             protected void onActionBegin() {
                 entity.getComponent(AnimationComponent.class).shout();
@@ -61,14 +61,6 @@ public class PlayerComponent extends Component {
                 //Note: sounds files must be put under /assets/sounds in the core resources
             }
         }, KeyCode.F);
-
-
-        // TODO: Add attack move
-//        input.addAction(new UserAction("Attack Move") {
-//            protected void onAction() {
-//                entity.getComponent(AnimationComponent.class).moveDown();
-//            }
-//        }, KeyCode.Å);
 
 
     }

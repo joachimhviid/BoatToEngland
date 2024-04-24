@@ -30,32 +30,16 @@ public class WeaponFactory implements EntityFactory, WeaponSPI {
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
         Point2D dir = data.get("direction");
+        // Dir test
         System.out.println(dir);
+
         return entityBuilder(data)
+                .type(EntityType.WEAPON)
                 .with(physics)
                 .bbox(new HitBox(BoundingShape.box(25,25)))
                 .with(new WeaponComponent(axe, dir))
                 .with(new WeaponAnimationComponent())
-//                .with(new KeepOnScreenComponent())
-//                for testing
-//                .view(new Rectangle(30, 30, Color.BLUE))
                 .build();
-
-       /*
-        PhysicsComponent physics = new PhysicsComponent();
-
-        physics.setBodyType(BodyType.DYNAMIC);
-        HitBox box = new HitBox(new Point2D((double) (4 * 50) / 4, (double) (4 * 48) / 5), BoundingShape.box(2 * 50, 3 * 48));
-        return FXGL.entityBuilder(data)
-                .type(EntityType.WEAPON)
-                .with(physics)
-                .bbox(box)
-                .with(new WeaponComponent(axe))
-                .with(new CollidableComponent(true))
-                .view(new Rectangle(20, 20, Color.BLUE))
-                .buildAndAttach();
-
-        */
 
     }
 

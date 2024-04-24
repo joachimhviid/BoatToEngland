@@ -14,17 +14,15 @@
 
 
 [Collision] ..> [GameEngine]
-[Player] <.. [Weapon]
-[Common] <.. [Enemy]
+[Player] -(0- [Weapon] : "weaponSPI"
 [Common] <.. [Player]
-[GameEngine] <.. [Map]
-[GameEngine] -(0- [Shop] : "ShopSPI"
+[Common] <.. [Enemy]
+[Common] <.. [Map]
+[GameEngine] -(0- [Shop] : "shopSPI"
 [Common] <.. [GameEngine]
-[Enemy] -0)- [EnemyGeneration] : "EnemySPI"
-[EnemySPI] <.. [Enemy]
-[GameEngine] <.. [Enemy]
-[GameEngine] <.. [Player]
-[EnemyGeneration] ..> [GameEngine] : ""
+[Enemy] -0)- [EnemyGeneration] :"enemyFactorySPI"
+[GameEngine] -(0- [Enemy] : "enemySPI"
+[GameEngine] -(0- [Player] : "playerSPI"
 /'note bottom of [EnemyGeneration]: Which one eats which
 note right of [Common]: Are the lolipop notaions pointing the right way? \n
 '/

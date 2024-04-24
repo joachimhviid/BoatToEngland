@@ -34,9 +34,9 @@ public class WeaponFactory implements EntityFactory, WeaponSPI {
         return entityBuilder(data)
                 .with(physics)
                 .bbox(new HitBox(BoundingShape.box(25,25)))
-//                .with(new KeepOnScreenComponent())
                 .with(new WeaponComponent(axe, dir))
                 .with(new WeaponAnimationComponent())
+//                .with(new KeepOnScreenComponent())
 //                for testing
 //                .view(new Rectangle(30, 30, Color.BLUE))
                 .build();

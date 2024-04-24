@@ -15,7 +15,7 @@ import java.util.ServiceLoader;
 public class WeaponComponent extends Component {
     private Weapon weapon;
 
-    private double speed = 60;
+    private double speed = 180;
     private Point2D direction = Point2D.ZERO;
     private PhysicsComponent physicsComponent;
 
@@ -26,6 +26,8 @@ public class WeaponComponent extends Component {
     public WeaponComponent(Weapon weapon, Point2D direction) {
         this.weapon = weapon;
         this.direction = direction;
+        System.out.println("created const");
+        System.out.println(direction);
     }
 
     @Override

@@ -46,15 +46,16 @@ public class PlayerComponent extends Component {
         input.addAction(new UserAction("Attack") {
             protected void onActionBegin() {
 //                entity.getComponent(WeaponComponent.class).weaponAttack(entity);
+                Vec2 playervelocity = entity.getComponent(AnimationComponent.class).getVelocity();
                 FXGL.getGameWorld().spawn("weapon", new SpawnData(entity.getCenter())
-                        .put("direction", Vec2.fromAngle(entity.getRotation()).toPoint2D()));
+                        .put("direction", playervelocity.toPoint2D()));
 
             }
         }, KeyCode.SPACE);
 
         // Optional
         input.addAction(new UserAction("Shout") {
-            protected void onAction() {
+            protected void onActionBegin() {
                 entity.getComponent(AnimationComponent.class).shout();
                 FXGL.play("shout1.wav");
                 //Note: sounds files must be put under /assets/sounds in the core resources

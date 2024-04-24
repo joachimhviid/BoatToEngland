@@ -16,6 +16,7 @@ import java.net.URL;
 public class AnimationComponent extends Component {
     private final double speed = 300;
     private Vec2 velocity = new Vec2(0, 0);
+    private Vec2 direction = new Vec2(0, 0);
     private final int scale = 4;
 
     private PhysicsComponent physics;
@@ -48,6 +49,7 @@ public class AnimationComponent extends Component {
     @Override
     public void onUpdate(double tpf) {
         normalizeSpeed();
+        direction = velocity.mul(tpf * speed);
         physics.setBodyLinearVelocity(velocity.mul(tpf * speed));
 
         if (physics.isMoving()) {
@@ -93,6 +95,9 @@ public class AnimationComponent extends Component {
 
     }
 
+    public Vec2 getVelocity() {
+        return direction;
+    }
 
     private String getUrlPrefixForAssets() {
         return '/' + getClass().getModule().getName() + "/assets/";

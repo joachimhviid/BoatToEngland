@@ -13,6 +13,7 @@ import data.EntityType;
 import javafx.scene.input.KeyCode;
 import services.MapSPI;
 import services.PlayerSPI;
+import services.WeaponSPI;
 
 import java.util.List;
 import java.util.ServiceLoader;
@@ -69,6 +70,13 @@ public class GameLauncher extends GameApplication {
             player = FXGL.getGameWorld().spawn("player", 100, 100);
             factory.loadInput(player);
         });
+
+        List<WeaponSPI> weaponFactories = ServiceLoader.load(WeaponSPI.class)
+                .stream().map(ServiceLoader
+                        .Provider::get)
+                .toList();
+
+        weaponFactories.forEach(WeaponFactory -> FXGL.getGameWorld().addEntityFactory((EntityFactory) WeaponFactory));
 
         Viewport viewport = FXGL.getGameScene().getViewport();
         viewport.setBounds(0, 0, 6400, 6400);

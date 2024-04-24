@@ -1,7 +1,8 @@
 open module core {
     uses services.MapSPI;
   uses services.PlayerSPI;
-  requires common;
+    uses services.WeaponSPI;
+    requires common;
   requires com.almasb.fxgl.all;
 
     exports launcher to com.almasb.fxgl.core;

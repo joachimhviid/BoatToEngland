@@ -6,6 +6,7 @@ import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import javafx.scene.input.KeyCode;
 import weaponsystem.Weapon;
+import weaponsystem.WeaponComponent;
 
 public class PlayerComponent extends Component {
 
@@ -40,6 +41,12 @@ public class PlayerComponent extends Component {
                 entity.getComponent(AnimationComponent.class).moveDown();
             }
         }, KeyCode.S);
+        input.addAction(new UserAction("Attack") {
+            protected void onAction() {
+                entity.getComponent(WeaponComponent.class).playerAttack();
+
+            }
+        }, KeyCode.SPACE);
 
         // Optional
         input.addAction(new UserAction("Shout") {

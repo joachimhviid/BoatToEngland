@@ -21,7 +21,6 @@ import weaponsystem.WeaponComponent;
 
 public class PlayerFactory implements EntityFactory, PlayerSPI {
 
-    // Is this right?
     @Spawns("player")
     public Entity newPlayer(SpawnData data) {
 

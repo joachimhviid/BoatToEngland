@@ -3,6 +3,7 @@ package launcher;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.Viewport;
+import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
@@ -11,6 +12,7 @@ import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
 import data.EntityType;
 import javafx.scene.input.KeyCode;
+import javafx.util.Duration;
 import services.MapSPI;
 import services.PlayerSPI;
 import services.WeaponSPI;
@@ -19,6 +21,7 @@ import java.util.List;
 import java.util.ServiceLoader;
 
 import static com.almasb.fxgl.dsl.FXGL.getPhysicsWorld;
+import static com.almasb.fxgl.dsl.FXGLForKtKt.getGameWorld;
 
 public class GameLauncher extends GameApplication {
     private Entity player;
@@ -84,8 +87,19 @@ public class GameLauncher extends GameApplication {
         if (player != null) {
             viewport.bindToEntity(player, viewport.getWidth() / 2 - (double) (4 * 50) / 2, viewport.getHeight() / 2 - (double) (4 * 48) / 2);
         }
+
+        //Music loading
         FXGL.play("background_music.mp3");
         System.out.println("Background music is playing");
+
+        //Flying axe hell - testing of autofire
+//        FXGL.getGameTimer().runAtInterval(() -> {
+//
+//            getGameWorld().spawn("weapon"
+//
+//            );
+//        }, new Duration(2000));
+
 
     }
 

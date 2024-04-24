@@ -25,8 +25,10 @@ public class WeaponFactory implements EntityFactory, WeaponSPI {
     public Entity createWeapon(SpawnData data) {
         Weapon axe = new Weapon(0.5, 5);
         return entityBuilder(data)
-                .view(new Rectangle(30, 30, Color.BLUE))
                 .with(new WeaponComponent(axe))
+                .with(new WeaponAnimationComponent())
+//                for testing
+//                .view(new Rectangle(30, 30, Color.BLUE))
                 .build();
 
        /*

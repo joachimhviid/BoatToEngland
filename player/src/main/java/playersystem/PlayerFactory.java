@@ -26,13 +26,15 @@ public class PlayerFactory implements EntityFactory, PlayerSPI {
 
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
+        CollidableComponent collidable = new CollidableComponent(true);
+        collidable.addIgnoredType(EntityType.WEAPON);
         HitBox box = new HitBox(new Point2D((double) (4 * 50) / 4, (double) (4 * 48) / 5), BoundingShape.box(2 * 50, 3 * 48));
         return FXGL.entityBuilder(data)
                 .type(EntityType.PLAYER)
                 .with(physics)
                 .bbox(box)
                 .with(new PlayerComponent())
-                .with(new CollidableComponent(true))
+                .with(collidable)
                 .with(new AnimationComponent())
 //                .with(new WeaponComponent())
                 .buildAndAttach();

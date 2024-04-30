@@ -1,21 +1,22 @@
 package flowfield;
 
+import common.ai.IPathFinder;
 import javafx.geometry.Point2D;
 
-public class FlowFieldGrid {
+public class FlowFieldGrid implements IPathFinder {
 
     private Cell[][] grid;
     private int width;
     private int height;
     private double cellSize;
-    private Point2D origin;
+    private Point2D gridPosition;
 
     public FlowFieldGrid(int width, int height, double cellSize, Point2D playerStartPosition) {
         this.width = width;
         this.height = height;
         this.grid = new Cell[height][width];
         this.cellSize = cellSize;
-        this.origin = new Point2D(
+        this.gridPosition = new Point2D(
                 playerStartPosition.getX() - (width * cellSize) / 2,
                 playerStartPosition.getY() - (height * cellSize) / 2
         );
@@ -38,7 +39,7 @@ public class FlowFieldGrid {
                 Point2D cellPosition = new Point2D(
                         (x + 0.5) * cellSize,
                         (y + 0.5) * cellSize
-                ).add(origin);
+                ).add(gridPosition);
                 Point2D direction = playerPosition.subtract(cellPosition).normalize();
                 cell.setDirection(direction);
             }
@@ -46,10 +47,10 @@ public class FlowFieldGrid {
     }
 
     public void centerGridOnPlayer(Point2D playerPosition) {
-        double offSetX = playerPosition.getX() - (this.width * this.cellSize / 2);
-        double offSetY = playerPosition.getY() - (this.height * this.cellSize / 2);
-
-        this.origin = new Point2D(offSetX, offSetY);
+        this.gridPosition = new Point2D(
+                playerPosition.getX() - (this.width * cellSize) / 2,
+                playerPosition.getY() - (this.height * cellSize) / 2
+        );
     }
 
     public int getHeight() {
@@ -69,14 +70,25 @@ public class FlowFieldGrid {
     }
 
     public Cell getCell(int x, int y) {
-        return this.grid[y][x];
+        return this.grid[x][y];
     }
 
     public double getCellSize() {
         return this.cellSize;
     }
 
-    public Point2D getOrigin() {
-        return origin;
+    public Point2D getGridPosition() {
+        return gridPosition;
     }
+
+    @Override
+    public Point2D getPath(Point2D position) {
+        int x = (int) ((position.getX() - gridPosition.getX()) / cellSize);
+        int y = (int) ((position.getY() - gridPosition.getY()) / cellSize);
+        if (x >= 0 && x < width && y >= 0 && y < height) {
+            return grid[x][y].getDirection();
+        }
+        return Point2D.ZERO;
+    }
+
 }

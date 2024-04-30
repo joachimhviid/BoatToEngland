@@ -8,12 +8,18 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 import common.enemy.Enemy;
 import common.enemy.EnemySPI;
 import common.data.EntityType;
+import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import static com.almasb.fxgl.dsl.FXGLForKtKt.entityBuilder;
 
 public class EnemyFactory implements EntityFactory, EnemySPI {
+    private Point2D path;
+
+    public void setPath(Point2D pathDirection) {
+        this.path = pathDirection;
+    }
 
     @Override
     @Spawns("enemy")

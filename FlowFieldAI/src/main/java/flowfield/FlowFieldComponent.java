@@ -3,6 +3,7 @@ package flowfield;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
 import common.ai.AI;
+import common.ai.IPathFinder;
 import common.events.DebugToggleEvent;
 import common.events.PlayerMovedEvent;
 import javafx.application.Platform;
@@ -14,7 +15,7 @@ public class FlowFieldComponent extends Component {
     // TODO: I need to make this variable not hardcoded at some point. Add some kind of event for when player is added and listen for that event.
     private Point2D startPosition = new Point2D(100, 100);
 
-    private FlowFieldGrid flowFieldGrid = new FlowFieldGrid(16, 10, 100, startPosition);
+    private FlowFieldGrid flowFieldGrid = new FlowFieldGrid(17, 11, 100, startPosition);
     private DebugOverlay debugOverlay;
 
     //This is for optimizing a bit since my methods lagged the game. Will ensure we don't call the PLAYER_MOVED every frame but instead everytime player has moved enough
@@ -23,11 +24,7 @@ public class FlowFieldComponent extends Component {
     @Override
     public void onAdded() {
         this.debugOverlay = new DebugOverlay(flowFieldGrid);
-
-        entity.getViewComponent().addChild(debugOverlay.getBoxCanvas());
         entity.getViewComponent().addChild(debugOverlay.getArrowCanvas());
-
-        debugOverlay.getBoxCanvas().setVisible(false);
         debugOverlay.getArrowCanvas().setVisible(false);
     }
 
@@ -35,6 +32,7 @@ public class FlowFieldComponent extends Component {
     public void onUpdate(double tpf) {
         //This is the toggle handler
         FXGL.getEventBus().addEventHandler(DebugToggleEvent.ANY, event -> {
+            //Without the Platform.runLater this wont load for some reason. Kept calling the event twice, but I am not entirely sure why.
             Platform.runLater(this::toggleDebugOverlay);
         });
 
@@ -44,10 +42,12 @@ public class FlowFieldComponent extends Component {
 
             if (lastUpdatePosition.distance(playerPosition) > flowFieldGrid.getCellSize()) {
                 lastUpdatePosition = playerPosition;
+                //This updates the vector arrows
                 flowFieldGrid.updateField(playerPosition);
+                //This updates the debug layout
+                flowFieldGrid.centerGridOnPlayer(playerPosition);
 
                 if (debugOverlay.getIsVisible()) {
-                    System.out.println("Updating Arrows!");
                     debugOverlay.refreshArrows();
                 }
 
@@ -57,8 +57,6 @@ public class FlowFieldComponent extends Component {
     }
 
     public void toggleDebugOverlay() {
-        Platform.runLater(() -> {
-            debugOverlay.toggleVisibility();
-        });
+        debugOverlay.toggleVisibility();
     }
 }

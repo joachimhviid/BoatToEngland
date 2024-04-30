@@ -14,6 +14,7 @@ import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import common.ai.AI_SPI;
+import common.ai.IPathFinder;
 import common.enemy.EnemySPI;
 import common.events.DebugToggleEvent;
 import components.AnimationComponent;
@@ -96,13 +97,15 @@ public class GameLauncher extends GameApplication {
             factory.loadMap();
         });
 
-//        List<EnemySPI> enemyFactories = ServiceLoader.load(EnemySPI.class)
-//                .stream()
-//                .map(ServiceLoader.Provider::get)
-//                .toList();
-//
-//        enemyFactories.forEach(enemyFactory -> FXGL.getGameWorld().addEntityFactory((EntityFactory) enemyFactory));
-//        enemyFactories.forEach(enemyFactory -> FXGL.getGameWorld().spawn("enemy"));
+        IPathFinder pathFinder = ServiceLoader.load(IPathFinder.class).findFirst().orElseThrow();
+
+        List<EnemySPI> enemyFactories = ServiceLoader.load(EnemySPI.class)
+                .stream()
+                .map(ServiceLoader.Provider::get)
+                .toList();
+
+        enemyFactories.forEach(enemyFactory -> FXGL.getGameWorld().addEntityFactory((EntityFactory) enemyFactory));
+        enemyFactories.forEach(enemyFactory -> FXGL.getGameWorld().spawn("enemy"));
 
         ServiceLoader<AI_SPI> aiFactory = ServiceLoader.load(AI_SPI.class);
         aiFactory.stream().forEach(aiSpiProvider -> {

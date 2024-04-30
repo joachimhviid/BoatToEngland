@@ -5,4 +5,5 @@ import com.almasb.fxgl.entity.Entity;
 
 public interface EnemySPI {
     Entity createEnemy(SpawnData spawnData);
+
 }

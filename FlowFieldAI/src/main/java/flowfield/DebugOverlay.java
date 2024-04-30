@@ -1,23 +1,14 @@
 package flowfield;
 
 import javafx.geometry.Point2D;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 
 public class DebugOverlay {
     private FlowFieldGrid grid;
     private boolean isVisible = false;
     private final double cellSize;
-
-    //To help optimize the redrawing, since my first attempt lagged
-    private Canvas boxCanvas;
-    private GraphicsContext boxGC;
     private Canvas arrowCanvas;
     private GraphicsContext arrowGC;
 
@@ -27,31 +18,13 @@ public class DebugOverlay {
         double width = grid.getWidth() * cellSize;
         double height = grid.getHeight() * cellSize;
 
-        this.boxCanvas = new Canvas(width, height);
-        this.boxGC = boxCanvas.getGraphicsContext2D();
-
         this.arrowCanvas = new Canvas(width, height);
         this.arrowGC = arrowCanvas.getGraphicsContext2D();
-
-        //I am drawing the parts of the grid here that never needs to be redrawn
-        drawGridLines();
-    }
-
-    //Canvas Drawing method
-    private void drawGridLines() {
-        boxGC.setStroke(Color.GRAY);
-        for(int y = 0; y <= grid.getHeight(); y++) {
-            boxGC.strokeLine(0, y * cellSize, grid.getWidth() * cellSize, y * cellSize);
-        }
-        for(int x = 0; x <= grid.getWidth(); x++) {
-            boxGC.strokeLine(x * cellSize, 0, x * cellSize, grid.getHeight() * cellSize);
-        }
     }
 
     public void toggleVisibility() {
         isVisible = !isVisible;
 
-        boxCanvas.setVisible(isVisible);
         arrowCanvas.setVisible(isVisible);
 
         if (isVisible) {
@@ -63,11 +36,8 @@ public class DebugOverlay {
         Point2D direction = cell.getDirection().normalize();
         double scale = 1.7;
 
-        double worldX = x * cellSize + grid.getOrigin().getX();
-        double worldY = y * cellSize + grid.getOrigin().getY();
-
-        double centerX = worldX + cellSize * 0.5;
-        double centerY = worldY + cellSize * 0.5;
+        double centerX = x * cellSize;
+        double centerY = y * cellSize;
 
         double arrowLength = cellSize * scale * 0.2;
         double endX = centerX + direction.getX() * arrowLength;
@@ -88,11 +58,12 @@ public class DebugOverlay {
         double y3 = endY + arrowHeadSize * Math.sin(angle);
 
         arrowGC.fillPolygon(new double[]{x1, x2, x3}, new double[]{y1, y2, y3}, 3);
-
-        System.out.println("Drawing arrows 2");
     }
 
     public void refreshArrows() {
+        arrowCanvas.setLayoutX(grid.getGridPosition().getX());
+        arrowCanvas.setLayoutY(grid.getGridPosition().getY());
+
         arrowGC.clearRect(0, 0, arrowCanvas.getWidth(), arrowCanvas.getHeight());
 
         arrowGC.setLineWidth(2);
@@ -106,15 +77,10 @@ public class DebugOverlay {
             }
         }
 
-        System.out.println("Drawing Arrows");
     }
 
     public boolean getIsVisible() {
         return this.isVisible;
-    }
-
-    public Canvas getBoxCanvas() {
-        return boxCanvas;
     }
 
     public Canvas getArrowCanvas() {

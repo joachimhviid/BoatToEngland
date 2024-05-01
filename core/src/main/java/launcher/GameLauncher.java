@@ -6,7 +6,6 @@ import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
-import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.BoundingShape;
@@ -15,7 +14,7 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import common.ai.AI_SPI;
 import common.ai.IPathFinder;
-import common.ai.IPathFinderProvider;
+import common.ai.IPathFinderService;
 import common.data.ServiceRegistry;
 import common.enemy.EnemySPI;
 import common.events.DebugToggleEvent;
@@ -24,9 +23,6 @@ import common.data.EntityType;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import common.services.MapSPI;
-
-import java.util.List;
-import java.util.ServiceLoader;
 
 import java.util.List;
 import java.util.ServiceLoader;
@@ -102,8 +98,8 @@ public class GameLauncher extends GameApplication {
         ServiceLoader<AI_SPI> aiFactory = ServiceLoader.load(AI_SPI.class);
         aiFactory.stream().forEach(aiSpiProvider -> {
             AI_SPI service = aiSpiProvider.get();
-            if (service instanceof IPathFinderProvider) {
-                IPathFinder pathFinder = ((IPathFinderProvider) service).getPathFinder();
+            if (service instanceof IPathFinderService) {
+                IPathFinder pathFinder = ((IPathFinderService) service).getPathFinder();
                 if (pathFinder != null) {
                     ServiceRegistry.registerService(IPathFinder.class, pathFinder);
                     System.out.println("Registered IPathFinder service");

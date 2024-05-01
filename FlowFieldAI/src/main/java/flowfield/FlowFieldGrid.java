@@ -86,8 +86,6 @@ public class FlowFieldGrid implements IPathFinder {
         int x = (int) ((position.getX() - gridPosition.getX()) / cellSize);
         int y = (int) ((position.getY() - gridPosition.getY()) / cellSize);
         if (x >= 0 && x < width && y >= 0 && y < height) {
-            Point2D direction = grid[y][x].getDirection();
-            System.out.println("Providing direction " + direction + " for position " + position);
             return grid[y][x].getDirection();
         }
         System.out.println("Requested position " + position + " out of grid bounds");

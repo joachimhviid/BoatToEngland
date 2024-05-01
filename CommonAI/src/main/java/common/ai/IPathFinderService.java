@@ -1,5 +1,5 @@
 package common.ai;
 
-public interface IPathFinderProvider {
+public interface IPathFinderService {
     IPathFinder getPathFinder();
 }

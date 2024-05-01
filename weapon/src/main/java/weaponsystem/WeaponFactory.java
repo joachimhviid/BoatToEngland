@@ -24,7 +24,7 @@ public class WeaponFactory implements EntityFactory, WeaponSPI {
     @Override
     @Spawns("weapon")
     public Entity createWeapon(SpawnData data) {
-        Weapon axe = new Weapon(0.5, 5);
+        Weapon weapon = new Weapon(0.5, 5);
 
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
@@ -37,7 +37,7 @@ public class WeaponFactory implements EntityFactory, WeaponSPI {
             .with(physics)
             .bbox(new HitBox(BoundingShape.box(25, 25)))
             .with(new CollidableComponent(true))
-            .with(new WeaponComponent(axe, dir))
+            .with(new WeaponComponent(weapon, dir))
             .with(new WeaponAnimationComponent())
             .with(new OffscreenCleanComponent())
             .with(new ExpireCleanComponent(Duration.seconds(3)))

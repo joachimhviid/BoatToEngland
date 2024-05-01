@@ -83,7 +83,7 @@ public class GameLauncher extends GameApplication {
         }
 
         //Music loading
-        FXGL.play("background_music.mp3");
+        //FXGL.play("background_music.mp3");
         System.out.println("Background music is playing");
 
     }

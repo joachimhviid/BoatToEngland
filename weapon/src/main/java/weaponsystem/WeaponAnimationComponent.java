@@ -20,12 +20,13 @@ public class WeaponAnimationComponent extends Component {
 
     public WeaponAnimationComponent() {
 
-        URL axeURL = url("textures/axe_attack_spin_v1.png");
-        if (axeURL == null) {
-            throw new RuntimeException("axeURL not found: " + axeURL);
+//        URL weaponURL = url("textures/axe_attack_spin_v1.png");
+        URL weaponURL = url("textures/mp5_attack_spin.png");
+        if (weaponURL == null) {
+            throw new RuntimeException("weaponURL not found: " + weaponURL);
         } else {
-            Image axeIMG = FXGL.image(axeURL);
-            animIdle = new AnimationChannel(ImagesKt.resize(axeIMG, (int) axeIMG.getWidth() * scale, (int) axeIMG.getHeight() * scale), 6, 50 * scale, 48 * scale, Duration.seconds(0.4), 0, 5);
+            Image weaponIMG = FXGL.image(weaponURL);
+            animIdle = new AnimationChannel(ImagesKt.resize(weaponIMG, (int) weaponIMG.getWidth() * scale, (int) weaponIMG.getHeight() * scale), 6, 50 * scale, 48 * scale, Duration.seconds(0.4), 0, 5);
 
             texture = new AnimatedTexture(animIdle);
         }

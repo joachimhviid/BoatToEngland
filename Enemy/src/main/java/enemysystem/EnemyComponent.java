@@ -2,22 +2,44 @@ package enemysystem;
 
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
-import common.enemy.Enemy;
+import common.ai.IPathFinder;
+import javafx.geometry.Point2D;
+
+import java.util.Optional;
 
 public class EnemyComponent extends Component {
-    private Enemy enemy;
     private double speedX = 160;
-    private double speedY = 20;
+    private double speedY = 160;
+    private Optional<IPathFinder> pathFinder;
 
-    public EnemyComponent(Enemy enemy) {
-        this.enemy = enemy;
+    public EnemyComponent() {
+        this.pathFinder = Optional.empty();
     }
+
+    public EnemyComponent(IPathFinder pathFinder) {
+        this.pathFinder = Optional.ofNullable(pathFinder);
+    }
+
     @Override
     public void onAdded() {
     }
 
     @Override
     public void onUpdate(double tpf) {
+        pathFinder.ifPresentOrElse(pf -> {
+            //Using pathfinder to get a direction here
+            Point2D currentPos = new Point2D(entity.getX(), entity.getY());
+            Point2D moveDirection = pf.getPath(currentPos).normalize();
+
+            entity.translate(moveDirection.multiply(speedX * tpf).getX(), moveDirection.multiply(speedY * tpf).getY());
+        }, () -> {
+            //If there is no pathFinder I have just made it move in a constant direction for now
+            moveAutonomously(tpf);
+        });
+
+    }
+
+    public void moveAutonomously(double tpf) {
         double x = entity.getX();
         double y = entity.getY();
 

@@ -15,11 +15,15 @@ public class FlowFieldComponent extends Component {
     // TODO: I need to make this variable not hardcoded at some point. Add some kind of event for when player is added and listen for that event.
     private Point2D startPosition = new Point2D(100, 100);
 
-    private FlowFieldGrid flowFieldGrid = new FlowFieldGrid(17, 11, 100, startPosition);
+    private FlowFieldGrid flowFieldGrid;
     private DebugOverlay debugOverlay;
 
     //This is for optimizing a bit since my methods lagged the game. Will ensure we don't call the PLAYER_MOVED every frame but instead everytime player has moved enough
     private Point2D lastUpdatePosition = new Point2D(0,0);
+
+    public FlowFieldComponent(FlowFieldGrid flowFieldGrid) {
+        this.flowFieldGrid = flowFieldGrid;
+    }
 
     @Override
     public void onAdded() {

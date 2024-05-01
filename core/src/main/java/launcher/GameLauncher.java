@@ -15,6 +15,8 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import common.ai.AI_SPI;
 import common.ai.IPathFinder;
+import common.ai.IPathFinderProvider;
+import common.data.ServiceRegistry;
 import common.enemy.EnemySPI;
 import common.events.DebugToggleEvent;
 import components.AnimationComponent;
@@ -97,23 +99,38 @@ public class GameLauncher extends GameApplication {
             factory.loadMap();
         });
 
-        IPathFinder pathFinder = ServiceLoader.load(IPathFinder.class).findFirst().orElseThrow();
+        ServiceLoader<AI_SPI> aiFactory = ServiceLoader.load(AI_SPI.class);
+        aiFactory.stream().forEach(aiSpiProvider -> {
+            AI_SPI service = aiSpiProvider.get();
+            if (service instanceof IPathFinderProvider) {
+                IPathFinder pathFinder = ((IPathFinderProvider) service).getPathFinder();
+                if (pathFinder != null) {
+                    ServiceRegistry.registerService(IPathFinder.class, pathFinder);
+                    System.out.println("Registered IPathFinder service");
+                } else {
+                    System.out.println("Failed to create a valid IPathFinder instance");
+                }
+            }
+            FXGL.getGameWorld().addEntityFactory((EntityFactory) service);
+        });
+
+        FXGL.getGameWorld().spawn("flowfield");
 
         List<EnemySPI> enemyFactories = ServiceLoader.load(EnemySPI.class)
                 .stream()
                 .map(ServiceLoader.Provider::get)
                 .toList();
 
-        enemyFactories.forEach(enemyFactory -> FXGL.getGameWorld().addEntityFactory((EntityFactory) enemyFactory));
-        enemyFactories.forEach(enemyFactory -> FXGL.getGameWorld().spawn("enemy"));
-
-        ServiceLoader<AI_SPI> aiFactory = ServiceLoader.load(AI_SPI.class);
-        aiFactory.stream().forEach(aiSpiProvider -> {
-            AI_SPI service = aiSpiProvider.get();
-            FXGL.getGameWorld().addEntityFactory((EntityFactory) service);
+        enemyFactories.forEach(enemyFactory -> {
+            System.out.println("Attempting to spawn enemy...");
+            if (ServiceRegistry.getService(IPathFinder.class).isPresent()) {
+                System.out.println("PathFinder is available for EnemyComponent");
+            } else {
+                System.out.println("PathFinder is not available for EnemyComponent");
+            }
+            FXGL.getGameWorld().addEntityFactory((EntityFactory) enemyFactory);
+            FXGL.getGameWorld().spawn("enemy");
         });
-
-        FXGL.getGameWorld().spawn("flowfield");
 
         // Move to player module
         //player = FXGL.getGameWorld().getEntitiesByType(EntityType.PLAYER).getFirst();

@@ -70,7 +70,7 @@ public class FlowFieldGrid implements IPathFinder {
     }
 
     public Cell getCell(int x, int y) {
-        return this.grid[x][y];
+        return this.grid[y][x];
     }
 
     public double getCellSize() {
@@ -86,8 +86,11 @@ public class FlowFieldGrid implements IPathFinder {
         int x = (int) ((position.getX() - gridPosition.getX()) / cellSize);
         int y = (int) ((position.getY() - gridPosition.getY()) / cellSize);
         if (x >= 0 && x < width && y >= 0 && y < height) {
-            return grid[x][y].getDirection();
+            Point2D direction = grid[y][x].getDirection();
+            System.out.println("Providing direction " + direction + " for position " + position);
+            return grid[y][x].getDirection();
         }
+        System.out.println("Requested position " + position + " out of grid bounds");
         return Point2D.ZERO;
     }
 

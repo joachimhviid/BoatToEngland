@@ -11,7 +11,6 @@ public class PlayerMovedEvent extends Event {
     public PlayerMovedEvent(Point2D newPosition) {
         super(PLAYER_MOVED);
         this.newPosition = newPosition;
-        System.out.println("OH NO TOO MANY EVENTS!");
     }
 
     public Point2D getNewPosition() {

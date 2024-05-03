@@ -6,6 +6,6 @@ module player {
 
     opens playersystem to com.almasb.fxgl.core;
 
-    provides services.PlayerSPI with playersystem.PlayerFactory;
+    provides common.services.PlayerSPI with playersystem.PlayerFactory;
 
 }

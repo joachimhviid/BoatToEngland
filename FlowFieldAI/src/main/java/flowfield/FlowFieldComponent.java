@@ -36,8 +36,7 @@ public class FlowFieldComponent extends Component {
     public void onUpdate(double tpf) {
         //This is the toggle handler
         FXGL.getEventBus().addEventHandler(DebugToggleEvent.ANY, event -> {
-            //Without the Platform.runLater this wont load for some reason. Kept calling the event twice, but I am not entirely sure why.
-            Platform.runLater(this::toggleDebugOverlay);
+            this.toggleDebugOverlay();
         });
 
         //This is the handler for everytime player moves

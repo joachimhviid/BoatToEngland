@@ -9,26 +9,17 @@ import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
-import data.EntityType;
+import common.data.EntityType;
 import javafx.scene.input.KeyCode;
 import playersystem.PlayerFactory;
-import services.MapSPI;
-import services.PlayerSPI;
-import com.almasb.fxgl.physics.BoundingShape;
-import com.almasb.fxgl.physics.HitBox;
-import com.almasb.fxgl.physics.PhysicsComponent;
-import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
+import common.services.MapSPI;
+import common.services.PlayerSPI;
 import common.ai.AI_SPI;
 import common.ai.IPathFinder;
 import common.ai.IPathFinderService;
 import common.data.ServiceRegistry;
 import common.enemy.EnemySPI;
 import common.events.DebugToggleEvent;
-import components.AnimationComponent;
-import common.data.EntityType;
-import javafx.geometry.Point2D;
-import javafx.scene.input.KeyCode;
-import services.MapSPI;
 
 import java.util.List;
 import java.util.ServiceLoader;
@@ -59,6 +50,7 @@ public class GameLauncher extends GameApplication {
 
     @Override
     protected void initInput() {
+        Input input = FXGL.getInput();
 
         input.addAction(new UserAction("Toggle FlowField Visibility") {
             @Override
@@ -93,6 +85,7 @@ public class GameLauncher extends GameApplication {
         });
 
     // SpawnData = playerSpawnData; Optionally spawn data passed into newPlayer?
+
         ServiceLoader<AI_SPI> aiFactory = ServiceLoader.load(AI_SPI.class);
         aiFactory.stream().forEach(aiSpiProvider -> {
             AI_SPI service = aiSpiProvider.get();
@@ -106,6 +99,7 @@ public class GameLauncher extends GameApplication {
                 }
             }
             FXGL.getGameWorld().addEntityFactory((EntityFactory) service);
+
         });
 
         FXGL.getGameWorld().spawn("flowfield");

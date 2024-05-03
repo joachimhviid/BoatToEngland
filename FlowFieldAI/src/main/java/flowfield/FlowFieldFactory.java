@@ -1,14 +1,19 @@
 package flowfield;
 
+import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
+import com.almasb.fxgl.input.Input;
+import com.almasb.fxgl.input.UserAction;
 import common.ai.AI_SPI;
 import common.ai.IPathFinder;
 import common.ai.IPathFinderService;
 import common.data.EntityType;
+import common.events.DebugToggleEvent;
 import javafx.geometry.Point2D;
+import javafx.scene.input.KeyCode;
 
 import static com.almasb.fxgl.dsl.FXGLForKtKt.entityBuilder;
 

@@ -93,18 +93,14 @@ public class AnimationComponent extends Component {
     public void moveLeft() {
         velocity = new Vec2(-speed, velocity.y);
         entity.setScaleX(-1);
-//        FXGL.getEventBus().fireEvent(new PlayerMovedEvent(new Point2D(entity.getX(), entity.getY())));
     }
 
     public void moveUp() {
         velocity = new Vec2(velocity.x, speed);
-//        FXGL.getEventBus().fireEvent(new PlayerMovedEvent(new Point2D(entity.getX(), entity.getY())));
     }
 
     public void moveDown() {
         velocity = new Vec2(velocity.x, -speed);
-//        FXGL.getEventBus().fireEvent(new PlayerMovedEvent(new Point2D(entity.getX(), entity.getY())));
-
     }
 
     private String getUrlPrefixForAssets() {

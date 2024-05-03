@@ -1,6 +1,6 @@
 open module core {
-	uses services.PlayerSPI;
-	uses services.MapSPI;
+	uses common.services.PlayerSPI;
+	uses common.services.MapSPI;
     uses common.enemy.EnemySPI;
     uses common.ai.AI_SPI;
     uses common.ai.IPathFinder;

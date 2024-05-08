@@ -10,6 +10,7 @@ import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
 import common.data.EntityType;
+import common.services.WaveSPI;
 import javafx.scene.input.KeyCode;
 import playersystem.PlayerFactory;
 import common.services.MapSPI;
@@ -118,6 +119,16 @@ public class GameLauncher extends GameApplication {
             }
             FXGL.getGameWorld().addEntityFactory((EntityFactory) enemyFactory);
             FXGL.getGameWorld().spawn("enemy");
+        });
+
+        List<WaveSPI> waveFactories = ServiceLoader.load(WaveSPI.class)
+                .stream()
+                .map(ServiceLoader.Provider::get)
+                .toList();
+
+        waveFactories.forEach(waveFactory -> {
+            FXGL.getGameWorld().addEntityFactory((EntityFactory) waveFactory);
+            FXGL.getGameWorld().spawn("wave");
         });
 
 

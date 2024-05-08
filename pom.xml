@@ -19,6 +19,7 @@
         <module>Enemy</module>
         <module>CommonAI</module>
         <module>FlowFieldAI</module>
+        <module>WaveGeneration</module>
     </modules>
 
     <properties>

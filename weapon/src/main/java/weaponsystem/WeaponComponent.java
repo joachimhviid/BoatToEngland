@@ -7,7 +7,6 @@ import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import javafx.geometry.Point2D;
-import services.WeaponSPI;
 
 import java.util.List;
 import java.util.ServiceLoader;

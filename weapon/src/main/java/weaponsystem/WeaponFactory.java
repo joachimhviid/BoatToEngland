@@ -11,10 +11,10 @@ import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
-import data.EntityType;
+import common.data.EntityType;
+import common.services.WeaponSPI;
 import javafx.geometry.Point2D;
 import javafx.util.Duration;
-import services.WeaponSPI;
 
 import static com.almasb.fxgl.dsl.FXGLForKtKt.entityBuilder;
 

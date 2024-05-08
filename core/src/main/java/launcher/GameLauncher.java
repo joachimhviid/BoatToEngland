@@ -6,11 +6,13 @@ import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
+import com.almasb.fxgl.input.Input;
+import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
-import data.EntityType;
-import services.MapSPI;
-import services.PlayerSPI;
-import services.WeaponSPI;
+import common.data.EntityType;
+import common.services.MapSPI;
+import common.services.PlayerSPI;
+import common.services.WeaponSPI;
 import common.data.EntityType;
 import javafx.scene.input.KeyCode;
 import playersystem.PlayerFactory;
@@ -140,9 +142,7 @@ public class GameLauncher extends GameApplication {
         //FXGL.play("background_music.mp3");
         System.out.println("Background music is playing");
 
-        }
     }
-
 
     @Override
     protected void initPhysics() {
@@ -168,3 +168,7 @@ public class GameLauncher extends GameApplication {
         // debugText.setText(ticks++ + " ticks\nTPF: " + tpf);
     }
 }
+
+
+
+

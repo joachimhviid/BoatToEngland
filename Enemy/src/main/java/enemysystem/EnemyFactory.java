@@ -31,8 +31,9 @@ public class EnemyFactory implements EntityFactory, EnemySPI {
 
         return entityBuilder(spawnData)
                 .type(EntityType.ENEMY)
-                .view(new Rectangle(30, 30, Color.RED))
+//                .view(new Rectangle(30, 30, Color.RED))
                 .with(new EnemyComponent(pathFinder.orElse(null)))
+                .with(new EnemyAnimationComponent())
                 .buildAndAttach();
 
     }

@@ -16,9 +16,8 @@ import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import common.data.EntityType;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
-import services.PlayerSPI;
-import weaponsystem.WeaponComponent;
 import common.services.PlayerSPI;
+import weaponsystem.WeaponComponent;
 
 public class PlayerFactory implements EntityFactory, PlayerSPI {
 

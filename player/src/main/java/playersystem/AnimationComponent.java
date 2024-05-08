@@ -31,6 +31,7 @@ public class AnimationComponent extends Component {
 
     public AnimationComponent() {
         URL playerReadyUrl = url("textures/player_ready.png");
+        System.out.println(playerReadyUrl);
         if (playerReadyUrl == null) {
             throw new RuntimeException("Player ready image not found: " + "textures/player_ready.png");
         } else {

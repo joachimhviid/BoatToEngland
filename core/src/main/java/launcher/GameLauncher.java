@@ -130,7 +130,7 @@ public class GameLauncher extends GameApplication {
             FXGL.getGameWorld().addEntityFactory((EntityFactory) waveFactory);
             FXGL.getGameWorld().spawn("wave");
         });
-
+        
 
         Viewport viewport = FXGL.getGameScene().getViewport();
         viewport.setBounds(0, 0, 6400, 6400);
@@ -145,7 +145,16 @@ public class GameLauncher extends GameApplication {
             // order of types is the same as passed into the constructor
             @Override
             protected void onCollisionBegin(Entity player, Entity enemy) {
-                //player should take damage here
+                player.removeFromWorld();
+            }
+        });
+        getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.WEAPON, EntityType.ENEMY) {
+
+            // order of types is the same as passed into the constructor
+            @Override
+            protected void onCollisionBegin(Entity weapon, Entity enemy) {
+                weapon.removeFromWorld();
+                enemy.removeFromWorld();
             }
         });
     }

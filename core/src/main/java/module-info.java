@@ -4,6 +4,7 @@ open module core {
     uses common.enemy.EnemySPI;
     uses common.ai.AI_SPI;
     uses common.ai.IPathFinder;
+    uses common.services.WaveSPI;
 
     requires common;
     requires com.almasb.fxgl.all;

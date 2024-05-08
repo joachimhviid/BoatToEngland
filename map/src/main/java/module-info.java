@@ -5,5 +5,5 @@ module map {
     exports mapsystem to com.almasb.fxgl.core;
     opens map.assets.levels to com.almasb.fxgl.all;
 
-    provides services.MapSPI with mapsystem.WorldFactory;
+    provides common.services.MapSPI with mapsystem.WorldFactory;
 }

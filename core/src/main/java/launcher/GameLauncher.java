@@ -11,6 +11,17 @@ import data.EntityType;
 import services.MapSPI;
 import services.PlayerSPI;
 import services.WeaponSPI;
+import common.data.EntityType;
+import javafx.scene.input.KeyCode;
+import playersystem.PlayerFactory;
+import common.services.MapSPI;
+import common.services.PlayerSPI;
+import common.ai.AI_SPI;
+import common.ai.IPathFinder;
+import common.ai.IPathFinderService;
+import common.data.ServiceRegistry;
+import common.enemy.EnemySPI;
+import common.events.DebugToggleEvent;
 
 import java.util.List;
 import java.util.ServiceLoader;
@@ -41,7 +52,14 @@ public class GameLauncher extends GameApplication {
 
     @Override
     protected void initInput() {
+        Input input = FXGL.getInput();
 
+        input.addAction(new UserAction("Toggle FlowField Visibility") {
+            @Override
+            protected void onActionBegin() {
+                FXGL.getEventBus().fireEvent(new DebugToggleEvent());
+            }
+        }, KeyCode.COMMA);
     }
 
     @Override
@@ -75,8 +93,44 @@ public class GameLauncher extends GameApplication {
 
         weaponFactories.forEach(WeaponFactory -> FXGL.getGameWorld().addEntityFactory((EntityFactory) WeaponFactory));
 
+        ServiceLoader<AI_SPI> aiFactory = ServiceLoader.load(AI_SPI.class);
+        aiFactory.stream().forEach(aiSpiProvider -> {
+            AI_SPI service = aiSpiProvider.get();
+            if (service instanceof IPathFinderService) {
+                IPathFinder pathFinder = ((IPathFinderService) service).getPathFinder();
+                if (pathFinder != null) {
+                    ServiceRegistry.registerService(IPathFinder.class, pathFinder);
+                    System.out.println("Registered IPathFinder service");
+                } else {
+                    System.out.println("Failed to create a valid IPathFinder instance");
+                }
+            }
+            FXGL.getGameWorld().addEntityFactory((EntityFactory) service);
+
+        });
+
+        FXGL.getGameWorld().spawn("flowfield");
+
+        List<EnemySPI> enemyFactories = ServiceLoader.load(EnemySPI.class)
+                .stream()
+                .map(ServiceLoader.Provider::get)
+                .toList();
+
+        enemyFactories.forEach(enemyFactory -> {
+            System.out.println("Attempting to spawn enemy...");
+            if (ServiceRegistry.getService(IPathFinder.class).isPresent()) {
+                System.out.println("PathFinder is available for EnemyComponent");
+            } else {
+                System.out.println("PathFinder is not available for EnemyComponent");
+            }
+            FXGL.getGameWorld().addEntityFactory((EntityFactory) enemyFactory);
+            FXGL.getGameWorld().spawn("enemy");
+        });
+
+
         Viewport viewport = FXGL.getGameScene().getViewport();
         viewport.setBounds(0, 0, 6400, 6400);
+        viewport.bindToEntity(player, viewport.getWidth() / 2 - (double) (4 * 50) / 2, viewport.getHeight() / 2 - (double) (4 * 48) / 2);
 
         if (player != null) {
             viewport.bindToEntity(player, viewport.getWidth() / 2 - (double) (4 * 50) / 2, viewport.getHeight() / 2 - (double) (4 * 48) / 2);
@@ -86,7 +140,9 @@ public class GameLauncher extends GameApplication {
         //FXGL.play("background_music.mp3");
         System.out.println("Background music is playing");
 
+        }
     }
+
 
     @Override
     protected void initPhysics() {

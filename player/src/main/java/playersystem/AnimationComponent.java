@@ -7,6 +7,7 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 import com.almasb.fxgl.texture.ImagesKt;
+import common.events.PlayerMovedEvent;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
@@ -23,6 +24,10 @@ public class AnimationComponent extends Component {
 
     private AnimatedTexture texture;
     private AnimationChannel animIdle, animRun;
+
+    //FOR TESTING
+    private Point2D lastEventPosition = new Point2D(0,0);
+    private final double CAP = 100;
 
     public AnimationComponent() {
         URL playerReadyUrl = url("textures/player_ready.png");
@@ -62,9 +67,19 @@ public class AnimationComponent extends Component {
             if (velocity.length() < 1) {
                 velocity = velocity.mul(0);
             }
+
+            Point2D currentPosition = new Point2D(entity.getX(), entity.getY());
+
+            if(lastEventPosition.distance(currentPosition) > CAP) {
+                lastEventPosition = currentPosition;
+
+                FXGL.getEventBus().fireEvent(new PlayerMovedEvent(new Point2D(entity.getX(), entity.getY())));
+            }
+
         } else if (texture.getAnimationChannel() == animRun) {
             texture.loopAnimationChannel(animIdle);
         }
+
     }
 
     private void normalizeSpeed() {
@@ -76,6 +91,7 @@ public class AnimationComponent extends Component {
     public void moveRight() {
         velocity = new Vec2(speed, velocity.y);
         entity.setScaleX(1);
+        //
     }
 
     public void moveLeft() {

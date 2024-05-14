@@ -19,6 +19,8 @@
         <module>Enemy</module>
         <module>CommonAI</module>
         <module>FlowFieldAI</module>
+        <module>CommonShop</module>
+        <module>Shop</module>
     </modules>
 
     <properties>

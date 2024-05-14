@@ -58,6 +58,12 @@ public class GameLauncher extends GameApplication {
                 FXGL.getEventBus().fireEvent(new DebugToggleEvent());
             }
         }, KeyCode.COMMA);
+        input.addAction(new UserAction("Open Shop"){
+            @Override
+            protected void onActionBegin() {
+
+            }
+        }, KeyCode.B);
     }
 
     @Override

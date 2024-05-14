@@ -1,5 +1,7 @@
 module common {
   requires com.almasb.fxgl.all;
-  exports data;
-  exports services;
+
+  exports common.data;
+  exports common.services;
+  exports common.events;
 }

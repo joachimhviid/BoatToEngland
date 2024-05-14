@@ -10,8 +10,8 @@ import com.almasb.fxgl.entity.level.tiled.TMXLevelLoader;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
-import data.EntityType;
-import services.MapSPI;
+import common.data.EntityType;
+import common.services.MapSPI;
 
 import java.net.URL;
 

@@ -8,23 +8,25 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
-import com.almasb.fxgl.physics.BoundingShape;
-import com.almasb.fxgl.physics.HitBox;
-import com.almasb.fxgl.physics.PhysicsComponent;
-import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
-import components.AnimationComponent;
-import data.EntityType;
-import javafx.geometry.Point2D;
+import com.almasb.fxgl.physics.CollisionHandler;
+import common.data.EntityType;
 import javafx.scene.input.KeyCode;
-import services.MapSPI;
+import common.services.MapSPI;
+import common.services.PlayerSPI;
+import common.ai.AiSpi;
+import common.ai.IPathFinder;
+import common.ai.IPathFinderService;
+import common.data.ServiceRegistry;
+import common.enemy.EnemySPI;
+import common.events.DebugToggleEvent;
 
 import java.util.List;
 import java.util.ServiceLoader;
 
+import static com.almasb.fxgl.dsl.FXGL.getPhysicsWorld;
+
 public class GameLauncher extends GameApplication {
     private Entity player;
-
-    //private Text debugText;
 
     public static void main(String[] args) {
         launch(args);
@@ -47,35 +49,20 @@ public class GameLauncher extends GameApplication {
     protected void initInput() {
         Input input = FXGL.getInput();
 
-        // See if these can be extracted to Player module
-        input.addAction(new UserAction("Move Left") {
-            protected void onAction() {
-                player.getComponent(AnimationComponent.class).moveLeft();
+        input.addAction(new UserAction("Toggle FlowField Visibility") {
+            @Override
+            protected void onActionBegin() {
+                FXGL.getEventBus().fireEvent(new DebugToggleEvent());
             }
-        }, KeyCode.A);
-        input.addAction(new UserAction("Move Right") {
-            protected void onAction() {
-                player.getComponent(AnimationComponent.class).moveRight();
-            }
-        }, KeyCode.D);
-        input.addAction(new UserAction("Move Up") {
-            protected void onAction() {
-                player.getComponent(AnimationComponent.class).moveUp();
-            }
-        }, KeyCode.W);
-        input.addAction(new UserAction("Move Down") {
-            protected void onAction() {
-                player.getComponent(AnimationComponent.class).moveDown();
-            }
-        }, KeyCode.S);
+        }, KeyCode.COMMA);
     }
 
     @Override
     protected void initGame() {
         List<MapSPI> worldFactories = ServiceLoader.load(MapSPI.class)
-            .stream()
-            .map(ServiceLoader.Provider::get)
-            .toList();
+                .stream()
+                .map(ServiceLoader.Provider::get)
+                .toList();
 
         worldFactories.forEach(factory -> {
             System.out.println("Found world factory: " + factory);
@@ -83,39 +70,67 @@ public class GameLauncher extends GameApplication {
             factory.loadMap();
         });
 
-        // Move to player module
-        //player = FXGL.getGameWorld().getEntitiesByType(EntityType.PLAYER).getFirst();
-        PhysicsComponent physics = new PhysicsComponent();
-        physics.setBodyType(BodyType.DYNAMIC);
-        HitBox box = new HitBox(new Point2D((double) (4 * 50) / 4, (double) (4 * 48) / 5), BoundingShape.box(2 * 50, 3 * 48));
+        List<PlayerSPI> playerFactories = ServiceLoader.load(PlayerSPI.class)
+            .stream()
+            .map(ServiceLoader.Provider::get)
+            .toList();
 
-        player = FXGL.entityBuilder()
-            .at(100, 100)
-            .type(EntityType.PLAYER)
-            .bbox(box)
-            .with(physics)
-            .with(new AnimationComponent())
-            .buildAndAttach();
+        playerFactories.forEach(factory -> {
+            FXGL.getGameWorld().addEntityFactory((EntityFactory) factory);
+            player = FXGL.getGameWorld().spawn("player", 100, 100);
+            factory.loadInput(player);
+        });
+
+        ServiceLoader<AiSpi> aiFactory = ServiceLoader.load(AiSpi.class);
+        aiFactory.stream().forEach(aiSpiProvider -> {
+            AiSpi service = aiSpiProvider.get();
+            if (service instanceof IPathFinderService) {
+                IPathFinder pathFinder = ((IPathFinderService) service).getPathFinder();
+                if (pathFinder != null) {
+                    ServiceRegistry.registerService(IPathFinder.class, pathFinder);
+                    System.out.println("Registered IPathFinder service");
+                } else {
+                    System.out.println("Failed to create a valid IPathFinder instance");
+                }
+            }
+            FXGL.getGameWorld().addEntityFactory((EntityFactory) service);
+
+        });
+
+        FXGL.getGameWorld().spawn("flowfield");
+
+        List<EnemySPI> enemyFactories = ServiceLoader.load(EnemySPI.class)
+                .stream()
+                .map(ServiceLoader.Provider::get)
+                .toList();
+
+        enemyFactories.forEach(enemyFactory -> {
+            System.out.println("Attempting to spawn enemy...");
+            if (ServiceRegistry.getService(IPathFinder.class).isPresent()) {
+                System.out.println("PathFinder is available for EnemyComponent");
+            } else {
+                System.out.println("PathFinder is not available for EnemyComponent");
+            }
+            FXGL.getGameWorld().addEntityFactory((EntityFactory) enemyFactory);
+            FXGL.getGameWorld().spawn("enemy");
+        });
+
 
         Viewport viewport = FXGL.getGameScene().getViewport();
         viewport.setBounds(0, 0, 6400, 6400);
         viewport.bindToEntity(player, viewport.getWidth() / 2 - (double) (4 * 50) / 2, viewport.getHeight() / 2 - (double) (4 * 48) / 2);
+
     }
 
     @Override
     protected void initPhysics() {
-        System.out.println("Physics initialized");
-    }
+        getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.ENEMY) {
 
-    @Override
-    protected void initUI() {
-        System.out.println("UI initialized");
-        // debugText = new Text();
-        // FXGL.addUINode(debugText, 100, 100);
-    }
-
-    @Override
-    protected void onUpdate(double tpf) {
-        // debugText.setText(ticks++ + " ticks\nTPF: " + tpf);
+            // order of types is the same as passed into the constructor
+            @Override
+            protected void onCollisionBegin(Entity player, Entity enemy) {
+                //player should take damage here
+            }
+        });
     }
 }

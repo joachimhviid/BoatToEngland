@@ -14,8 +14,11 @@
         <module>core</module>
         <module>map</module>
         <module>player</module>
-        <module>enemy</module>
         <module>weapon</module>
+        <module>common-enemy</module>
+        <module>enemy</module>
+        <module>common-ai</module>
+        <module>flowfield-ai</module>
     </modules>
 
     <properties>

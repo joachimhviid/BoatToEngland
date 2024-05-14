@@ -11,10 +11,9 @@ import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
 import common.data.EntityType;
 import javafx.scene.input.KeyCode;
-import playersystem.PlayerFactory;
 import common.services.MapSPI;
 import common.services.PlayerSPI;
-import common.ai.AI_SPI;
+import common.ai.AiSpi;
 import common.ai.IPathFinder;
 import common.ai.IPathFinderService;
 import common.data.ServiceRegistry;
@@ -28,8 +27,6 @@ import static com.almasb.fxgl.dsl.FXGL.getPhysicsWorld;
 
 public class GameLauncher extends GameApplication {
     private Entity player;
-
-    //private Text debugText;
 
     public static void main(String[] args) {
         launch(args);
@@ -84,11 +81,9 @@ public class GameLauncher extends GameApplication {
             factory.loadInput(player);
         });
 
-    // SpawnData = playerSpawnData; Optionally spawn data passed into newPlayer?
-
-        ServiceLoader<AI_SPI> aiFactory = ServiceLoader.load(AI_SPI.class);
+        ServiceLoader<AiSpi> aiFactory = ServiceLoader.load(AiSpi.class);
         aiFactory.stream().forEach(aiSpiProvider -> {
-            AI_SPI service = aiSpiProvider.get();
+            AiSpi service = aiSpiProvider.get();
             if (service instanceof IPathFinderService) {
                 IPathFinder pathFinder = ((IPathFinderService) service).getPathFinder();
                 if (pathFinder != null) {
@@ -137,17 +132,5 @@ public class GameLauncher extends GameApplication {
                 //player should take damage here
             }
         });
-    }
-
-    @Override
-    protected void initUI() {
-        System.out.println("UI initialized");
-        // debugText = new Text();
-        // FXGL.addUINode(debugText, 100, 100);
-    }
-
-    @Override
-    protected void onUpdate(double tpf) {
-        // debugText.setText(ticks++ + " ticks\nTPF: " + tpf);
     }
 }

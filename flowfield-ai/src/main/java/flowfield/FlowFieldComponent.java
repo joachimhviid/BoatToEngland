@@ -2,16 +2,11 @@ package flowfield;
 
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
-import common.ai.AI;
-import common.ai.IPathFinder;
 import common.events.DebugToggleEvent;
 import common.events.PlayerMovedEvent;
-import javafx.application.Platform;
 import javafx.geometry.Point2D;
 
 public class FlowFieldComponent extends Component {
-    private AI ai;
-
     // TODO: I need to make this variable not hardcoded at some point. Add some kind of event for when player is added and listen for that event.
     private Point2D startPosition = new Point2D(100, 100);
 

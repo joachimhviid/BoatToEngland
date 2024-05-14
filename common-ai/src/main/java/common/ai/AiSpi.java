@@ -3,6 +3,6 @@ package common.ai;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 
-public interface AI_SPI {
+public interface AiSpi {
     Entity createAI(SpawnData spawnData);
 }

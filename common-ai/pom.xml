@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>src.main.java</groupId>
-    <artifactId>CommonAI</artifactId>
+    <artifactId>common-ai</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>

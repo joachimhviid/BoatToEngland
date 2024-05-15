@@ -29,13 +29,13 @@ public class WaveGenerationComponent extends Component {
                         //Gets a screen side to spawn the enemy
                         int side = FXGL.random(1, 4);
                         if (side == 1){
-                            FXGL.spawn("enemy", vp.getX() + vp.getWidth(), FXGL.random(vp.getY(), vp.getY() + vp.getHeight()));
+                            FXGL.spawn("enemy", playerPosition.getX() + vp.getWidth()/2, FXGL.random(playerPosition.getY() - vp.getHeight()/2, playerPosition.getY() + vp.getHeight()/2));
                         } else if (side == 2){
-                            FXGL.spawn("enemy", vp.getX(), FXGL.random(vp.getY(), vp.getY() + vp.getHeight()));
+                            FXGL.spawn("enemy", playerPosition.getX() - vp.getWidth()/2, FXGL.random(playerPosition.getY() - vp.getHeight()/2, playerPosition.getY() + vp.getHeight()/2));
                         } else if (side == 3){
-                            FXGL.spawn("enemy", FXGL.random(vp.getX(), vp.getX() + vp.getWidth()), vp.getY());
+                            FXGL.spawn("enemy", FXGL.random(playerPosition.getX() - vp.getWidth()/2, playerPosition.getX() + vp.getWidth()/2), playerPosition.getY() - vp.getHeight()/2);
                         } else {
-                            FXGL.spawn("enemy", FXGL.random(vp.getX(), vp.getX() + vp.getWidth()), vp.getY() + vp.getHeight());
+                            FXGL.spawn("enemy", FXGL.random(playerPosition.getX() - vp.getWidth()/2, playerPosition.getX() + vp.getWidth()/2), playerPosition.getY() + vp.getHeight()/2);
                         }
                     }
                 } else {

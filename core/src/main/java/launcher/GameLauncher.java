@@ -82,7 +82,7 @@ public class GameLauncher extends GameApplication {
 
         playerFactories.forEach(factory -> {
             FXGL.getGameWorld().addEntityFactory((EntityFactory) factory);
-            player = FXGL.getGameWorld().spawn("player", 300, 300);
+            player = FXGL.getGameWorld().spawn("player", 3000, 3000);
             factory.loadInput(player);
         });
 

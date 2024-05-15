@@ -118,8 +118,9 @@ public class GameLauncher extends GameApplication {
                 System.out.println("PathFinder is not available for EnemyComponent");
             }
             FXGL.getGameWorld().addEntityFactory((EntityFactory) enemyFactory);
-            FXGL.getGameWorld().spawn("enemy");
+            //FXGL.getGameWorld().spawn("enemy");
         });
+
 
         List<WaveSPI> waveFactories = ServiceLoader.load(WaveSPI.class)
                 .stream()
@@ -130,7 +131,7 @@ public class GameLauncher extends GameApplication {
             FXGL.getGameWorld().addEntityFactory((EntityFactory) waveFactory);
             FXGL.getGameWorld().spawn("wave");
         });
-        
+
 
         Viewport viewport = FXGL.getGameScene().getViewport();
         viewport.setBounds(0, 0, 6400, 6400);

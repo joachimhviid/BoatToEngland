@@ -11,8 +11,14 @@ import java.util.List;
 public class WaveGenerationComponent extends Component {
     public int roundNumber = 0;
     public int difficulty = 1;
+
+    @Override
+    public void onAdded() {
+        System.out.println("Wave generation component added");
+    }
     @Override
     public void onUpdate(double tpf) {
+        System.out.println("Wave generation component");
         if (FXGL.getGameWorld().getEntitiesByType(EntityType.ENEMY).size() == 0) {
             Point2D playerPosition = FXGL.getGameWorld().getSingleton(EntityType.PLAYER).getPosition();
             Viewport vp = FXGL.getGameScene().getViewport();
@@ -20,6 +26,7 @@ public class WaveGenerationComponent extends Component {
             int enemyCount = 5 + roundNumber * difficulty;
             for (int i = 0; i < enemyCount; i++) {
                 int wavePattern = FXGL.random(1, 2);
+                System.out.println("Wave pattern: " + wavePattern);
                 if (wavePattern == 1) {
                     int waveSize = 1 + roundNumber;
                     for (int j = 0; j < waveSize; j++) {
@@ -36,6 +43,7 @@ public class WaveGenerationComponent extends Component {
                         }
                     }
                 } else {
+                    //Should spawn the enemy in a certain pattern
                     FXGL.spawn("enemy", 500, 100);
                 }
                 FXGL.spawn("enemy");

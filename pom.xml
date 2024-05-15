@@ -19,6 +19,7 @@
         <module>enemy</module>
         <module>common-ai</module>
         <module>flowfield-ai</module>
+        <module>wave-generation</module>
     </modules>
 
     <properties>

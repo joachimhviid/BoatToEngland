@@ -90,7 +90,6 @@ class PlayerFactoryTest {
     public void testNewPlayerTwo(){
         playerFactory.newPlayer(spawnData);
         when(playerFactory.newPlayer(spawnData)).thenReturn(new Entity());
-
     }
 
     @Test

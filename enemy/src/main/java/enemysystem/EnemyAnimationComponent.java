@@ -43,8 +43,6 @@ public class EnemyAnimationComponent extends Component {
         normalizeSpeed();
         direction = velocity.mul(tpf * speed);
 
-        System.out.println(direction.x);
-        System.out.println(direction.y);
 
         if (direction.x < 0) {
             entity.setScaleX(1);

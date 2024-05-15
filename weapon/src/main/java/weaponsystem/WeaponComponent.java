@@ -24,7 +24,7 @@ public class WeaponComponent extends Component {
         this.weapon = weapon;
         this.direction = direction;
 
-        System.out.println("Weapon direction: " + direction);
+//        System.out.println("Weapon direction: " + direction);
     }
 
     @Override

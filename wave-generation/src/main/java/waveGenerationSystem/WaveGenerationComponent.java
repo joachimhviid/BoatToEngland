@@ -13,12 +13,8 @@ public class WaveGenerationComponent extends Component {
     public int difficulty = 1;
 
     @Override
-    public void onAdded() {
-        System.out.println("Wave generation component added");
-    }
-    @Override
     public void onUpdate(double tpf) {
-        System.out.println("Wave generation component");
+
         if (FXGL.getGameWorld().getEntitiesByType(EntityType.ENEMY).size() == 0) {
             Point2D playerPosition = FXGL.getGameWorld().getSingleton(EntityType.PLAYER).getPosition();
             Viewport vp = FXGL.getGameScene().getViewport();

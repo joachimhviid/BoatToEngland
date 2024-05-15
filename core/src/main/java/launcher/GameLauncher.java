@@ -15,6 +15,7 @@ import common.services.MapSPI;
 import common.services.PlayerSPI;
 import common.services.WeaponSPI;
 import common.data.EntityType;
+import common.services.WaveSPI;
 import javafx.scene.input.KeyCode;
 import common.services.MapSPI;
 import common.services.PlayerSPI;
@@ -105,10 +106,9 @@ public class GameLauncher extends GameApplication {
                 }
             }
             FXGL.getGameWorld().addEntityFactory((EntityFactory) service);
+            FXGL.getGameWorld().spawn("flowfield");
 
         });
-
-        FXGL.getGameWorld().spawn("flowfield");
 
         List<EnemySPI> enemyFactories = ServiceLoader.load(EnemySPI.class)
                 .stream()
@@ -123,7 +123,18 @@ public class GameLauncher extends GameApplication {
                 System.out.println("PathFinder is not available for EnemyComponent");
             }
             FXGL.getGameWorld().addEntityFactory((EntityFactory) enemyFactory);
-            FXGL.getGameWorld().spawn("enemy");
+            //FXGL.getGameWorld().spawn("enemy");
+        });
+
+
+        List<WaveSPI> waveFactories = ServiceLoader.load(WaveSPI.class)
+                .stream()
+                .map(ServiceLoader.Provider::get)
+                .toList();
+
+        waveFactories.forEach(waveFactory -> {
+            FXGL.getGameWorld().addEntityFactory((EntityFactory) waveFactory);
+            FXGL.getGameWorld().spawn("wave");
         });
 
 

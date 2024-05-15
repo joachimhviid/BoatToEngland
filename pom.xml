@@ -16,9 +16,10 @@
         <module>player</module>
         <module>weapon</module>
         <module>common-enemy</module>
-        <module>Enemy</module>
+        <module>enemy</module>
         <module>common-ai</module>
         <module>flowfield-ai</module>
+        <module>wave-generation</module>
         <module>CommonWeapon</module>
     </modules>
 

@@ -7,7 +7,6 @@ import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
-import weaponsystem.Weapon;
 
 public class PlayerComponent extends Component {
 
@@ -16,7 +15,6 @@ public class PlayerComponent extends Component {
     int damage;
 
     int movementSpeed;
-    Weapon weapon;
 
     boolean autoFireEnabled;
     //TODO:
@@ -96,21 +94,19 @@ public class PlayerComponent extends Component {
             oldPlayerVelocity = currentPlayerVelocity;
         }
 
+        try {
         Point2D weaponSpawnData = new Point2D(entity.getX() + 60, entity.getY() + 60);
         FXGL.getGameWorld().spawn("weapon", new SpawnData(weaponSpawnData)
                 .put("direction", oldPlayerVelocity));
+        } catch (Exception e) {
+            System.out.println("Weapon spawn failed");
+        }
 
         // entity.getComponent(WeaponComponent.class).weaponAttack();
     }
 
 
-    public Weapon getWeapon() {
-        return weapon;
-    }
 
-    public void setWeapon(Weapon weapon) {
-        this.weapon = weapon;
-    }
 
 
     public int getHealth() {

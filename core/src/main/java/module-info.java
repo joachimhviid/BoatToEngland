@@ -11,7 +11,6 @@ open module core {
     requires com.almasb.fxgl.all;
     requires common.enemy;
     requires common.ai;
-    requires player;
 
     exports launcher to com.almasb.fxgl.core;
 }

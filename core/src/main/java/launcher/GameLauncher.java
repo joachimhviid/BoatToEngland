@@ -94,10 +94,9 @@ public class GameLauncher extends GameApplication {
                 }
             }
             FXGL.getGameWorld().addEntityFactory((EntityFactory) service);
+            FXGL.getGameWorld().spawn("flowfield");
 
         });
-
-        FXGL.getGameWorld().spawn("flowfield");
 
         List<EnemySPI> enemyFactories = ServiceLoader.load(EnemySPI.class)
                 .stream()

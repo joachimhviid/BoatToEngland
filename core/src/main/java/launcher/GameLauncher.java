@@ -32,8 +32,6 @@ import static com.almasb.fxgl.dsl.FXGL.getPhysicsWorld;
 public class GameLauncher extends GameApplication {
     private Entity player;
 
-    //private Text debugText;
-
     public static void main(String[] args) {
         launch(args);
     }
@@ -125,8 +123,7 @@ public class GameLauncher extends GameApplication {
                 System.out.println("PathFinder is not available for EnemyComponent");
             }
             FXGL.getGameWorld().addEntityFactory((EntityFactory) enemyFactory);
-            FXGL.getGameWorld().spawn("enemy", 100, 100);
-
+            FXGL.getGameWorld().spawn("enemy");
         });
 
 
@@ -167,8 +164,8 @@ public class GameLauncher extends GameApplication {
     @Override
     protected void initUI() {
         System.out.println("UI initialized");
-//        Text debugText = new Text("Some debug text");
-//        FXGL.addUINode(debugText, 50, 50);
+        // debugText = new Text();
+        // FXGL.addUINode(debugText, 100, 100);
     }
 
     @Override
@@ -176,7 +173,3 @@ public class GameLauncher extends GameApplication {
         // debugText.setText(ticks++ + " ticks\nTPF: " + tpf);
     }
 }
-
-
-
-

@@ -158,7 +158,7 @@ public class GameLauncher extends GameApplication {
             // order of types is the same as passed into the constructor
             @Override
             protected void onCollisionBegin(Entity player, Entity enemy) {
-                player.removeFromWorld();
+//                player.removeFromWorld();
             }
         });
         getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.WEAPON, EntityType.ENEMY) {

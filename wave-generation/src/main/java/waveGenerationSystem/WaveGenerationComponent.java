@@ -21,7 +21,8 @@ public class WaveGenerationComponent extends Component {
             roundNumber++;
             int enemyCount = 5 + roundNumber * difficulty;
             for (int i = 0; i < enemyCount; i++) {
-                int wavePattern = FXGL.random(1, 2);
+                int wavePattern = 1;
+//                int wavePattern = FXGL.random(1, 2);
                 System.out.println("Wave pattern: " + wavePattern);
                 if (wavePattern == 1) {
                     int waveSize = 1 + roundNumber;

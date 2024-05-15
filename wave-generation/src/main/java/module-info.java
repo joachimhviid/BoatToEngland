@@ -1,4 +1,4 @@
-module wave-generation {
+module wavegeneration {
     exports waveGenerationSystem;
     requires common;
     requires com.almasb.fxgl.all;

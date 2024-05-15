@@ -9,6 +9,7 @@ import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
+import common.ai.AiSpi;
 import common.data.EntityType;
 import common.services.MapSPI;
 import common.services.PlayerSPI;
@@ -17,7 +18,6 @@ import common.data.EntityType;
 import javafx.scene.input.KeyCode;
 import common.services.MapSPI;
 import common.services.PlayerSPI;
-import common.ai.AI_SPI;
 import common.ai.IPathFinder;
 import common.ai.IPathFinderService;
 import common.data.ServiceRegistry;
@@ -92,9 +92,9 @@ public class GameLauncher extends GameApplication {
 
         weaponFactories.forEach(WeaponFactory -> FXGL.getGameWorld().addEntityFactory((EntityFactory) WeaponFactory));
 
-        ServiceLoader<AI_SPI> aiFactory = ServiceLoader.load(AI_SPI.class);
+        ServiceLoader<AiSpi> aiFactory = ServiceLoader.load(AiSpi.class);
         aiFactory.stream().forEach(aiSpiProvider -> {
-            AI_SPI service = aiSpiProvider.get();
+            AiSpi service = aiSpiProvider.get();
             if (service instanceof IPathFinderService) {
                 IPathFinder pathFinder = ((IPathFinderService) service).getPathFinder();
                 if (pathFinder != null) {

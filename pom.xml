@@ -15,10 +15,10 @@
         <module>map</module>
         <module>player</module>
         <module>weapon</module>
-        <module>CommonEnemy</module>
+        <module>common-enemy</module>
         <module>Enemy</module>
-        <module>CommonAI</module>
-        <module>FlowFieldAI</module>
+        <module>common-ai</module>
+        <module>flowfield-ai</module>
         <module>CommonWeapon</module>
     </modules>
 

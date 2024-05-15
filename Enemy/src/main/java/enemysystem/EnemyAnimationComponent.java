@@ -1,5 +1,6 @@
 package enemysystem;
 
+import com.almasb.fxgl.core.math.Vec2;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.texture.AnimatedTexture;
@@ -15,6 +16,10 @@ public class EnemyAnimationComponent extends Component {
     private AnimatedTexture texture;
     private AnimationChannel enemyAnimRun;
 
+    private final double speed = 300;
+    private Vec2 direction = new Vec2(0, 0);
+    private Vec2 velocity = new Vec2(0, 0);
+
     private final int scale = 2;
 
 
@@ -22,9 +27,6 @@ public class EnemyAnimationComponent extends Component {
 
         URL enemyRunUrl = url("textures/enemy_run2.png");
 
-        System.out.println(getUrlPrefixForAssets());
-        System.out.println(enemyRunUrl);
-        // /Users/tbechv/IdeaProjects/BoatToEngland/enemy/src/main/resources/enemy/assets/textures/priest_run.png
         if (enemyRunUrl == null) {
             throw new RuntimeException("Enemy ready image not found: " + enemyRunUrl);
         } else {
@@ -35,12 +37,36 @@ public class EnemyAnimationComponent extends Component {
         }
     }
 
+    @Override
+    public void onUpdate(double tpf) {
+
+        normalizeSpeed();
+        direction = velocity.mul(tpf * speed);
+
+        System.out.println(direction.x);
+        System.out.println(direction.y);
+
+        if (direction.x < 0) {
+            entity.setScaleX(1);
+        }
+        if (direction.x > 0) {
+            entity.setScaleX(-1);
+        }
+
+
+    }
 
     @Override
     public void onAdded() {
 
         entity.getViewComponent().addChild(texture);
         texture.loopAnimationChannel(enemyAnimRun);
+    }
+
+    private void normalizeSpeed() {
+        if (velocity.length() > 0) {
+            velocity = velocity.normalize();
+        }
     }
 
 

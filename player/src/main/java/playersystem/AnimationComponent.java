@@ -92,7 +92,6 @@ public class AnimationComponent extends Component {
     public void moveRight() {
         velocity = new Vec2(speed, velocity.y);
         entity.setScaleX(1);
-        //
     }
 
     public void moveLeft() {

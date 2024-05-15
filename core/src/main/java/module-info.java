@@ -10,7 +10,6 @@ open module core {
 
     requires CommonEnemy;
     requires CommonAI;
-    requires player;
 
     exports launcher to com.almasb.fxgl.core;
 }

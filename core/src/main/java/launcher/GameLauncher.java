@@ -15,7 +15,6 @@ import common.services.PlayerSPI;
 import common.services.WeaponSPI;
 import common.data.EntityType;
 import javafx.scene.input.KeyCode;
-import playersystem.PlayerFactory;
 import common.services.MapSPI;
 import common.services.PlayerSPI;
 import common.ai.AI_SPI;
@@ -84,7 +83,7 @@ public class GameLauncher extends GameApplication {
 
         playerFactories.forEach(factory -> {
             FXGL.getGameWorld().addEntityFactory((EntityFactory) factory);
-            player = FXGL.getGameWorld().spawn("player", 100, 100);
+            player = FXGL.getGameWorld().spawn("player", 300, 300);
             factory.loadInput(player);
         });
 
@@ -126,13 +125,13 @@ public class GameLauncher extends GameApplication {
                 System.out.println("PathFinder is not available for EnemyComponent");
             }
             FXGL.getGameWorld().addEntityFactory((EntityFactory) enemyFactory);
-            FXGL.getGameWorld().spawn("enemy");
+            FXGL.getGameWorld().spawn("enemy", 100, 100);
+
         });
 
 
         Viewport viewport = FXGL.getGameScene().getViewport();
         viewport.setBounds(0, 0, 6400, 6400);
-        viewport.bindToEntity(player, viewport.getWidth() / 2 - (double) (4 * 50) / 2, viewport.getHeight() / 2 - (double) (4 * 48) / 2);
 
         if (player != null) {
             viewport.bindToEntity(player, viewport.getWidth() / 2 - (double) (4 * 50) / 2, viewport.getHeight() / 2 - (double) (4 * 48) / 2);
@@ -151,7 +150,16 @@ public class GameLauncher extends GameApplication {
             // order of types is the same as passed into the constructor
             @Override
             protected void onCollisionBegin(Entity player, Entity enemy) {
-                //player should take damage here
+                player.removeFromWorld();
+            }
+        });
+        getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.WEAPON, EntityType.ENEMY) {
+
+            // order of types is the same as passed into the constructor
+            @Override
+            protected void onCollisionBegin(Entity weapon, Entity enemy) {
+                weapon.removeFromWorld();
+                enemy.removeFromWorld();
             }
         });
     }

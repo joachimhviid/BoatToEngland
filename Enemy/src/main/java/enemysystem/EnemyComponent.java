@@ -22,6 +22,7 @@ public class EnemyComponent extends Component {
 
     @Override
     public void onAdded() {
+
     }
 
     @Override

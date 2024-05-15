@@ -1,12 +1,11 @@
-import common.ai.AiSpi;
-
 open module core {
-	uses common.services.PlayerSPI;
-	uses common.services.MapSPI;
+    uses common.services.PlayerSPI;
+    uses common.services.MapSPI;
     uses common.enemy.EnemySPI;
-    uses AiSpi;
+    uses common.ai.AiSpi;
     uses common.ai.IPathFinder;
     uses common.services.WaveSPI;
+    uses common.services.WeaponSPI;
 
     requires common;
     requires com.almasb.fxgl.all;

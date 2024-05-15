@@ -9,12 +9,16 @@ import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
+import common.ai.AiSpi;
+import common.data.EntityType;
+import common.services.MapSPI;
+import common.services.PlayerSPI;
+import common.services.WeaponSPI;
 import common.data.EntityType;
 import common.services.WaveSPI;
 import javafx.scene.input.KeyCode;
 import common.services.MapSPI;
 import common.services.PlayerSPI;
-import common.ai.AiSpi;
 import common.ai.IPathFinder;
 import common.ai.IPathFinderService;
 import common.data.ServiceRegistry;
@@ -72,15 +76,22 @@ public class GameLauncher extends GameApplication {
         });
 
         List<PlayerSPI> playerFactories = ServiceLoader.load(PlayerSPI.class)
-            .stream()
-            .map(ServiceLoader.Provider::get)
-            .toList();
+                .stream()
+                .map(ServiceLoader.Provider::get)
+                .toList();
 
         playerFactories.forEach(factory -> {
             FXGL.getGameWorld().addEntityFactory((EntityFactory) factory);
-            player = FXGL.getGameWorld().spawn("player", 100, 100);
+            player = FXGL.getGameWorld().spawn("player", 300, 300);
             factory.loadInput(player);
         });
+
+        List<WeaponSPI> weaponFactories = ServiceLoader.load(WeaponSPI.class)
+                .stream().map(ServiceLoader
+                        .Provider::get)
+                .toList();
+
+        weaponFactories.forEach(WeaponFactory -> FXGL.getGameWorld().addEntityFactory((EntityFactory) WeaponFactory));
 
         ServiceLoader<AiSpi> aiFactory = ServiceLoader.load(AiSpi.class);
         aiFactory.stream().forEach(aiSpiProvider -> {
@@ -129,7 +140,14 @@ public class GameLauncher extends GameApplication {
 
         Viewport viewport = FXGL.getGameScene().getViewport();
         viewport.setBounds(0, 0, 6400, 6400);
-        viewport.bindToEntity(player, viewport.getWidth() / 2 - (double) (4 * 50) / 2, viewport.getHeight() / 2 - (double) (4 * 48) / 2);
+
+        if (player != null) {
+            viewport.bindToEntity(player, viewport.getWidth() / 2 - (double) (4 * 50) / 2, viewport.getHeight() / 2 - (double) (4 * 48) / 2);
+        }
+
+        //Music loading
+        //FXGL.play("background_music.mp3");
+        System.out.println("Background music is playing");
 
     }
 
@@ -152,5 +170,17 @@ public class GameLauncher extends GameApplication {
                 enemy.removeFromWorld();
             }
         });
+    }
+
+    @Override
+    protected void initUI() {
+        System.out.println("UI initialized");
+        // debugText = new Text();
+        // FXGL.addUINode(debugText, 100, 100);
+    }
+
+    @Override
+    protected void onUpdate(double tpf) {
+        // debugText.setText(ticks++ + " ticks\nTPF: " + tpf);
     }
 }

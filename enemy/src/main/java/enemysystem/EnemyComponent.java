@@ -34,11 +34,11 @@ public class EnemyComponent extends Component {
             Point2D moveDirection = pf.getPath(currentPos).normalize();
             PhysicsComponent physics = entity.getComponent(PhysicsComponent.class);
 
-            System.out.println(physics.getLinearVelocity());
+            System.out.println(entity.getX() + " : " + entity.getY());
 
             physics.setBodyLinearVelocity(new Vec2(0,0));
             //            entity.translate(moveDirection.multiply(speedX * tpfda).getX(), moveDirection.multiply(speedY * tpf).getY());
-            physics.setBodyLinearVelocity(new Vec2(moveDirection.getY(), moveDirection.getX()).mul(speedX * tpf));
+            physics.setBodyLinearVelocity(new Vec2(moveDirection.getX(), moveDirection.getY() * -1).mul(speedX * tpf));
         }, () -> {
             //If there is no pathFinder I have just made it move in a constant direction for now
             moveAutonomously(tpf);

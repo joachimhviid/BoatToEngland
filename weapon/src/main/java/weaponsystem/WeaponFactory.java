@@ -30,7 +30,7 @@ public class WeaponFactory implements EntityFactory, WeaponSPI {
         physics.setBodyType(BodyType.DYNAMIC);
         Point2D dir = data.get("direction");
         // Dir test
-        System.out.println(dir);
+        //System.out.println(dir);
 
         return entityBuilder(data)
             .type(EntityType.WEAPON)

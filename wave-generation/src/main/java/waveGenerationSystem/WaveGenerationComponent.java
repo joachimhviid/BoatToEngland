@@ -60,27 +60,29 @@ public class WaveGenerationComponent extends Component {
         Point2D playerPosition = FXGL.getGameWorld().getSingleton(EntityType.PLAYER).getPosition();
         Viewport vp = FXGL.getGameScene().getViewport();
         int side = FXGL.random(1, 4);
+        double[] spawnPosition;
         if (side == 1) {
             //spawn on right side
             double x = playerPosition.getX() + vp.getWidth() / 2;
             double y = FXGL.random(playerPosition.getX() - vp.getWidth() / 2, playerPosition.getX() + vp.getWidth() / 2);
-            double[] spawnPosition = {x, y, side};
+            spawnPosition = new double[]{x, y, side};
         } else if (side == 2) {
             //spawn on left side
             double x = playerPosition.getX() - vp.getWidth() / 2;
             double y = FXGL.random(playerPosition.getY() - vp.getHeight() / 2, playerPosition.getY() + vp.getHeight() / 2);
-            double[] spawnPosition = {x, y, side};
+            spawnPosition = new double[]{x, y, side};
         } else if (side == 3) {
             //spawn on top side
             double x = playerPosition.getY() - vp.getHeight() / 2;
             double y = FXGL.random(playerPosition.getX() - vp.getWidth() / 2, playerPosition.getX() + vp.getWidth() / 2);
-            double[] spawnPosition = {x, y};
+            spawnPosition = new double[]{x, y};
         } else {
             //spawn on bottom side
             double x = playerPosition.getY() + vp.getHeight() / 2;
             double y = FXGL.random(playerPosition.getX() - vp.getWidth() / 2, playerPosition.getX() + vp.getWidth() / 2);
-            double[] spawnPosition = {x, y, side};
+            spawnPosition = new double[]{x, y, side};
         }
+        return spawnPosition;
     }
 
 }

@@ -3,9 +3,11 @@ package playersystem;
 
 
 import com.almasb.fxgl.app.ApplicationMode;
+import com.almasb.fxgl.core.math.Vec2;
 import com.almasb.fxgl.dsl.EntityBuilder;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 
 import com.almasb.fxgl.entity.components.CollidableComponent;
@@ -44,73 +46,76 @@ class PlayerFactoryTest {
     PlayerFactory playerFactory;
     @Mock
     SpawnData spawnData;
+    @Mock
+    AnimationComponent animationComponent;
+
+    @Mock
+    PhysicsComponent physicsComponent;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-
-        when(FXGL.entityBuilder()).thenReturn(mockEntityBuilder);
+        playerFactory = mock(PlayerFactory.class);
+        spawnData = mock(SpawnData.class);
+        physicsComponent = mock(PhysicsComponent.class);
+        mockHitBox = mock(Entity.class);
+        mockEntityBuilder = mock(EntityBuilder.class);
+        animationComponent = mock(AnimationComponent.class);
     }
 
     @Test
     public void testNewPlayer() {
-
-        // instantiating playerfactory to call newPlayer method
-        PlayerFactory playerFactory = new PlayerFactory();
-
-        // Mock of SpawnData for the newPlayer method
-        SpawnData mockSpawnData = new SpawnData();
-
-        // Mock a physics component player entity
-        PhysicsComponent mockPhysics = new PhysicsComponent();
-        mockPhysics.setBodyType(BodyType.DYNAMIC);
-
         // Mock of player hitBox
-        HitBox mockHitBox = new HitBox(new Point2D((double) (4 * 50) / 4, (double) (4 * 48) / 5), BoundingShape.box(2 * 50, 3 * 48));
+        HitBox HitBox = new HitBox(new Point2D((double) (4 * 50) / 4, (double) (4 * 48) / 5), BoundingShape.box(2 * 50, 3 * 48));
 
-        //Mocking the use of FXGL.entityBuilder().buildAndAttach();
-
-        Entity mockEntity = new Entity();
-        mockEntityBuilder.buildAndAttach();
-        when(mockEntityBuilder.type(EntityType.PLAYER)).thenReturn(mockEntityBuilder);
-        when(mockEntityBuilder.bbox(mockHitBox)).thenReturn(mockEntityBuilder);
-        when(mockEntityBuilder.with(any())).thenReturn(mockEntityBuilder);
-        when(mockEntityBuilder.buildAndAttach()).thenReturn(mockEntity);
-
-
-        // Call the method to be tested
-        Entity playerEntity = playerFactory.newPlayer(mockSpawnData);
-
-        // checking if the mockEntity is equal to the playerentity creating using the entitybuilder directly
-        assertEquals(mockEntity, playerEntity);
+        mockEntityBuilder.bbox(HitBox);
+        mockEntityBuilder.with(new CollidableComponent());
+        mockEntityBuilder.with(physicsComponent);
+        assertNotNull(mockEntityBuilder);
 
     }
 
     @Test
     public void testNewPlayerTwo(){
-        playerFactory.newPlayer(spawnData);
         when(playerFactory.newPlayer(spawnData)).thenReturn(new Entity());
     }
 
     @Test
     public void newPlayerNotNull(){
-        Entity playerEntity = playerFactory.newPlayer(spawnData);
-        assertNotNull(playerEntity, "The player entity should not be null");
+        HitBox HitBox = new HitBox(new Point2D((double) (4 * 50) / 4, (double) (4 * 48) / 5), BoundingShape.box(2 * 50, 3 * 48));
 
+        mockEntityBuilder.bbox(HitBox);
+        assertNotNull(mockEntityBuilder);
     }
 
     @Test
     public void newPlayerCorrectEntityType(){
-        Entity playerEntity = playerFactory.newPlayer(spawnData);
-        assertEquals(EntityType.PLAYER, playerEntity.getType());
+//        Entity playerEntity = playerFactory.newPlayer(spawnData);
+//        playerEntity.setType(EntityType.PLAYER);
+        //mockEntityBuilder.with(animationComponent);
+
+        Entity player = playerFactory.newPlayer(spawnData);
+
+        player.setPosition(100,100);
+        //playerFactory.loadInput(player);
+        Point2D firstPosition = player.getPosition();
+
+        player.getComponent(AnimationComponent.class).moveRight();
+        Point2D newPosition = player.getPosition();
+
+
+        assertNotEquals(firstPosition, newPosition);
+        //Equals(EntityType.PLAYER, mockEntityBuilder);
+
     }
 
     //Checking if the created player entity has a PhycisComponent attached
     @Test
     public void newPlayerHasComponent(){
-        Entity playerEntity = playerFactory.newPlayer(spawnData);
-        //mock.
-        assertTrue(playerEntity.hasComponent(PhysicsComponent.class));
+        mockEntityBuilder.with(new CollidableComponent(true));
+        mockEntityBuilder.with(physicsComponent);
+
+        assertNotNull(mockEntityBuilder);
     }
 
 

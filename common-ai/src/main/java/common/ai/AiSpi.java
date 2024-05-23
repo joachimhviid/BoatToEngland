@@ -5,4 +5,6 @@ import com.almasb.fxgl.entity.SpawnData;
 
 public interface AiSpi {
     Entity createAI(SpawnData spawnData);
+
+    IPathFinder getPathFinder();
 }

@@ -14,13 +14,9 @@ import common.data.EntityType;
 import common.services.MapSPI;
 import common.services.PlayerSPI;
 import common.services.WeaponSPI;
-import common.data.EntityType;
 import common.services.WaveSPI;
 import javafx.scene.input.KeyCode;
-import common.services.MapSPI;
-import common.services.PlayerSPI;
 import common.ai.IPathFinder;
-import common.ai.IPathFinderService;
 import common.data.ServiceRegistry;
 import common.enemy.EnemySPI;
 import common.events.DebugToggleEvent;
@@ -96,14 +92,12 @@ public class GameLauncher extends GameApplication {
         ServiceLoader<AiSpi> aiFactory = ServiceLoader.load(AiSpi.class);
         aiFactory.stream().forEach(aiSpiProvider -> {
             AiSpi service = aiSpiProvider.get();
-            if (service instanceof IPathFinderService) {
-                IPathFinder pathFinder = ((IPathFinderService) service).getPathFinder();
-                if (pathFinder != null) {
-                    ServiceRegistry.registerService(IPathFinder.class, pathFinder);
-                    System.out.println("Registered IPathFinder service");
-                } else {
-                    System.out.println("Failed to create a valid IPathFinder instance");
-                }
+            IPathFinder pathFinder = service.getPathFinder();
+            if (pathFinder != null) {
+                ServiceRegistry.registerService(IPathFinder.class, pathFinder);
+                System.out.println("Registered IPathFinder service");
+            } else {
+                System.out.println("Failed to create a valid IPathFinder instance");
             }
             FXGL.getGameWorld().addEntityFactory((EntityFactory) service);
             FXGL.getGameWorld().spawn("flowfield");

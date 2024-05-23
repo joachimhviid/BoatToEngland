@@ -6,13 +6,12 @@ import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
 import common.ai.AiSpi;
 import common.ai.IPathFinder;
-import common.ai.IPathFinderService;
 import common.data.EntityType;
 import javafx.geometry.Point2D;
 
 import static com.almasb.fxgl.dsl.FXGLForKtKt.entityBuilder;
 
-public class FlowFieldFactory implements EntityFactory, AiSpi, IPathFinderService {
+public class FlowFieldFactory implements EntityFactory, AiSpi {
     private FlowFieldGrid flowFieldGrid;
 
     public FlowFieldFactory() {

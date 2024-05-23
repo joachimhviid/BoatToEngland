@@ -19,9 +19,10 @@ public class WaveGenerationComponent extends Component {
             Point2D playerPosition = FXGL.getGameWorld().getSingleton(EntityType.PLAYER).getPosition();
             Viewport vp = FXGL.getGameScene().getViewport();
             roundNumber++;
-            int enemyCount = 5 + roundNumber * difficulty;
+            int enemyCount = 1 + roundNumber * difficulty;
             for (int i = 0; i < enemyCount; i++) {
-                int wavePattern = FXGL.random(1, 2);
+                int wavePattern = 1;
+//                int wavePattern = FXGL.random(1, 2);
                 System.out.println("Wave pattern: " + wavePattern);
                 if (wavePattern == 1) {
                     int waveSize = 1 + roundNumber;
@@ -42,7 +43,6 @@ public class WaveGenerationComponent extends Component {
                     //Should spawn the enemy in a certain pattern
                     FXGL.spawn("enemy", 500, 100);
                 }
-                FXGL.spawn("enemy");
             }
         }
     }

@@ -22,9 +22,9 @@ public class WaveGenerationComponent extends Component {
             int enemyCount = 1 + roundNumber * difficulty;
             try {
                 for (int i = 0; i < enemyCount; i++) {
-                    int wavePattern = FXGL.random(1, 4);
+                    int wavePattern = FXGL.random(1, 2);
                     System.out.println("Wave pattern: " + wavePattern);
-                    if (wavePattern == 1 || wavePattern == 2 || wavePattern == 3) {
+                    if (wavePattern == 1) {
                         int waveSize = 1 + roundNumber;
                         for (int j = 0; j < waveSize; j++) {
                             //Gets a screen side to spawn the enemy

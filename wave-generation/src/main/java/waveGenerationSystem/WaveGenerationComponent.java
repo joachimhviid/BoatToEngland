@@ -21,32 +21,32 @@ public class WaveGenerationComponent extends Component {
             Point2D playerPosition = FXGL.getGameWorld().getSingleton(EntityType.PLAYER).getPosition();
             Viewport vp = FXGL.getGameScene().getViewport();
             roundNumber++;
-            int enemyCount = 5 + roundNumber * difficulty;
+            int enemyCount = 1 + roundNumber * difficulty;
             try {
-                for (int i = 0; i < enemyCount; i++) {
-                    int wavePattern = FXGL.random(1, 2);
-                    System.out.println("Wave pattern: " + wavePattern);
-                    if (wavePattern == 1) {
-                        int waveSize = 1 + roundNumber;
-                        for (int j = 0; j < waveSize; j++) {
-                            //Gets a screen side to spawn the enemy
-                            int side = FXGL.random(1, 4);
-                            if (side == 1){
-                                FXGL.spawn("enemy", playerPosition.getX() + vp.getWidth()/2, FXGL.random(playerPosition.getY() - vp.getHeight()/2, playerPosition.getY() + vp.getHeight()/2));
-                            } else if (side == 2){
-                                FXGL.spawn("enemy", playerPosition.getX() - vp.getWidth()/2, FXGL.random(playerPosition.getY() - vp.getHeight()/2, playerPosition.getY() + vp.getHeight()/2));
-                            } else if (side == 3){
-                                FXGL.spawn("enemy", FXGL.random(playerPosition.getX() - vp.getWidth()/2, playerPosition.getX() + vp.getWidth()/2), playerPosition.getY() - vp.getHeight()/2);
-                            } else {
-                                FXGL.spawn("enemy", FXGL.random(playerPosition.getX() - vp.getWidth()/2, playerPosition.getX() + vp.getWidth()/2), playerPosition.getY() + vp.getHeight()/2);
-                            }
+            for (int i = 0; i < enemyCount; i++) {
+                int wavePattern = 1;
+//                int wavePattern = FXGL.random(1, 2);
+                System.out.println("Wave pattern: " + wavePattern);
+                if (wavePattern == 1) {
+                    int waveSize = 1 + roundNumber;
+                    for (int j = 0; j < waveSize; j++) {
+                        //Gets a screen side to spawn the enemy
+                        int side = FXGL.random(1, 4);
+                        if (side == 1){
+                            FXGL.spawn("enemy", playerPosition.getX() + vp.getWidth()/2, FXGL.random(playerPosition.getY() - vp.getHeight()/2, playerPosition.getY() + vp.getHeight()/2));
+                        } else if (side == 2){
+                            FXGL.spawn("enemy", playerPosition.getX() - vp.getWidth()/2, FXGL.random(playerPosition.getY() - vp.getHeight()/2, playerPosition.getY() + vp.getHeight()/2));
+                        } else if (side == 3){
+                            FXGL.spawn("enemy", FXGL.random(playerPosition.getX() - vp.getWidth()/2, playerPosition.getX() + vp.getWidth()/2), playerPosition.getY() - vp.getHeight()/2);
+                        } else {
+                            FXGL.spawn("enemy", FXGL.random(playerPosition.getX() - vp.getWidth()/2, playerPosition.getX() + vp.getWidth()/2), playerPosition.getY() + vp.getHeight()/2);
                         }
-                    } else {
-                        //Should spawn the enemy in a certain pattern
-                        FXGL.spawn("enemy", 500, 100);
                     }
-                    FXGL.spawn("enemy");
+                } else {
+                    //Should spawn the enemy in a certain pattern
+                    FXGL.spawn("enemy", 500, 100);
                 }
+            }
             } catch (Exception e) {
                 System.out.println("Enemy factory not found");
                 hasEnemyFactory = false;

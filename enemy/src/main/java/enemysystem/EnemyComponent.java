@@ -1,7 +1,9 @@
 package enemysystem;
 
+import com.almasb.fxgl.core.math.Vec2;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
+import com.almasb.fxgl.physics.PhysicsComponent;
 import common.ai.IPathFinder;
 import javafx.geometry.Point2D;
 
@@ -30,8 +32,13 @@ public class EnemyComponent extends Component {
             //Using pathfinder to get a direction here
             Point2D currentPos = new Point2D(entity.getX(), entity.getY());
             Point2D moveDirection = pf.getPath(currentPos).normalize();
+            PhysicsComponent physics = entity.getComponent(PhysicsComponent.class);
 
-            entity.translate(moveDirection.multiply(speedX * tpf).getX(), moveDirection.multiply(speedY * tpf).getY());
+            System.out.println(entity.getX() + " : " + entity.getY());
+
+            physics.setBodyLinearVelocity(new Vec2(0,0));
+            //            entity.translate(moveDirection.multiply(speedX * tpfda).getX(), moveDirection.multiply(speedY * tpf).getY());
+            physics.setBodyLinearVelocity(new Vec2(moveDirection.getX(), moveDirection.getY() * -1).mul(speedX * tpf));
         }, () -> {
             //If there is no pathFinder I have just made it move in a constant direction for now
             moveAutonomously(tpf);

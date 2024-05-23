@@ -4,9 +4,14 @@ import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
 import common.data.EntityType;
+import common.enemy.EnemySPI;
 import javafx.geometry.Point2D;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.ServiceLoader;
+
+import static java.util.stream.Collectors.toList;
 
 public class WaveGenerationComponent extends Component {
     public int roundNumber = 0;
@@ -35,16 +40,21 @@ public class WaveGenerationComponent extends Component {
                         } else if (side == 3){
                             FXGL.spawn("enemy", FXGL.random(playerPosition.getX() - vp.getWidth()/2, playerPosition.getX() + vp.getWidth()/2), playerPosition.getY() - vp.getHeight()/2);
                         } else {
+
                             FXGL.spawn("enemy", FXGL.random(playerPosition.getX() - vp.getWidth()/2, playerPosition.getX() + vp.getWidth()/2), playerPosition.getY() + vp.getHeight()/2);
                         }
                     }
                 } else {
-                    //Should spawn the enemy in a certain pattern
-                    FXGL.spawn("enemy", 500, 100);
+                    for (EnemySPI e : getEnemySPIs()) {
+                        e.createEnemy();
+                    }
                 }
-                FXGL.spawn("enemy");
             }
         }
+    }
+
+    private Collection<? extends EnemySPI> getEnemySPIs() {
+        return ServiceLoader.load(EnemySPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 
 }

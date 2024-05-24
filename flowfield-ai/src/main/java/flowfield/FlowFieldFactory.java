@@ -15,7 +15,7 @@ public class FlowFieldFactory implements EntityFactory, AiSpi {
     private FlowFieldGrid flowFieldGrid;
 
     public FlowFieldFactory() {
-        flowFieldGrid = new FlowFieldGrid(17, 11, 100, new Point2D(100, 100));
+        flowFieldGrid = new FlowFieldGrid(1000, 1000, 100, new Point2D(100, 100));
     }
 
     @Override

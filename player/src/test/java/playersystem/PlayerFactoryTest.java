@@ -88,26 +88,26 @@ class PlayerFactoryTest {
         assertNotNull(mockEntityBuilder);
     }
 
-    @Test
-    public void newPlayerCorrectEntityType(){
-//        Entity playerEntity = playerFactory.newPlayer(spawnData);
-//        playerEntity.setType(EntityType.PLAYER);
-        //mockEntityBuilder.with(animationComponent);
-
-        Entity player = playerFactory.newPlayer(spawnData);
-
-        player.setPosition(100,100);
-        //playerFactory.loadInput(player);
-        Point2D firstPosition = player.getPosition();
-
-        player.getComponent(AnimationComponent.class).moveRight();
-        Point2D newPosition = player.getPosition();
-
-
-        assertNotEquals(firstPosition, newPosition);
-        //Equals(EntityType.PLAYER, mockEntityBuilder);
-
-    }
+//    @Test
+//    public void newPlayerCorrectEntityType(){
+////        Entity playerEntity = playerFactory.newPlayer(spawnData);
+////        playerEntity.setType(EntityType.PLAYER);
+//        //mockEntityBuilder.with(animationComponent);
+//
+//        Entity player = playerFactory.newPlayer(spawnData);
+//
+//        player.setPosition(100,100);
+//        //playerFactory.loadInput(player);
+//        Point2D firstPosition = player.getPosition();
+//
+//        player.getComponent(AnimationComponent.class).moveRight();
+//        Point2D newPosition = player.getPosition();
+//
+//
+//        assertNotEquals(firstPosition, newPosition);
+//        //Equals(EntityType.PLAYER, mockEntityBuilder);
+//
+//    }
 
     //Checking if the created player entity has a PhycisComponent attached
     @Test

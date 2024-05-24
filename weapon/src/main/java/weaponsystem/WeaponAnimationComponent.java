@@ -13,34 +13,29 @@ import java.net.URL;
 public class WeaponAnimationComponent extends Component {
 
     private AnimatedTexture texture;
-    private AnimationChannel animIdle;
+    private AnimationChannel weaponAnimationChannel;
 
     private final int scale = 2;
 
 
     public WeaponAnimationComponent() {
 
-//        URL weaponURL = url("textures/axe_attack_spin_v1.png");
-        URL weaponURL = url("textures/mp5_attack_spin.png");
+//      URL weaponURL = url("textures/mp5_attack_spin.png");
+        URL weaponURL = url("textures/axe_attack_spin_v1.png");
         if (weaponURL == null) {
             throw new RuntimeException("weaponURL not found: " + weaponURL);
         } else {
             Image weaponIMG = FXGL.image(weaponURL);
-            animIdle = new AnimationChannel(ImagesKt.resize(weaponIMG, (int) weaponIMG.getWidth() * scale, (int) weaponIMG.getHeight() * scale), 6, 50 * scale, 48 * scale, Duration.seconds(0.4), 0, 5);
+            weaponAnimationChannel = new AnimationChannel(ImagesKt.resize(weaponIMG, (int) weaponIMG.getWidth() * scale, (int) weaponIMG.getHeight() * scale), 6, 50 * scale, 48 * scale, Duration.seconds(0.4), 0, 5);
 
-            texture = new AnimatedTexture(animIdle);
+            texture = new AnimatedTexture(weaponAnimationChannel);
         }
-
     }
-
-
-
 
     @Override
     public void onAdded() {
-
         entity.getViewComponent().addChild(texture);
-        texture.loopAnimationChannel(animIdle);
+        texture.loopAnimationChannel(weaponAnimationChannel);
     }
 
 
@@ -51,6 +46,5 @@ public class WeaponAnimationComponent extends Component {
     private URL url(String path) {
         return getClass().getResource(getUrlPrefixForAssets() + path);
     }
-
 
 }

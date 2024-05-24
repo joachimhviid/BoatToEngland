@@ -26,11 +26,6 @@ public class EnemyFactory implements EntityFactory, EnemySPI {
     @Spawns("enemy")
     public Entity createEnemy(SpawnData spawnData) {
         Optional<IPathFinder> pathFinder = ServiceRegistry.getService(IPathFinder.class);
-        if (pathFinder.isPresent()) {
-            System.out.println("PathFinder successfully retrieved for EnemyComponent");
-        } else {
-            System.out.println("Failed to retrieve PathFinder for EnemyComponent");
-        }
 
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);

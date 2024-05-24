@@ -12,8 +12,5 @@ public class Weapon {
         this.damage = damage;
     }
 
-    void attack() {
-    }
-
 
 }

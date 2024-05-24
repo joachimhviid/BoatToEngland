@@ -10,7 +10,7 @@ public enum ServiceRegistry {
 
     private static final Map<Class<?>, Object> services = new HashMap<>();
 
-    public static  <T> void registerService(Class<T> serviceType, T serviceInstance) {
+    public static <T> void registerService(Class<T> serviceType, T serviceInstance) {
         services.put(serviceType, serviceInstance);
     }
 

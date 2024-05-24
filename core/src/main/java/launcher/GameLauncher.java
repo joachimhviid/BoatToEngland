@@ -9,14 +9,14 @@ import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
+import common.ai.AiSpi;
 import common.data.EntityType;
-import javafx.scene.input.KeyCode;
-import playersystem.PlayerFactory;
 import common.services.MapSPI;
 import common.services.PlayerSPI;
-import common.ai.AI_SPI;
+import common.services.WeaponSPI;
+import common.services.WaveSPI;
+import javafx.scene.input.KeyCode;
 import common.ai.IPathFinder;
-import common.ai.IPathFinderService;
 import common.data.ServiceRegistry;
 import common.enemy.EnemySPI;
 import common.events.DebugToggleEvent;
@@ -28,8 +28,6 @@ import static com.almasb.fxgl.dsl.FXGL.getPhysicsWorld;
 
 public class GameLauncher extends GameApplication {
     private Entity player;
-
-    //private Text debugText;
 
     public static void main(String[] args) {
         launch(args);
@@ -74,35 +72,34 @@ public class GameLauncher extends GameApplication {
         });
 
         List<PlayerSPI> playerFactories = ServiceLoader.load(PlayerSPI.class)
-            .stream()
-            .map(ServiceLoader.Provider::get)
-            .toList();
+                .stream()
+                .map(ServiceLoader.Provider::get)
+                .toList();
 
         playerFactories.forEach(factory -> {
             FXGL.getGameWorld().addEntityFactory((EntityFactory) factory);
-            player = FXGL.getGameWorld().spawn("player", 100, 100);
-            factory.loadInput(player);
+            player = FXGL.getGameWorld().spawn("player", 3000, 3000);
         });
 
-    // SpawnData = playerSpawnData; Optionally spawn data passed into newPlayer?
+        List<WeaponSPI> weaponFactories = ServiceLoader.load(WeaponSPI.class)
+                .stream().map(ServiceLoader
+                        .Provider::get)
+                .toList();
 
-        ServiceLoader<AI_SPI> aiFactory = ServiceLoader.load(AI_SPI.class);
+        weaponFactories.forEach(WeaponFactory -> FXGL.getGameWorld().addEntityFactory((EntityFactory) WeaponFactory));
+
+        ServiceLoader<AiSpi> aiFactory = ServiceLoader.load(AiSpi.class);
         aiFactory.stream().forEach(aiSpiProvider -> {
-            AI_SPI service = aiSpiProvider.get();
-            if (service instanceof IPathFinderService) {
-                IPathFinder pathFinder = ((IPathFinderService) service).getPathFinder();
-                if (pathFinder != null) {
-                    ServiceRegistry.registerService(IPathFinder.class, pathFinder);
-                    System.out.println("Registered IPathFinder service");
-                } else {
-                    System.out.println("Failed to create a valid IPathFinder instance");
-                }
+            AiSpi service = aiSpiProvider.get();
+            IPathFinder pathFinder = service.getPathFinder();
+            if (pathFinder != null) {
+                ServiceRegistry.registerService(IPathFinder.class, pathFinder);
             }
+
             FXGL.getGameWorld().addEntityFactory((EntityFactory) service);
+            FXGL.getGameWorld().spawn("flowfield");
 
         });
-
-        FXGL.getGameWorld().spawn("flowfield");
 
         List<EnemySPI> enemyFactories = ServiceLoader.load(EnemySPI.class)
                 .stream()
@@ -110,20 +107,32 @@ public class GameLauncher extends GameApplication {
                 .toList();
 
         enemyFactories.forEach(enemyFactory -> {
-            System.out.println("Attempting to spawn enemy...");
-            if (ServiceRegistry.getService(IPathFinder.class).isPresent()) {
-                System.out.println("PathFinder is available for EnemyComponent");
-            } else {
-                System.out.println("PathFinder is not available for EnemyComponent");
-            }
             FXGL.getGameWorld().addEntityFactory((EntityFactory) enemyFactory);
-            FXGL.getGameWorld().spawn("enemy");
+            //FXGL.getGameWorld().spawn("enemy");
+        });
+
+
+        List<WaveSPI> waveFactories = ServiceLoader.load(WaveSPI.class)
+                .stream()
+                .map(ServiceLoader.Provider::get)
+                .toList();
+
+        waveFactories.forEach(waveFactory -> {
+            FXGL.getGameWorld().addEntityFactory((EntityFactory) waveFactory);
+            FXGL.getGameWorld().spawn("wave");
         });
 
 
         Viewport viewport = FXGL.getGameScene().getViewport();
         viewport.setBounds(0, 0, 6400, 6400);
-        viewport.bindToEntity(player, viewport.getWidth() / 2 - (double) (4 * 50) / 2, viewport.getHeight() / 2 - (double) (4 * 48) / 2);
+
+        if (player != null) {
+            viewport.bindToEntity(player, viewport.getWidth() / 2 - (double) (4 * 50) / 2, viewport.getHeight() / 2 - (double) (4 * 48) / 2);
+        }
+
+        //Music loading
+        //FXGL.play("background_music.mp3");
+        System.out.println("Background music is playing");
 
     }
 
@@ -134,7 +143,16 @@ public class GameLauncher extends GameApplication {
             // order of types is the same as passed into the constructor
             @Override
             protected void onCollisionBegin(Entity player, Entity enemy) {
-                //player should take damage here
+//                player.removeFromWorld();
+            }
+        });
+        getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.WEAPON, EntityType.ENEMY) {
+
+            // order of types is the same as passed into the constructor
+            @Override
+            protected void onCollisionBegin(Entity weapon, Entity enemy) {
+                weapon.removeFromWorld();
+                enemy.removeFromWorld();
             }
         });
     }

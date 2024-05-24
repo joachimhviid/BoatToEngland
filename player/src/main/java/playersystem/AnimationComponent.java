@@ -17,6 +17,7 @@ import java.net.URL;
 public class AnimationComponent extends Component {
     private final double speed = 300;
     private Vec2 velocity = new Vec2(0, 0);
+    private Vec2 direction = new Vec2(0, 0);
     private final int scale = 4;
 
     private PhysicsComponent physics;
@@ -30,6 +31,7 @@ public class AnimationComponent extends Component {
 
     public AnimationComponent() {
         URL playerReadyUrl = url("textures/player_ready.png");
+        System.out.println(playerReadyUrl);
         if (playerReadyUrl == null) {
             throw new RuntimeException("Player ready image not found: " + "textures/player_ready.png");
         } else {
@@ -37,6 +39,8 @@ public class AnimationComponent extends Component {
             Image playerRun = FXGL.image(url("textures/player_run.png"));
             animIdle = new AnimationChannel(ImagesKt.resize(playerReady, (int) playerReady.getWidth() * scale, (int) playerReady.getHeight() * scale), 6, 50 * scale, 48 * scale, Duration.seconds(1), 0, 5);
             animRun = new AnimationChannel(ImagesKt.resize(playerRun, (int) playerRun.getWidth() * scale, (int) playerRun.getHeight() * scale), 6, 50 * scale, 48 * scale, Duration.seconds(1), 0, 5);
+
+
 
             texture = new AnimatedTexture(animIdle);
         }
@@ -51,6 +55,7 @@ public class AnimationComponent extends Component {
     @Override
     public void onUpdate(double tpf) {
         normalizeSpeed();
+        direction = velocity.mul(tpf * speed);
         physics.setBodyLinearVelocity(velocity.mul(tpf * speed));
 
         if (physics.isMoving()) {
@@ -87,7 +92,6 @@ public class AnimationComponent extends Component {
     public void moveRight() {
         velocity = new Vec2(speed, velocity.y);
         entity.setScaleX(1);
-        //
     }
 
     public void moveLeft() {
@@ -101,6 +105,14 @@ public class AnimationComponent extends Component {
 
     public void moveDown() {
         velocity = new Vec2(velocity.x, -speed);
+    }
+
+    public void shout() {
+
+    }
+
+    public Vec2 getVelocity() {
+        return direction;
     }
 
     private String getUrlPrefixForAssets() {

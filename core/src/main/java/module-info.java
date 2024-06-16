@@ -1,4 +1,4 @@
-open module core {
+module core {
     uses common.services.PlayerSPI;
     uses common.services.MapSPI;
     uses common.enemy.EnemySPI;

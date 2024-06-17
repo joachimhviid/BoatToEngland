@@ -6,6 +6,7 @@ import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 import com.almasb.fxgl.texture.ImagesKt;
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
 
@@ -56,7 +57,7 @@ public class EnemyAnimationComponent extends Component {
 
     @Override
     public void onAdded() {
-
+        entity.getTransformComponent().setScaleOrigin(new Point2D((double) (27 * scale) / 2, (double) (45 * scale) / 2));
         entity.getViewComponent().addChild(texture);
         texture.loopAnimationChannel(enemyAnimRun);
     }

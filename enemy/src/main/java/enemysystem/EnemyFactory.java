@@ -30,7 +30,7 @@ public class EnemyFactory implements EntityFactory, EnemySPI {
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
         CollidableComponent collidable = new CollidableComponent(true);
-        HitBox box = new HitBox(new Point2D((double) (4 * 50) / 4, (double) (4 * 48) / 5), BoundingShape.box(2 * 50, 3 * 48));
+        HitBox box = new HitBox(new Point2D((double) (2 * 27) / 2, 0), BoundingShape.box(2 * 27, 2 * 45));
 
         return entityBuilder(spawnData)
                 .type(EntityType.ENEMY)
